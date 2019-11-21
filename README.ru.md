@@ -65,40 +65,15 @@ $ neo-go contract testinvoke -e 127.0.0.1:20331 -i $AVM
 2. Скопировать скомпилированный контракт в docker neo-python:
 `$ sudo docker cp smart-contracts/1-print.avm  neo-python:/neo-python`
 
-3. Деплой контракта из neo-cli
-- Открыть neo-cli консоль
-- `sc deploy 1-print.avm True False False  07 05 --fee=1.5`
+3. Деплой контракта из neo-go
+- `./bin/neo-go contract deploy -i 1-print.avm -c 1-print.yml -e http://localhost:20331 -w KxDgvEKzgSBPPfuVfw67oPQBSjidEiqTHURKSDL1R7yGaGYAeYnr -g 100`
 
 Результат:
 ```
-Please fill out the following contract details:
-[Contract Name] >                                                                                                                                                                                                                      
-[Contract Version] >                                                                                                                                                                                                                   
-[Contract Author] >                                                                                                                                                                                                                    
-[Contract Email] >                                                                                                                                                                                                                     
-[Contract Description] >                                                                                                                                                                                                               
-Creating smart contract....
-                 Name:  
-              Version: 
-               Author:  
-                Email:  
-          Description:  
-        Needs Storage: True 
- Needs Dynamic Invoke: False 
-           Is Payable: False 
-{
-    "hash": "0x4cf87bd149748abc3cf5fe46040bb8b4c2c0b2c7",
-    "script": "5ec56b68164e656f2e53746f726167652e476574436f6e74657874616a00527ac410746573742d73746f726167652d6b65796a51527ac46a00c36a51c37c680f4e656f2e53746f726167652e476574616a52527ac41756616c756520726561642066726f6d2073746f726167656a53527ac46a53c368124e656f2e52756e74696d652e4e6f74696679616a52c3009c6447002553746f72616765206b6579206e6f7420796574207365742e2053657474696e6720746f203168124e656f2e52756e74696d652e4e6f7469667961516a52527ac4624d002a53746f72616765206b657920616c7265616479207365742e20496e6372656d656e74696e67206279203168124e656f2e52756e74696d652e4e6f74696679616a52c351936a52527ac46a00c36a51c36a52c35272680f4e656f2e53746f726167652e507574611e4e65772076616c7565207772697474656e20696e746f2073746f7261676568124e656f2e52756e74696d652e4e6f74696679616a52c36c7566",
-    "parameters": [
-        "String",
-        "Array"
-    ],
-    "returntype": "ByteArray"
-}
-
+Sent deployment transaction 98d33630d98fa6e171c2659bf9028497574aca9ccf3f398624173b7d445fc0d6 for contract 50befd26fdf6e4d957c11e078b24ebce6291456f
 ``` 
 
-4. Запуск контракта
+4. Запуск контракта из neo-python
 
 `sc invoke 0x4cf87bd149748abc3cf5fe46040bb8b4c2c0b2c7`
 
