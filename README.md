@@ -16,7 +16,7 @@ This article is about the last one since we’re developing it at NEO SPCC.
 Hope that this article will help you to get an idea of how everything is tied up and being able to start neo-go node,
  write smart contract and deploy it.
  
-## What is the node?
+## What is a node?
 
 <p align="center">
 <img src="./pic/node.png" width="300px" alt="node">
