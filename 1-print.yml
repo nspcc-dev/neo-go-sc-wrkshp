@@ -1,0 +1,11 @@
+project:
+  author: Random Guy
+  email: joe@example.com
+  version: 0.99
+  name: Helloer
+  description: 'Da contract dat hallos u'
+  hasstorage: false
+  hasdynamicinvocation: false
+  ispayable: false
+  returntype: ByteArray
+  parameters: ['String', 'Array']
