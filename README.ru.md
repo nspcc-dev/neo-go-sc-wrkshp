@@ -13,6 +13,14 @@ $ git checkout -b 4nodes 0.12
 $ make start
 ```
 
+### neo-go
+
+```
+$ git clone https://github.com/nspcc-dev/neo-go
+$ cd neo-go
+$ make build
+```
+
 ## RPC
 
 ```
