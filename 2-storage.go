@@ -1,4 +1,4 @@
-package storagePython
+package storage
 
 import (
 	"github.com/CityOfZion/neo-go/pkg/interop/runtime"
