@@ -1,8 +1,8 @@
 ## Требования
 
-Debian 10, Docker, docker-compose, go
-https://docs.docker.com/install/linux/docker-ce/debian/
-https://golang.org/dl/
+Debian 10, Docker, docker-compose, go:
+* https://docs.docker.com/install/linux/docker-ce/debian/
+* https://golang.org/dl/
 
 ## Развёртывание
 
@@ -119,7 +119,7 @@ Enter your password to continue and deploy this contract
 Необходимо ввести пароль `coz`
 
 
-### Запуск Hello world контракта (2-storage.go)
+### Запуск контракта с использованием хранилища (2-storage.go)
 
 Этот контракт использует системные вызовы(interops), которые позволяют сохранить значение переменной и обращаться к ней из другого контракта.
 
@@ -149,6 +149,7 @@ neo> [I 191031 10:01:11 EventHub:62] [SmartContract.Storage.Get][7770] [4cf87bd1
 
 # Ссылки
 
-https://github.com/neo-project/neo/
-https://github.com/nspcc-dev/neo-go
-https://medium.com/@neospcc/%D1%81%D0%BC%D0%B0%D1%80%D1%82-%D0%BA%D0%BE%D0%BD%D1%82%D1%80%D0%B0%D0%BA%D1%82-%D0%B4%D0%BB%D1%8F-neo-769139352b65
+* https://medium.com/@neospcc/%D1%81%D0%BC%D0%B0%D1%80%D1%82-%D0%BA%D0%BE%D0%BD%D1%82%D1%80%D0%B0%D0%BA%D1%82-%D0%B4%D0%BB%D1%8F-neo-769139352b65
+* https://docs.neo.org/
+* https://github.com/neo-project/neo/
+* https://github.com/nspcc-dev/neo-go
