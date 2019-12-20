@@ -139,15 +139,46 @@ signing transactions, working with accounts, assets, storing blocks in database 
 There are 3 types of network. 
 Private net -- it’s the private one which you can run locally. Testnet and Mainnet where much of the nodes across the world now running. 
 NEO has a nice monitor where you can find particular node running in the blockchain network.
-<p align="center">
-<img src="https://gfycat.com/legitimatepertinentindianrhinoceros" width="300px" alt="network_monitor">
-</p>
+[Neo Monitor](http://monitor.cityofzion.io/)
 
 ## Workshop
-Now it’s time to run your private network. Connect neo-go node to it, write smart contract and deploy it. Let’s go!
+Now it’s time to run your private network. Connect neo-go node to it, write smart contract, deploy and invoke it. 
+Let’s go!
 
 #### Step 1
-Run local privnet:
+Download neo-go and build it
+```
+git clone https://github.com/nspcc-dev/neo-go.git
+$ cd neo-go
+$ make build 
+```
+
+#### Step 2
+There are 2 ways of running local private network. 
+One way is using neo-local private network and other way is with neo-go private network.
+
+#### Running with neo-go private network
+```
+$ make env_image
+$ make env_up
+```
+Result: running privatenet:
+```
+=> Bootup environment
+Creating network "neo_go_network" with the default driver
+Creating volume "docker_volume_chain" with local driver
+Creating neo_go_node_four  ... done
+Creating neo_go_node_two   ... done
+Creating neo_go_node_one   ... done
+Creating neo_go_node_three ... done
+```
+
+In case you need to shutdown environment you can use:
+```
+$ make env_down
+```
+
+#### Running with neo local private network
 ```
 git clone https://github.com/CityOfZion/neo-local.git
 $ cd neo-local
@@ -155,15 +186,8 @@ $ git checkout -b 4nodes 0.12
 $ make start
 ```
 
-#### Step 2
-Download neo-go
-```
-https://github.com/nspcc-dev/neo-go.git
-$ make build
-```
-
 #### Step 3
-Create basic Hello World smart contract(or use the one presented in this repo):
+Create basic "Hello World" smart contract(or use the one presented in this repo):
 ```
 package main
 
@@ -177,8 +201,11 @@ func Main() {
 ```
 And save it as `1-print.go`.
 
+Create configuration for it:
+https://github.com/nspcc-dev/neo-go-sc-wrkshp/blob/master/1-print.yml
+
 #### Step 4 
-Run Hello World smart contract:
+Run "Hello World" smart contract:
 ```
 $ ./bin/neo-go contract compile -i '/1-print.go'
 ```
@@ -192,57 +219,74 @@ Result:
 Compiled smart-contract: `1-pring.avm`
 
 #### Step 5
-Copy smart contract to docker environment:
+Start neo-go node which will connect to previously started privatenet:
+```
+$ ./bin/neo-go node --privnet
+```
 
-`$ sudo docker cp smart-contracts/1-print.avm neo-python:/neo-python`
+Result:
+```
+INFO[0000] no storage version found! creating genesis block 
+INFO[0000] Pprof service hasn't started since it's disabled 
+INFO[0000] Prometheus service hasn't started since it's disabled 
+INFO[0000] bad MinPeers configured, using the default value  MinPeers actual=5 MinPeers configured=0
+INFO[0000] bad AttemptConnPeers configured, using the default value  AttemptConnPeers actual=20 AttemptConnPeers configured=0
+
+    _   ____________        __________
+   / | / / ____/ __ \      / ____/ __ \
+  /  |/ / __/ / / / /_____/ / __/ / / /
+ / /|  / /___/ /_/ /_____/ /_/ / /_/ /
+/_/ |_/_____/\____/      \____/\____/
+
+/NEO-GO:0.70.2-pre-11-g735b937/
+
+INFO[0000] RPC server is not enabled                    
+INFO[0000] node started                                  blockHeight=0 headerHeight=0
+INFO[0000] new peer connected                            addr="127.0.0.1:20336"
+...
+```
 
 #### Step 6
 Deploy smart contract:
 ```
-./bin/neo-go contract deploy -i 1-print.avm -c neo-go.yml -e 
+./bin/neo-go contract deploy -i 1-print.avm -c 1-print.yml -e 
 http://localhost:20331 -w KxDgvEKzgSBPPfuVfw67oPQBSjidEiqTHURKSDL1R7yGaGYAeYnr -g 100
 ```
 
 Where
 - `contract deploy` is a command for deployment
 - `-i '/1-print.avm'` path to smart contract
-- `-c neo-go.yml` configuration input file
+- `-c 1-print.yml` configuration input file
 - `-e http://localhost:20331` node endpoint
 - `-w KxDgvEKzgSBPPfuVfw67oPQBSjidEiqTHURKSDL1R7yGaGYAeYnr` key to sign deployed transaction
 - `-g 100` amount of gas to pay for contract deployment
 
 Result:
 ```
-Sent deployment transaction 98d33630d98fa6e171c2659bf9028497574aca9ccf3f398624173b7d445fc0d6 for contract 50befd26fdf6e4d957c11e078b24ebce6291456f
-```
-#### Step 7
-Invoke contract from neo-python environment.
-```
-sc invoke 0x4cf87bd149748abc3cf5fe46040bb8b4c2c0b2c7
+Sent deployment transaction 26d0a206e724e402ee1d4bcd794e82e43ca436888c50dbc5a2216e1ba08ecd0d for contract 6d1eeca891ee93de2b7a77eb91c26f3b3c04d6cf
 ```
 
-Where `0x4cf87bd149748abc3cf5fe46040bb8b4c2c0b2c7` is a smart contract hashcode which you can get from the log in the previous step.
+At this point your ‘Hello World’ contract is deployed and could be invoked. Let’s do it as a final step.
+
+#### Step 7
+Invoke contract.
+```
+$ ./bin/neo-go contract invokefunction -e http://localhost:20331 -w KxDgvEKzgSBPPfuVfw67oPQBSjidEiqTHURKSDL1R7yGaGYAeYnr -g 0.00001 6d1eeca891ee93de2b7a77eb91c26f3b3c04d6cf
+```
+
+Where
+- `contract invokefunction` runs invoke with provided parameters
+- `-e http://localhost:20331` defines RPC endpoint used for function call
+- `-w KxDgvEKzgSBPPfuVfw67oPQBSjidEiqTHURKSDL1R7yGaGYAeYnr` is a wallet
+- `-g 0.00001` defines amount of GAS to be used for invoke operation
+- `6d1eeca891ee93de2b7a77eb91c26f3b3c04d6cf` contract hash got as an output from the previous command (deployment in step 6)
 
 Result:
+In the console where you were running step #5 you will get:
 ```
-Used 500.0 Gas 
-
--------------------------------------------------------------------------------------------------------------------------------------
-Test deploy invoke successful
-Total operations executed: 11
-Results:
-[<neo.Core.State.ContractState.ContractState object at 0x7f4164c67358>]
-Deploy Invoke TX GAS cost: 490.0
-Deploy Invoke TX Fee: 0.0
--------------------------------------------------------------------------------------------------------------------------------------
-
-Priority Fee (1.5) + Deploy Invoke TX Fee (0.0) = 1.5
-
-Enter your password to continue and deploy this contract
+INFO[0227] script cfd6043c3b6fc291eb777a2bde93ee91a8ec1e6d logs: "Hello, world!"
 ```
-
-Enter `coz` password to continue.
-After you will see printed `Hello world!`
+Which means that this contract was executed.
 
 This is it. There are only 5 steps to make deployment and they look easy, aren’t they?
 Thank you!
