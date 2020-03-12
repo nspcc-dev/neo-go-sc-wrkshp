@@ -8,7 +8,7 @@ but it’s not the only thing we’re working on.
 
 ## NEO GO
 As you know network is composed of nodes. These nodes as of now have several implementations:
-- https://github.com/CityOfZion/neo-sharp
+- https://github.com/neo-project/neo
 - https://github.com/CityOfZion/neo-python
 - https://github.com/nspcc-dev/neo-go
 
@@ -141,9 +141,13 @@ Private net -- it’s the private one which you can run locally. Testnet and Mai
 NEO has a nice monitor where you can find particular node running in the blockchain network.
 [Neo Monitor](http://monitor.cityofzion.io/)
 
-## Workshop
+## Workshop. Part 1
 Now it’s time to run your private network. Connect neo-go node to it, write smart contract, deploy and invoke it. 
 Let’s go!
+#### Requirements
+For this workshop you will need Debian 10, Docker, docker-compose, go to be installed:
+- [docker](https://docs.docker.com/install/linux/docker-ce/debian/)
+- [go](https://golang.org/dl/)
 
 #### Step 1
 Download neo-go and build it
@@ -218,6 +222,11 @@ Result:
 
 Compiled smart-contract: `1-pring.avm`
 
+To dump all the opcodes, you can use:
+```
+$ ./bin/neo-go contract inspect -i '/1-print.go'
+```
+
 #### Step 5
 Start neo-go node which will connect to previously started privatenet:
 ```
@@ -249,8 +258,8 @@ INFO[0000] new peer connected                            addr="127.0.0.1:20336"
 #### Step 6
 Deploy smart contract:
 ```
-./bin/neo-go contract deploy -i 1-print.avm -c 1-print.yml -e 
-http://localhost:20331 -w KxDgvEKzgSBPPfuVfw67oPQBSjidEiqTHURKSDL1R7yGaGYAeYnr -g 100
+./bin/neo-go contract deploy -i 1-print.avm -c 1-print.yml -e \
+http://localhost:20331 -w my_wallet.json -g 100
 ```
 
 Where
@@ -258,12 +267,17 @@ Where
 - `-i '/1-print.avm'` path to smart contract
 - `-c 1-print.yml` configuration input file
 - `-e http://localhost:20331` node endpoint
-- `-w KxDgvEKzgSBPPfuVfw67oPQBSjidEiqTHURKSDL1R7yGaGYAeYnr` key to sign deployed transaction
+- `-w my_wallet.json` wallet to use to get the key for transaction signing (you can use one from the workshop repo)
 - `-g 100` amount of gas to pay for contract deployment
+
+Enter password `qwerty` for account:
+```
+Enter account AK2nJJpJr6o664CWJKi1QRXjqeic2zRp8y password >
+```
 
 Result:
 ```
-Sent deployment transaction 26d0a206e724e402ee1d4bcd794e82e43ca436888c50dbc5a2216e1ba08ecd0d for contract 6d1eeca891ee93de2b7a77eb91c26f3b3c04d6cf
+Sent deployment transaction ea93196802fe3517d2d028e4d4f244aa734a9b1988456740d96f2c3336140fda for contract 6d1eeca891ee93de2b7a77eb91c26f3b3c04d6cf
 ```
 
 At this point your ‘Hello World’ contract is deployed and could be invoked. Let’s do it as a final step.
@@ -271,15 +285,20 @@ At this point your ‘Hello World’ contract is deployed and could be invoked. 
 #### Step 7
 Invoke contract.
 ```
-$ ./bin/neo-go contract invokefunction -e http://localhost:20331 -w KxDgvEKzgSBPPfuVfw67oPQBSjidEiqTHURKSDL1R7yGaGYAeYnr -g 0.00001 6d1eeca891ee93de2b7a77eb91c26f3b3c04d6cf
+$ ./bin/neo-go contract invokefunction -e http://localhost:20331 -w my_wallet.json -g 0.00001 6d1eeca891ee93de2b7a77eb91c26f3b3c04d6cf
 ```
 
 Where
 - `contract invokefunction` runs invoke with provided parameters
 - `-e http://localhost:20331` defines RPC endpoint used for function call
-- `-w KxDgvEKzgSBPPfuVfw67oPQBSjidEiqTHURKSDL1R7yGaGYAeYnr` is a wallet
+- `-w my_wallet.json` is a wallet
 - `-g 0.00001` defines amount of GAS to be used for invoke operation
 - `6d1eeca891ee93de2b7a77eb91c26f3b3c04d6cf` contract hash got as an output from the previous command (deployment in step 6)
+
+Enter password `qwerty` for account:
+```
+Enter account AK2nJJpJr6o664CWJKi1QRXjqeic2zRp8y password >
+```
 
 Result:
 In the console where you were running step #5 you will get:
@@ -291,3 +310,223 @@ Which means that this contract was executed.
 This is it. There are only 5 steps to make deployment and they look easy, aren’t they?
 Thank you!
 
+## Workshop. Part 2
+In this part we'll look at RPC calls, NEP5 token and try to write, deploy and invoke more complicated smart contract. 
+Let’s go!
+
+### RPC calls
+Let's check what's going on under the hood. 
+Each neo-go node provides an API interface for obtaining blockchain data from it.
+The interface is provided via `JSON-RPC`, and the underlying protocol uses HTTP for communication.
+
+Full `NEO JSON-RPC 2.0 API` described [here](https://docs.neo.org/docs/en-us/reference/rpc/latest-version/api.html).
+
+RPC-server of started in step #5 neo-go node is available on `localhost:20331`, so let's try to perform several RPC calls.
+
+#### GetRawTransaction
+[GetRawTransaction](https://docs.neo.org/docs/en-us/reference/rpc/latest-version/api/getrawtransaction.html) returns 
+the corresponding transaction information, based on the specified hash value.
+
+Request information about our deployment transaction:
+```
+curl -d '{ "jsonrpc": "2.0", "id": 1, "method": "getrawtransaction", "params": ["ea93196802fe3517d2d028e4d4f244aa734a9b1988456740d96f2c3336140fda", 1] }' localhost:20331 | json_pp
+```
+
+Where
+- `"jsonrpc": "2.0"` is protocol version
+- `"id": 1` is id of current request
+- `"method": "getrawtransaction"` is requested method
+- `"params": ["ea93196802fe3517d2d028e4d4f244aa734a9b1988456740d96f2c3336140fda", 1]` is array of parameters, where
+   - `ea93196802fe3517d2d028e4d4f244aa734a9b1988456740d96f2c3336140fda` is deployment transaction hash
+   - `1` is `verbose` parameter for detailed JSON string output
+- `json_pp` just makes the JSON output prettier
+
+Result:
+```
+{
+   "result" : {
+      "blocktime" : 1584027315,
+      "net_fee" : "100",
+      "type" : "InvocationTransaction",
+      "version" : 1,
+      "vin" : [
+         {
+            "vout" : 0,
+            "txid" : "0x9aa010ea9618b34dd2dc42d35015280701c35a292cfb702ad32e86d40e9239cb"
+         }
+      ],
+      "txid" : "0xea93196802fe3517d2d028e4d4f244aa734a9b1988456740d96f2c3336140fda",
+      "sys_fee" : "100",
+      "size" : 341,
+      "confirmations" : 70,
+      "blockhash" : "0xa0ed247b4161426532fd20c7c21da633a6994493216c71f3a9940d2256d3cee4",
+      "vout" : [
+         {
+            "n" : 0,
+            "value" : "19952",
+            "asset" : "0x602c79718b16e442de58778e148d0b1084e3b2dffd5de6b7b16cee7969282de7",
+            "address" : "AK2nJJpJr6o664CWJKi1QRXjqeic2zRp8y"
+         }
+      ],
+      "scripts" : [
+         {
+            "invocation" : "4001a7e30b4e3b4ec2f50bb7af86bf2b8ef03ae55fbf302e4f5db36df12fe1e417a01d92949376131c0be5c472cbc47c61669fc8c7abc691a071107c1271b2a460",
+            "verification" : "21031a6c6fbbdf02ca351745fa86b9ba5a9452d785ac4f7fc2b7548ca2a46c4fcf4aac"
+         }
+      ],
+      "attributes" : []
+   },
+   "jsonrpc" : "2.0",
+   "id" : 1
+}
+```
+
+#### GetApplicationLog
+[GetApplicationLog](https://docs.neo.org/docs/en-us/reference/rpc/latest-version/api/getapplicationlog.html) returns the contract log based on the specified transaction id.
+
+Request application log for invocation transaction from step #7:
+```
+curl -d '{ "jsonrpc": "2.0", "id": 1, "method": "getapplicationlog", "params": ["42879c901de7d180f2ff609aded2da2b9c63d5ed7d1b22f18e246c16fc5d0c57"] }' localhost:20331 | json_pp
+```
+
+With a single parameter:
+- `42879c901de7d180f2ff609aded2da2b9c63d5ed7d1b22f18e246c16fc5d0c57` - invocation transaction hash from step #7
+
+Result:
+```
+{
+   "id" : 1,
+   "result" : {
+      "txid" : "0x42879c901de7d180f2ff609aded2da2b9c63d5ed7d1b22f18e246c16fc5d0c57",
+      "executions" : [
+         {
+            "gas_consumed" : "0.017",
+            "contract" : "0x9dbb827c329d765240569058a5bdd8176aab4cb6",
+            "stack" : [
+               {
+                  "type" : "Array",
+                  "value" : []
+               },
+               {
+                  "type" : "ByteArray",
+                  "value" : ""
+               }
+            ],
+            "trigger" : "Application",
+            "notifications" : [],
+            "vmstate" : "HALT"
+         }
+      ]
+   },
+   "jsonrpc" : "2.0"
+}
+```
+
+#### Other Useful RPC calls
+```
+curl -d '{ "jsonrpc": "2.0", "id": 5, "method": "getversion", "params": [] }' localhost:20331
+curl -d '{ "jsonrpc": "2.0", "id": 5, "method": "getblockcount", "params": [] }' localhost:20331
+curl -d '{ "jsonrpc": "2.0", "id": 5, "method": "getconnectioncount", "params": [] }' localhost:20331
+curl -d '{ "jsonrpc": "2.0", "id": 5, "method": "getaccountstate", "params": ["AK2nJJpJr6o664CWJKi1QRXjqeic2zRp8y"] }' localhost:20331
+```
+
+List of supported by neo-go node RPC commands you can find [here](https://github.com/nspcc-dev/neo-go/blob/master/docs/rpc.md#supported-methods).
+
+### NEP5
+[NEP5](https://docs.neo.org/docs/en-us/sc/write/nep5.html) is a token standard for the Neo blockchain that provides systems with a generalized interaction mechanism for tokenized smart contracts.
+The example with implementation of all required by the standard methods you can find in [nep5.go](https://github.com/nspcc-dev/neo-go/blob/master/examples/token/nep5/nep5.go)
+ 
+Let's take a view on the example of smart contract with NEP5: [token.go](https://github.com/nspcc-dev/neo-go/blob/master/examples/token/token.go)
+ 
+This smart contract initialises nep5 token interface and takes operation string as a parameter, which is one of:
+- `name` returns name of created nep5 token 
+- `symbol` returns ticker symbol of the token
+- `decimals` returns amount of decimals for the token
+- `totalSupply` returns total token * multiplier
+- `balanceOf` returns the token balance of a specific address and requires additional argument:
+  - `holder` which is requested address
+- `transfer` transfers token from one user to another and requires additional arguments:
+  - `from` is account which you'd like to transfer tokens from
+  - `to` is account which you'd like to transfer tokens to
+  - `amount` is the amount of token to transfer
+
+Let's perform several operations with our contract.
+
+#### Step #1
+Compile smart contract [token.go](https://github.com/nspcc-dev/neo-go/blob/master/examples/token/token.go):
+```
+./bin/neo-go contract compile -i examples/token/token.go
+```
+
+... and deploy it with [configuration](https://github.com/nspcc-dev/neo-go-sc-wrkshp/blob/master/1-print.yml), used in the Part 1:
+```
+./bin/neo-go contract deploy -i examples/token/token.avm -c 1-print.yml -e http://localhost:20331 -w my_wallet.json -g 100
+```
+... enter the password `qwerty`:
+```
+Enter account AK2nJJpJr6o664CWJKi1QRXjqeic2zRp8y password >
+```
+
+Result:
+```
+Sent deployment transaction 6e46e2f2c8e799bf0fce679fa3c8acbc046f595252ae58b39abea839da01067d for contract f84d6a337fbc3d3a201d41da99e86b479e7a2554
+```   
+
+Which means that our contract was deployed and now we can invoke it.
+
+#### Step #2
+Let's invoke the contract to perform different operations.
+
+To start with, query name of the created nep5 token:
+```
+./bin/neo-go contract invokefunction -e http://localhost:20331 -w my_wallet.json -g 0.00001 f84d6a337fbc3d3a201d41da99e86b479e7a2554 name
+```                                                                   
+Where
+- `f84d6a337fbc3d3a201d41da99e86b479e7a2554` is our contract hash from step #1
+- `name` is operation string which was described earlier and returns token name
+
+... and don't forget the password of your account `qwerty`.
+
+Result:
+```
+Sent invocation transaction cfdf4c2883d71a4375ab94fbb302a386828e7934541aa222fc38b8bc67e6a2b4
+```                                                                                         
+Now, let's take a detailed look at this invocation transaction with `getapplicationlog` RPC call:
+
+```
+curl -d '{ "jsonrpc": "2.0", "id": 1, "method": "getapplicationlog", "params": ["cfdf4c2883d71a4375ab94fbb302a386828e7934541aa222fc38b8bc67e6a2b4"] }' localhost:20331 | json_pp
+```               
+
+Result:
+```
+"result" : {
+      "txid" : "0xcfdf4c2883d71a4375ab94fbb302a386828e7934541aa222fc38b8bc67e6a2b4",
+      "executions" : [
+         {
+            "contract" : "0xc1c04480d56e04689c0ac4db973516f9a44f277d",
+            "gas_consumed" : "0.059",
+            "notifications" : [],
+            "stack" : [
+               {
+                  "type" : "ByteArray",
+                  "value" : "417765736f6d65204e454f20546f6b656e"
+               }
+            ],
+            "trigger" : "Application",
+            "vmstate" : "HALT"
+         }
+      ]
+   },
+   "id" : 1,
+   "jsonrpc" : "2.0"
+}
+```
+
+At least, you can see that `stack` field of JSON result is not empty: it contains byte array with the name of our token.
+
+### Useful links
+
+* [Our basic tutorial on Medium](https://medium.com/@neospcc/%D1%81%D0%BC%D0%B0%D1%80%D1%82-%D0%BA%D0%BE%D0%BD%D1%82%D1%80%D0%B0%D0%BA%D1%82-%D0%B4%D0%BB%D1%8F-neo-769139352b65)
+* [NEO documentation](https://docs.neo.org/)
+* [NEO github](https://github.com/neo-project/neo/)
+* [NEO-GO github](https://github.com/nspcc-dev/neo-go)
