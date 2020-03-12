@@ -477,7 +477,8 @@ Which means that our contract was deployed and now we can invoke it.
 #### Step #2
 Let's invoke the contract to perform different operations.
 
-To start with, query name of the created nep5 token:
+To start with, query `name` of the created nep5 token:
+
 ```
 ./bin/neo-go contract invokefunction -e http://localhost:20331 -w my_wallet.json -g 0.00001 f84d6a337fbc3d3a201d41da99e86b479e7a2554 name
 ```                                                                   
@@ -523,6 +524,15 @@ Result:
 ```
 
 At least, you can see that `stack` field of JSON result is not empty: it contains byte array with the name of our token.
+
+Following commands able you to get some additional information about token:
+```
+./bin/neo-go contract invokefunction -e http://localhost:20331 -w my_wallet.json -g 0.00001 f84d6a337fbc3d3a201d41da99e86b479e7a2554 symbol
+./bin/neo-go contract invokefunction -e http://localhost:20331 -w my_wallet.json -g 0.00001 f84d6a337fbc3d3a201d41da99e86b479e7a2554 decimals
+./bin/neo-go contract invokefunction -e http://localhost:20331 -w my_wallet.json -g 0.00001 f84d6a337fbc3d3a201d41da99e86b479e7a2554 totalSupply
+```
+
+Thank you!
 
 ### Useful links
 
