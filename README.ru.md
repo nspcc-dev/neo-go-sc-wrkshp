@@ -426,6 +426,243 @@ curl -d '{ "jsonrpc": "2.0", "id": 5, "method": "getaccountstate", "params": ["A
 
 Список всех поддерживаемых нодой neo-go вызовов RPC вы найдете [здесь](https://github.com/nspcc-dev/neo-go/blob/master/docs/rpc.md#supported-methods).
 
+#### Шаг #3
+Настало время для более интересных вещей. Для начала проверим баланс nep5 токенов на нашем счету с помощью метода `balanceOf`:
+```
+./bin/neo-go contract invokefunction -e http://localhost:20331 -w my_wallet.json -g 0.00001 f84d6a337fbc3d3a201d41da99e86b479e7a2554 balanceOf AK2nJJpJr6o664CWJKi1QRXjqeic2zRp8y
+```                             
+... с паролем `qwerty`. Результат:
+```
+Sent invocation transaction 30de65dec667d68ca1b385c590c9c5fccf82e2d4831540e6bb5875afa57c5cbe
+```
+Для более детального рассмотрения транзакции используем `getapplicationlog` RPC-вызов:
+```
+curl -d '{ "jsonrpc": "2.0", "id": 1, "method": "getapplicationlog", "params": ["30de65dec667d68ca1b385c590c9c5fccf82e2d4831540e6bb5875afa57c5cbe"] }' localhost:20331 | json_pp
+```
+Результат:
+```
+{
+   "jsonrpc" : "2.0",
+   "id" : 1,
+   "result" : {
+      "executions" : [
+         {
+            "trigger" : "Application",
+            "vmstate" : "HALT",
+            "stack" : [
+               {
+                  "value" : "",
+                  "type" : "ByteArray"
+               }
+            ],
+            "notifications" : [],
+            "gas_consumed" : "0.209",
+            "contract" : "0x762ca50a574b7140961283e9d45fc67d1482b0ba"
+         }
+      ],
+      "txid" : "0x30de65dec667d68ca1b385c590c9c5fccf82e2d4831540e6bb5875afa57c5cbe"
+   }
+}
+``` 
+Как вы видите, поле `stack` содержит пустой массив, то есть в настоящий момент мы не обладаем токенами.
+Но не стоит об этом беспокоиться, переходите к следующему шагу.
+
+#### Шаг #4
+
+Перед тем как мы будем способны использовать наш токен (например, попытаемся передать его кому-либо), мы должны его *выпустить*.
+Другими словами, мы должны перевести все имеющееся количество токена (total supply) на чей-нибудь аккаунт.
+Для этого в нашем контракте существует специальная функция - `mint`. Давайте выпустим токен на наш адрес:
+```
+./bin/neo-go contract invokefunction -e http://localhost:20331 -w my_wallet.json -g 0.00001 f84d6a337fbc3d3a201d41da99e86b479e7a2554 mint AK2nJJpJr6o664CWJKi1QRXjqeic2zRp8y
+```
+... с паролем `qwerty`. Результат:
+``` 
+Sent invocation transaction a571adebdbdabfd087f34867da94524649003c6b851ed0cc5da7a30ff843bc1e
+```
+`getapplicationlog` RPC-вызов для этой транзакции даст нам следующее:
+```
+{
+   "result" : {
+      "executions" : [
+         {
+            "stack" : [
+               {
+                  "value" : "1",
+                  "type" : "Integer"
+               }
+            ],
+            "trigger" : "Application",
+            "vmstate" : "HALT",
+            "contract" : "0x4176c0e2f8b5b23910dac91a77cd97784e618c73",
+            "gas_consumed" : "2.489",
+            "notifications" : [
+               {
+                  "contract" : "0xf6ac2777b1cbd227bed1fa5735bd06befdee6d34",
+                  "state" : {
+                     "type" : "Array",
+                     "value" : [
+                        {
+                           "value" : "7472616e73666572",
+                           "type" : "ByteArray"
+                        },
+                        {
+                           "type" : "ByteArray",
+                           "value" : ""
+                        },
+                        {
+                           "value" : "23ba2703c53263e8d6e522dc32203339dcd8eee9",
+                           "type" : "ByteArray"
+                        },
+                        {
+                           "type" : "ByteArray",
+                           "value" : "00c040b571e803"
+                        }
+                     ]
+                  }
+               }
+            ]
+         }
+      ],
+      "txid" : "0xa571adebdbdabfd087f34867da94524649003c6b851ed0cc5da7a30ff843bc1e"
+   },
+   "jsonrpc" : "2.0",
+   "id" : 1
+}
+```
+Обратите внимание, что поле `stack` содержит значение `1` - токен был успешно выпущен.
+Давайте убедимся в этом, еще раз запросив баланс нашего аккаунта с помощью метода `balanceOf`:
+```
+./bin/neo-go contract invokefunction -e http://localhost:20331 -w my_wallet.json -g 0.00001 f84d6a337fbc3d3a201d41da99e86b479e7a2554 balanceOf AK2nJJpJr6o664CWJKi1QRXjqeic2zRp8y
+```
+... пароль `qwerty`. Результат:
+``` 
+Sent invocation transaction c56f469cd9d47c6a4195a742752621c4898447aa4cfd7f550046bdd10d297c12
+```
+... со следующим сообщением от `getapplicationlog` вызова RPC:
+```
+{
+   "result" : {
+      "executions" : [
+         {
+            "notifications" : [],
+            "stack" : [
+               {
+                  "value" : "00c040b571e803",
+                  "type" : "ByteArray"
+               }
+            ],
+            "contract" : "0x762ca50a574b7140961283e9d45fc67d1482b0ba",
+            "vmstate" : "HALT",
+            "trigger" : "Application",
+            "gas_consumed" : "0.209"
+         }
+      ],
+      "txid" : "0xc56f469cd9d47c6a4195a742752621c4898447aa4cfd7f550046bdd10d297c12"
+   },
+   "id" : 1,
+   "jsonrpc" : "2.0"
+}
+```
+Теперь мы видим непустой массив байт в поле `stack`, а именно, `00c040b571e803` является шестнадцатеричным представлением баланса токена nep5 на нашем аккаунте.
+
+Важно, что токен может быть выпущен лишь однажды.
+
+#### Шаг #5
+
+После того, как мы закончили с выпуском токена, мы можем перевести некоторое количество токена кому-нибудь.
+Давайте переведем 5 токенов аккаунту с адресом `AKkkumHbBipZ46UMZJoFynJMXzSRnBvKcs` с помощью функции `transfer`:
+```
+./bin/neo-go contract invokefunction -e http://localhost:20331 -w my_wallet.json -g 0.00001 f84d6a337fbc3d3a201d41da99e86b479e7a2554 transfer AK2nJJpJr6o664CWJKi1QRXjqeic2zRp8y AKkkumHbBipZ46UMZJoFynJMXzSRnBvKcs 5
+```
+... пароль `qwerty`. Результат:
+``` 
+Sent invocation transaction 11a272f4a0d7912f7219979bab7d094df3b404b89e903337ee72a90249cc448d
+```
+Наш любимый вызов RPC `getapplicationlog` говорит нам:
+```
+{
+   "id" : 1,
+   "result" : {
+      "executions" : [
+         {
+            "vmstate" : "HALT",
+            "contract" : "0x102277f9ab76c0bc0452e890652c7e272ce9c94a",
+            "gas_consumed" : "2.485",
+            "notifications" : [
+               {
+                  "state" : {
+                     "value" : [
+                        {
+                           "value" : "7472616e73666572",
+                           "type" : "ByteArray"
+                        },
+                        {
+                           "type" : "ByteArray",
+                           "value" : "23ba2703c53263e8d6e522dc32203339dcd8eee9"
+                        },
+                        {
+                           "type" : "ByteArray",
+                           "value" : "2baa76ad534b886cb87c6b3720a34943d9000fa9"
+                        },
+                        {
+                           "value" : "5",
+                           "type" : "Integer"
+                        }
+                     ],
+                     "type" : "Array"
+                  },
+                  "contract" : "0xf6ac2777b1cbd227bed1fa5735bd06befdee6d34"
+               }
+            ],
+            "stack" : [
+               {
+                  "value" : "1",
+                  "type" : "Integer"
+               }
+            ],
+            "trigger" : "Application"
+         }
+      ],
+      "txid" : "0x11a272f4a0d7912f7219979bab7d094df3b404b89e903337ee72a90249cc448d"
+   },
+   "jsonrpc" : "2.0"
+}
+```
+Заметьте, что поле `stack` содержит `1`, что означает, что токен был успешно переведен с нашего аккаунта.
+Теперь давайте проверим баланс аккаунта, на который был совершен перевод (`AKkkumHbBipZ46UMZJoFynJMXzSRnBvKcs`), чтобы убедиться, что количество токена на нем = 5:
+```
+./bin/neo-go contract invokefunction -e http://localhost:20331 -w my_wallet.json -g 0.00001 f84d6a337fbc3d3a201d41da99e86b479e7a2554 balanceOf AKkkumHbBipZ46UMZJoFynJMXzSRnBvKcs
+```
+Вызов RPC `getapplicationlog` для этой транзакции возвращает следующий результат:
+```
+{
+   "result" : {
+      "txid" : "0x172c5074646ce043095e612d31e5c5c3d00c7c8a4e8c01873cc732692d5152f5",
+      "executions" : [
+         {
+            "stack" : [
+               {
+                  "value" : "05",
+                  "type" : "ByteArray"
+               }
+            ],
+            "gas_consumed" : "0.209",
+            "notifications" : [],
+            "vmstate" : "HALT",
+            "trigger" : "Application",
+            "contract" : "0xbaaafb6be440d1de3d298ba556ad23aa0209ef2f"
+         }
+      ]
+   },
+   "id" : 1,
+   "jsonrpc" : "2.0"
+}
+```
+Как и ожидалось, мы видим ровно 5 токенов в поле `stack`.
+Вы можете самостоятельно убедиться, что с нашего аккаунта были списаны 5 токенов, выполнив метод `balanceOf` с аргументом `AK2nJJpJr6o664CWJKi1QRXjqeic2zRp8y`.
+
+Спасибо!
+
 ### Полезные ссылки
 
 * [Наш воркшоп на Medium](https://medium.com/@neospcc/%D1%81%D0%BC%D0%B0%D1%80%D1%82-%D0%BA%D0%BE%D0%BD%D1%82%D1%80%D0%B0%D0%BA%D1%82-%D0%B4%D0%BB%D1%8F-neo-769139352b65)
