@@ -449,7 +449,8 @@ This smart contract initialises nep5 token interface and takes operation string 
   - `from` is account which you'd like to transfer tokens from
   - `to` is account which you'd like to transfer tokens to
   - `amount` is the amount of token to transfer
-
+- `mint` supplies initial amount of token to account and requires additional arguments:
+  - `to` is account address which you'd like to transfer initial token to
 Let's perform several operations with our contract.
 
 #### Step #1
@@ -531,6 +532,239 @@ Following commands able you to get some additional information about token:
 ./bin/neo-go contract invokefunction -e http://localhost:20331 -w my_wallet.json -g 0.00001 f84d6a337fbc3d3a201d41da99e86b479e7a2554 decimals
 ./bin/neo-go contract invokefunction -e http://localhost:20331 -w my_wallet.json -g 0.00001 f84d6a337fbc3d3a201d41da99e86b479e7a2554 totalSupply
 ```
+
+#### Step #3
+Now it's time for more interesting things. First of all, let's check the balance of nep5 token on our account by using `balanceOf`:
+```
+./bin/neo-go contract invokefunction -e http://localhost:20331 -w my_wallet.json -g 0.00001 f84d6a337fbc3d3a201d41da99e86b479e7a2554 balanceOf AK2nJJpJr6o664CWJKi1QRXjqeic2zRp8y
+```                             
+... with `qwerty` password. The result is:
+```
+Sent invocation transaction 30de65dec667d68ca1b385c590c9c5fccf82e2d4831540e6bb5875afa57c5cbe
+```
+And take a closer look at the transaction's details with `getapplicationlog` RPC-call:
+```
+curl -d '{ "jsonrpc": "2.0", "id": 1, "method": "getapplicationlog", "params": ["30de65dec667d68ca1b385c590c9c5fccf82e2d4831540e6bb5875afa57c5cbe"] }' localhost:20331 | json_pp
+```
+Result:
+```
+{
+   "jsonrpc" : "2.0",
+   "id" : 1,
+   "result" : {
+      "executions" : [
+         {
+            "trigger" : "Application",
+            "vmstate" : "HALT",
+            "stack" : [
+               {
+                  "value" : "",
+                  "type" : "ByteArray"
+               }
+            ],
+            "notifications" : [],
+            "gas_consumed" : "0.209",
+            "contract" : "0x762ca50a574b7140961283e9d45fc67d1482b0ba"
+         }
+      ],
+      "txid" : "0x30de65dec667d68ca1b385c590c9c5fccf82e2d4831540e6bb5875afa57c5cbe"
+   }
+}
+``` 
+As far as `stack` field contains an empty byte array, we have no token on the balance. But don't worry about that. Just follow the next step.
+
+#### Step #4
+
+Before we are able to start using our token (e.g. transfer it to someone else), we have to *mint* it.
+In other words, we should transfer all available amount of token (total supply) to someone's account.
+There's a special function for this purpose in our contract - `mint` function, so let's mint token to our address:
+```
+./bin/neo-go contract invokefunction -e http://localhost:20331 -w my_wallet.json -g 0.00001 f84d6a337fbc3d3a201d41da99e86b479e7a2554 mint AK2nJJpJr6o664CWJKi1QRXjqeic2zRp8y
+```
+... with `qwerty` pass. The result:
+``` 
+Sent invocation transaction a571adebdbdabfd087f34867da94524649003c6b851ed0cc5da7a30ff843bc1e
+```
+`getapplicationlog` RPC-call for this transaction tells us the following:
+```
+{
+   "result" : {
+      "executions" : [
+         {
+            "stack" : [
+               {
+                  "value" : "1",
+                  "type" : "Integer"
+               }
+            ],
+            "trigger" : "Application",
+            "vmstate" : "HALT",
+            "contract" : "0x4176c0e2f8b5b23910dac91a77cd97784e618c73",
+            "gas_consumed" : "2.489",
+            "notifications" : [
+               {
+                  "contract" : "0xf6ac2777b1cbd227bed1fa5735bd06befdee6d34",
+                  "state" : {
+                     "type" : "Array",
+                     "value" : [
+                        {
+                           "value" : "7472616e73666572",
+                           "type" : "ByteArray"
+                        },
+                        {
+                           "type" : "ByteArray",
+                           "value" : ""
+                        },
+                        {
+                           "value" : "23ba2703c53263e8d6e522dc32203339dcd8eee9",
+                           "type" : "ByteArray"
+                        },
+                        {
+                           "type" : "ByteArray",
+                           "value" : "00c040b571e803"
+                        }
+                     ]
+                  }
+               }
+            ]
+         }
+      ],
+      "txid" : "0xa571adebdbdabfd087f34867da94524649003c6b851ed0cc5da7a30ff843bc1e"
+   },
+   "jsonrpc" : "2.0",
+   "id" : 1
+}
+```
+Here we have `1` at the `stack` field, which means that token was successfully minted.
+Let's just ensure that by querying `balanceOf` one more time:
+```
+./bin/neo-go contract invokefunction -e http://localhost:20331 -w my_wallet.json -g 0.00001 f84d6a337fbc3d3a201d41da99e86b479e7a2554 balanceOf AK2nJJpJr6o664CWJKi1QRXjqeic2zRp8y
+```
+... with `qwerty` pass. The result:
+``` 
+Sent invocation transaction c56f469cd9d47c6a4195a742752621c4898447aa4cfd7f550046bdd10d297c12
+```
+... with the following `getapplicationlog` JSON message:
+```
+{
+   "result" : {
+      "executions" : [
+         {
+            "notifications" : [],
+            "stack" : [
+               {
+                  "value" : "00c040b571e803",
+                  "type" : "ByteArray"
+               }
+            ],
+            "contract" : "0x762ca50a574b7140961283e9d45fc67d1482b0ba",
+            "vmstate" : "HALT",
+            "trigger" : "Application",
+            "gas_consumed" : "0.209"
+         }
+      ],
+      "txid" : "0xc56f469cd9d47c6a4195a742752621c4898447aa4cfd7f550046bdd10d297c12"
+   },
+   "id" : 1,
+   "jsonrpc" : "2.0"
+}
+```
+Now we can see non-empty byte array at the `stack` field, so `00c040b571e803` is a hexadecimal representation of the nep5 token balance of our account.
+
+Note, that token can be minted only ones.
+
+#### Step #5
+
+After we are done with minting, it's possible to transfer token to someone else.
+Let's transfer 5 tokens from our account to `AKkkumHbBipZ46UMZJoFynJMXzSRnBvKcs` with `transfer` call:
+```
+./bin/neo-go contract invokefunction -e http://localhost:20331 -w my_wallet.json -g 0.00001 f84d6a337fbc3d3a201d41da99e86b479e7a2554 transfer AK2nJJpJr6o664CWJKi1QRXjqeic2zRp8y AKkkumHbBipZ46UMZJoFynJMXzSRnBvKcs 5
+```
+... with password `qwerty` and following result:
+``` 
+Sent invocation transaction 11a272f4a0d7912f7219979bab7d094df3b404b89e903337ee72a90249cc448d
+```
+Our favourite `getapplicationlog` RPC-call tells us:
+```
+{
+   "id" : 1,
+   "result" : {
+      "executions" : [
+         {
+            "vmstate" : "HALT",
+            "contract" : "0x102277f9ab76c0bc0452e890652c7e272ce9c94a",
+            "gas_consumed" : "2.485",
+            "notifications" : [
+               {
+                  "state" : {
+                     "value" : [
+                        {
+                           "value" : "7472616e73666572",
+                           "type" : "ByteArray"
+                        },
+                        {
+                           "type" : "ByteArray",
+                           "value" : "23ba2703c53263e8d6e522dc32203339dcd8eee9"
+                        },
+                        {
+                           "type" : "ByteArray",
+                           "value" : "2baa76ad534b886cb87c6b3720a34943d9000fa9"
+                        },
+                        {
+                           "value" : "5",
+                           "type" : "Integer"
+                        }
+                     ],
+                     "type" : "Array"
+                  },
+                  "contract" : "0xf6ac2777b1cbd227bed1fa5735bd06befdee6d34"
+               }
+            ],
+            "stack" : [
+               {
+                  "value" : "1",
+                  "type" : "Integer"
+               }
+            ],
+            "trigger" : "Application"
+         }
+      ],
+      "txid" : "0x11a272f4a0d7912f7219979bab7d094df3b404b89e903337ee72a90249cc448d"
+   },
+   "jsonrpc" : "2.0"
+}
+```
+Note, that `stack` field contains `1`, which means that token was successfully transferred.
+Let's now check the balance of `AKkkumHbBipZ46UMZJoFynJMXzSRnBvKcs` account to ensure that the amount of token on that account = 5:
+```
+./bin/neo-go contract invokefunction -e http://localhost:20331 -w my_wallet.json -g 0.00001 f84d6a337fbc3d3a201d41da99e86b479e7a2554 balanceOf AKkkumHbBipZ46UMZJoFynJMXzSRnBvKcs
+```
+The `getapplicationlog` RPC-call for this transaction tells us the following:
+```
+{
+   "result" : {
+      "txid" : "0x172c5074646ce043095e612d31e5c5c3d00c7c8a4e8c01873cc732692d5152f5",
+      "executions" : [
+         {
+            "stack" : [
+               {
+                  "value" : "05",
+                  "type" : "ByteArray"
+               }
+            ],
+            "gas_consumed" : "0.209",
+            "notifications" : [],
+            "vmstate" : "HALT",
+            "trigger" : "Application",
+            "contract" : "0xbaaafb6be440d1de3d298ba556ad23aa0209ef2f"
+         }
+      ]
+   },
+   "id" : 1,
+   "jsonrpc" : "2.0"
+}
+```
+Here we are! There are exactly 5 tokens at the `stack` field. You can also ensure that these 5 tokens were debited from `AK2nJJpJr6o664CWJKi1QRXjqeic2zRp8y` account by using `balanceOf` method.
 
 Thank you!
 
