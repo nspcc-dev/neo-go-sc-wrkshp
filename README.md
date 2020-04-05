@@ -259,7 +259,7 @@ INFO[0000] new peer connected                            addr="127.0.0.1:20336"
 Deploy smart contract:
 ```
 ./bin/neo-go contract deploy -i 1-print.avm -c 1-print.yml -e \
-http://localhost:20331 -w my_wallet.json -g 100
+http://localhost:20331 -w my_wallet.json -g 0.001
 ```
 
 Where
@@ -268,7 +268,7 @@ Where
 - `-c 1-print.yml` configuration input file
 - `-e http://localhost:20331` node endpoint
 - `-w my_wallet.json` wallet to use to get the key for transaction signing (you can use one from the workshop repo)
-- `-g 100` amount of gas to pay for contract deployment
+- `-g 0.001` amount of gas to pay for contract deployment
 
 Enter password `qwerty` for account:
 ```
@@ -459,9 +459,15 @@ Compile smart contract [token.go](https://github.com/nspcc-dev/neo-go/blob/maste
 ./bin/neo-go contract compile -i examples/token/token.go
 ```
 
-... and deploy it with [configuration](https://github.com/nspcc-dev/neo-go-sc-wrkshp/blob/master/1-print.yml), used in the Part 1:
+Note: as a deploy configuration you can use [configuration](https://github.com/nspcc-dev/neo-go-sc-wrkshp/blob/master/1-print.yml) from Part 1 of the workshop with following changes:
+as far as our contract uses storage, the flag `hasstorage` should be set to `true`:
 ```
-./bin/neo-go contract deploy -i examples/token/token.avm -c 1-print.yml -e http://localhost:20331 -w my_wallet.json -g 100
+hasstorage: true
+```
+
+Deploy smart contract with modified configuration:
+```
+./bin/neo-go contract deploy -i examples/token/token.avm -c nep5.yml -e http://localhost:20331 -w my_wallet.json -g 0.001
 ```
 ... enter the password `qwerty`:
 ```
@@ -534,6 +540,7 @@ Following commands able you to get some additional information about token:
 ```
 
 #### Step #3
+
 Now it's time for more interesting things. First of all, let's check the balance of nep5 token on our account by using `balanceOf`:
 ```
 ./bin/neo-go contract invokefunction -e http://localhost:20331 -w my_wallet.json -g 0.00001 f84d6a337fbc3d3a201d41da99e86b479e7a2554 balanceOf AK2nJJpJr6o664CWJKi1QRXjqeic2zRp8y
@@ -765,6 +772,313 @@ The `getapplicationlog` RPC-call for this transaction tells us the following:
 }
 ```
 Here we are! There are exactly 5 tokens at the `stack` field. You can also ensure that these 5 tokens were debited from `AK2nJJpJr6o664CWJKi1QRXjqeic2zRp8y` account by using `balanceOf` method.
+
+## Workshop. Part 3
+In this part we'll summarise our knowledge about smart contracts by investigating [4-domain](https://github.com/nspcc-dev/neo-go-sc-wrkshp/blob/master/4-domain.go) smart contract. This contract 
+contains code for domain registration, transferring, deletion and getting information about registered domains.
+
+Let’s go!
+
+#### Step #1
+Let's take a glance at our [contract](https://github.com/nspcc-dev/neo-go-sc-wrkshp/blob/master/4-domain.go) and inspect it. The contract takes an action string as the first parameter, which is one of the following:
+- `register` checks, whether domain with the specified name already exists. If not, it also adds the pair `[domain_name, owner]` to the storage. It requires additional arguments:
+   - `domain_name` which is the new domain name.
+   - `owner` - the 34-digit account address from our [wallet](https://github.com/nspcc-dev/neo-go-sc-wrkshp/blob/master/my_wallet.json), which will be used for contract invocation.
+- `query` returns the specified domain owner address (or false, if no such domain was registered). It requires the following argument:
+   - `domain_name` which is requested domain name.
+- `transfer` transfers domain with the specified name to the other address (of course, in case if you're the actual owner of the domain requested). It requires additional arguments:
+   - `domain_name` which is the name of domain you'd like to transfer.
+   - `to_address` - the account address you'd like to transfer the specified domain to.
+- `delete` deletes specified domain from the storage. The arguments:
+   - `domain_name` which is the name of the domain you'd like to delete.
+ 
+ In the next steps we'll compile and deploy smart contract. 
+ After that we'll try to register new domain, transfer it to another account and query information about it.
+
+#### Step #2
+
+Compile smart contract [4-domain.go](https://github.com/nspcc-dev/neo-go-sc-wrkshp/blob/master/4-domain.go)
+```
+./bin/neo-go contract compile -i 4-domain.go
+```
+
+... and deploy it with [configuration](https://github.com/nspcc-dev/neo-go-sc-wrkshp/blob/master/4-domain.yml):
+```
+./bin/neo-go contract deploy -i 4-domain.avm -c 4-domain.yml -e http://localhost:20331 -w my_wallet.json -g 0.001
+```
+Just a note: our contract uses storage and, as the previous one, needs the flag `hasstorage` to be set to `true` value.
+That can be done in [configuration](https://github.com/nspcc-dev/neo-go-sc-wrkshp/blob/master/4-domain.yml) file.
+
+... enter the password `qwerty`:
+```
+Enter account AK2nJJpJr6o664CWJKi1QRXjqeic2zRp8y password >
+```
+
+Result:
+```
+Sent deployment transaction d41a7fd8a61381707a37bd2aa7628c97b4520866ae6d19f720daeb05eb803cb1 for contract fbc160d7fef3184f688638c4292d45a5215e2ec1
+```   
+You know, what it means :)
+
+#### Step #3
+
+Invoke the contract to register domain with name `my_first_domain`:
+```
+./bin/neo-go contract invokefunction -e http://localhost:20331 -w my_wallet.json -g 0.00001 fbc160d7fef3184f688638c4292d45a5215e2ec1 register my_first_domain AK2nJJpJr6o664CWJKi1QRXjqeic2zRp8y
+```
+... the strongest password in the world, guess: `qwerty`
+```
+Enter account AK2nJJpJr6o664CWJKi1QRXjqeic2zRp8y password >
+```
+Result:
+```
+Sent invocation transaction 41a706e7b10200a25649dc0b6d0ea0652ece4c24b304a7ddf1c743426c22dda9
+```
+Also you can see the log message in the console, where you run neo-go node:
+```
+2020-04-03T11:16:38.516+0300	INFO	runtime log	{"script": "c12e5e21a5452d29c43886684f18f3fed760c1fb", "logs": "\"RegisterDomain: my_first_domain\""}
+```
+Well, that's ok. Let's check now, whether our domain was registered with `getapplicationlog` RPC-call:
+```
+curl -d '{ "jsonrpc": "2.0", "id": 1, "method": "getapplicationlog", "params": ["41a706e7b10200a25649dc0b6d0ea0652ece4c24b304a7ddf1c743426c22dda9"] }' localhost:20331 | json_pp
+```
+The result is:
+```
+{
+   "result" : {
+      "txid" : "0x41a706e7b10200a25649dc0b6d0ea0652ece4c24b304a7ddf1c743426c22dda9",
+      "executions" : [
+         {
+            "contract" : "0xe4babf9d5e48aa2f034428c1d810b50bb3032873",
+            "trigger" : "Application",
+            "vmstate" : "HALT",
+            "stack" : [
+               {
+                  "type" : "Integer",
+                  "value" : "1"
+               }
+            ],
+            "gas_consumed" : "1.396",
+            "notifications" : [
+               {
+                  "state" : {
+                     "type" : "Array",
+                     "value" : [
+                        {
+                           "value" : "72656769737465726564",
+                           "type" : "ByteArray"
+                        },
+                        {
+                           "value" : "23ba2703c53263e8d6e522dc32203339dcd8eee9",
+                           "type" : "ByteArray"
+                        },
+                        {
+                           "type" : "ByteArray",
+                           "value" : "6d795f7365636f6e645f646f6d61696e"
+                        }
+                     ]
+                  },
+                  "contract" : "0xfbc160d7fef3184f688638c4292d45a5215e2ec1"
+               }
+            ]
+         }
+      ]
+   },
+   "id" : 1,
+   "jsonrpc" : "2.0"
+}
+```
+Especially, we're interested in two fields of the json:
+
+First one is `notifications` field, which contains 3 values:
+- `72656769737465726564` byte array with hexadecimal value. A bit of decoding magic with the following script:
+```
+package main
+
+import (
+	"encoding/hex"
+	"fmt"
+)
+
+func main() {
+	bytes, _ := hex.DecodeString("72656769737465726564")
+	fmt.Println(string(bytes))
+}
+```
+... let us see the actual notification message: `registered`.
+
+- `6d795f66697273745f646f6d61696e` byte array, which can be decoded to `my_first_domain` - our domain's name
+- `23ba2703c53263e8d6e522dc32203339dcd8eee9` byte array, which can be decoded to the account address `AK2nJJpJr6o664CWJKi1QRXjqeic2zRp8y` by following script:
+```
+package main
+
+import (
+	"encoding/hex"
+	"fmt"
+
+	"github.com/nspcc-dev/neo-go/pkg/encoding/address"
+	"github.com/nspcc-dev/neo-go/pkg/util"
+)
+
+func main() {
+	addressBytes, _ := hex.DecodeString("23ba2703c53263e8d6e522dc32203339dcd8eee9")
+	addressUint160, _ := util.Uint160DecodeBytesBE(addressBytes)
+	fmt.Println(address.Uint160ToString(addressUint160))
+}
+```
+The second field is `stack` with `1` value, which was returned by the smart contract.
+
+All of these values let us be sure that our domain was successfully registered.  
+
+#### Step #4
+
+Invoke the contract to query the address information our `my_first_domain` domain:
+```
+./bin/neo-go contract invokefunction -e http://localhost:20331 -w my_wallet.json -g 0.00001 fbc160d7fef3184f688638c4292d45a5215e2ec1 query my_first_domain
+```
+... the pass `qwerty`:
+```
+Enter account AK2nJJpJr6o664CWJKi1QRXjqeic2zRp8y password >
+```
+Result:
+```
+Sent invocation transaction cd06be932fe305ff096ca95633a51df59995f84011fa8cecb37ead90848dfe74
+```
+and log-message:
+```
+2020-04-03T11:37:10.285+0300	INFO	runtime log	{"script": "c12e5e21a5452d29c43886684f18f3fed760c1fb", "logs": "\"QueryDomain: my_first_domain\""}
+```
+Let's check this transaction with `getapplicationlog` RPC call:
+```
+curl -d '{ "jsonrpc": "2.0", "id": 1, "method": "getapplicationlog", "params": ["cd06be932fe305ff096ca95633a51df59995f84011fa8cecb37ead90848dfe74"] }' localhost:20331 | json_pp
+```
+... which gives us the following result:
+```
+{
+   "result" : {
+      "txid" : "0xcd06be932fe305ff096ca95633a51df59995f84011fa8cecb37ead90848dfe74",
+      "executions" : [
+         {
+            "gas_consumed" : "0.17",
+            "trigger" : "Application",
+            "vmstate" : "HALT",
+            "contract" : "0xc653319a5ba3a71a2a93298d810e68ea9444a54a",
+            "notifications" : [],
+            "stack" : [
+               {
+                  "type" : "ByteArray",
+                  "value" : "23ba2703c53263e8d6e522dc32203339dcd8eee9"
+               }
+            ]
+         }
+      ]
+   },
+   "jsonrpc" : "2.0",
+   "id" : 1
+}
+```
+
+with hexadecimal interpretation of our account address `AK2nJJpJr6o664CWJKi1QRXjqeic2zRp8y` on the stack, which means that domain `my_first_domain` was registered by the owner with received account address.
+
+#### Step #5
+
+Invoke the contract to transfer domain to the other account (e.g. account with `AKkkumHbBipZ46UMZJoFynJMXzSRnBvKcs` address):
+```
+./bin/neo-go contract invokefunction -e http://localhost:20331 -w my_wallet.json -g 0.00001 fbc160d7fef3184f688638c4292d45a5215e2ec1 transfer my_first_domain AKkkumHbBipZ46UMZJoFynJMXzSRnBvKcs
+```
+... the password: `qwerty`
+```
+Enter account AK2nJJpJr6o664CWJKi1QRXjqeic2zRp8y password >
+```
+Result:
+```
+Sent invocation transaction edc0ac81555782602f5507ab0b7cb6957382623d722c87f08fe071af33743d56
+```
+and log-message:
+```
+2020-04-03T11:44:25.539+0300	INFO	runtime log	{"script": "c12e5e21a5452d29c43886684f18f3fed760c1fb", "logs": "\"TransferDomain: my_first_domain\""}
+```
+Perfect. And `getapplicationlog` RPC-call...
+```
+curl -d '{ "jsonrpc": "2.0", "id": 1, "method": "getapplicationlog", "params": ["edc0ac81555782602f5507ab0b7cb6957382623d722c87f08fe071af33743d56"] }' localhost:20331 | json_pp
+```
+... tells us:
+```
+{
+   "id" : 1,
+   "result" : {
+      "executions" : [
+         {
+            "gas_consumed" : "1.406",
+            "notifications" : [
+               {
+                  "contract" : "0xfbc160d7fef3184f688638c4292d45a5215e2ec1",
+                  "state" : {
+                     "value" : [
+                        {
+                           "type" : "ByteArray",
+                           "value" : "64656c65746564"
+                        },
+                        {
+                           "type" : "ByteArray",
+                           "value" : "23ba2703c53263e8d6e522dc32203339dcd8eee9"
+                        },
+                        {
+                           "value" : "6d795f66697273745f646f6d61696e",
+                           "type" : "ByteArray"
+                        }
+                     ],
+                     "type" : "Array"
+                  }
+               },
+               {
+                  "state" : {
+                     "value" : [
+                        {
+                           "type" : "ByteArray",
+                           "value" : "72656769737465726564"
+                        },
+                        {
+                           "value" : "2baa76ad534b886cb87c6b3720a34943d9000fa9",
+                           "type" : "ByteArray"
+                        },
+                        {
+                           "value" : "6d795f66697273745f646f6d61696e",
+                           "type" : "ByteArray"
+                        }
+                     ],
+                     "type" : "Array"
+                  },
+                  "contract" : "0xfbc160d7fef3184f688638c4292d45a5215e2ec1"
+               }
+            ],
+            "stack" : [
+               {
+                  "value" : "1",
+                  "type" : "Integer"
+               }
+            ],
+            "contract" : "0xb09f9a5abb066d593b5bf05c97aaa28176cf4ad7",
+            "vmstate" : "HALT",
+            "trigger" : "Application"
+         }
+      ],
+      "txid" : "0xedc0ac81555782602f5507ab0b7cb6957382623d722c87f08fe071af33743d56"
+   },
+   "jsonrpc" : "2.0"
+}
+```
+Quite a detailed one. The `notifications` field contains two arrays:
+- First one with `64656c65746564` byte array, which is `deleted` with additional information (domain `my_first_domain` was deleted from account `AK2nJJpJr6o664CWJKi1QRXjqeic2zRp8y`),
+- Second one with `72656769737465726564` byte array, which is `registered` with additional information  (domain `my_first_domain` was registered with account `AKkkumHbBipZ46UMZJoFynJMXzSRnBvKcs`).
+The `stack` field contains `1` value, which means that our domain was successfully transferred.
+
+#### Step #6
+
+The last call is `delete`, so you can try to create the other domain, e.g. `my_second_domain` and then remove it from storage with:
+```
+./bin/neo-go contract invokefunction -e http://localhost:20331 -w my_wallet.json -g 0.00001 fbc160d7fef3184f688638c4292d45a5215e2ec1 delete my_second_domain
+```
 
 Thank you!
 

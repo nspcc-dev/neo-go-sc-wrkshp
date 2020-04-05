@@ -187,7 +187,7 @@ $ git checkout -b 4nodes 0.12
 $ make start
 ```
 
-#### Step 3
+#### Шаг 3
 Создайте простой смарт-контракт "Hello World" (или используйте представленный в репозтитории воркшопа):
 ```
 package main
@@ -205,7 +205,7 @@ func Main() {
 Создайте конфигурацию для смарт-контракта:
 https://github.com/nspcc-dev/neo-go-sc-wrkshp/blob/master/1-print.yml
 
-#### Step 4 
+#### Шаг 4 
 Запустите смарт-контракт "Hello World":
 ```
 $ ./bin/neo-go contract compile -i '/1-print.go'
@@ -255,7 +255,7 @@ INFO[0000] new peer connected                            addr="127.0.0.1:20336"
 #### Шаг 6
 Разверните смарт-контракт:
 ```
-./bin/neo-go contract deploy -i 1-print.avm -c 1-print.yml -e http://localhost:20331 -w my_wallet.json -g 100
+./bin/neo-go contract deploy -i 1-print.avm -c 1-print.yml -e http://localhost:20331 -w my_wallet.json -g 0.001
 ```
 
 Где
@@ -264,7 +264,7 @@ INFO[0000] new peer connected                            addr="127.0.0.1:20336"
 - `-c 1-print.yml` - файл конфигурации
 - `-e http://localhost:20331` - эндпоинт ноды
 - `-w my_wallet.json` - бумажник, в котором хранится ключ для подписи транзакции (вы можете взять его из репозитория воркшопа)
-- `-g 100` - количество газа для оплаты развертывания контракта
+- `-g 0.001` - количество газа для оплаты развертывания контракта
 
 Введите пароль `qwerty` для аккаунта:
 ```
@@ -425,6 +425,112 @@ curl -d '{ "jsonrpc": "2.0", "id": 5, "method": "getaccountstate", "params": ["A
 ```
 
 Список всех поддерживаемых нодой neo-go вызовов RPC вы найдете [здесь](https://github.com/nspcc-dev/neo-go/blob/master/docs/rpc.md#supported-methods).
+
+### NEP5
+[NEP5](https://docs.neo.org/docs/en-us/sc/write/nep5.html) - это стандарт токена блокчейна Neo, обеспечивающий системы обобщенным механизмом взаимодействия для токенизированных смарт-контрактов.
+Пример с реализацией всех требуемых стандартом методов вы можете найти в [nep5.go](https://github.com/nspcc-dev/neo-go/blob/master/examples/token/nep5/nep5.go)
+ 
+Давайте посмотрим на пример смарт-контракта NEP5: [token.go](https://github.com/nspcc-dev/neo-go/blob/master/examples/token/token.go)
+ 
+Этот смарт-контракт принимает в качестве параетра строку с операцией, которая может принимать следующие значения:
+- `name` возвращает имя созданного токена nep5 
+- `symbol` возвращает код токена
+- `decimals` возвращает количество десятичных знаков токена
+- `totalSupply` возвращает общий множитель * токена
+- `balanceOf` возвращает баланс токена, находящегося на указанном адресе и требует дополнительног аргумента:
+  - `holder` адрес запрашиваемог аккаунта
+- `transfer` перемещает токен от одного пользователя к другому и требует дополнительных аргументов:
+  - `from` адрес аккаунта, с которого будет списан токен
+  - `to` адрес аккаунта, на который будет зачислен токен
+  - `amount` количество токена для перевода
+- `mint` выпускает начальное количество токенов на аккаунт и требует дополнительных аргументов:
+  - `to` адрес аккаунта, на который вы бы хотели выпустить токены  
+
+Давайте проведем несколько операций с помощью этого контракта.
+
+#### Шаг #1
+Скомпилируйте смарт-контракт [token.go](https://github.com/nspcc-dev/neo-go/blob/master/examples/token/token.go):
+```
+./bin/neo-go contract compile -i examples/token/token.go
+```
+Для развертывания можно использовать отредактированный файл [конфигурации](https://github.com/nspcc-dev/neo-go-sc-wrkshp/blob/master/1-print.yml) из части 1 со следующими изменениями:
+поскольку данный контракт использует storage, необходимо установить флаг 
+```
+hasstorage: true
+```
+Разверните скомпилированный контракт с отредактированной конфигурацией:
+```
+./bin/neo-go contract deploy -i examples/token/token.avm -c nep5.yml -e http://localhost:20331 -w my_wallet.json -g 0.001
+```
+... введите пароль `qwerty`:
+```
+Enter account AK2nJJpJr6o664CWJKi1QRXjqeic2zRp8y password >
+```
+
+Результат:
+```
+Sent deployment transaction 6e46e2f2c8e799bf0fce679fa3c8acbc046f595252ae58b39abea839da01067d for contract f84d6a337fbc3d3a201d41da99e86b479e7a2554
+```   
+
+Что означает, что наш контракт был развернут, и теперь мы можем вызывать его.
+
+#### Шаг #2
+Давайте вызовем контракт для осуществления операций с nep5.
+
+Для начала, запросите имя созданного токена nep5:
+
+```
+./bin/neo-go contract invokefunction -e http://localhost:20331 -w my_wallet.json -g 0.00001 f84d6a337fbc3d3a201d41da99e86b479e7a2554 name
+```                                                                   
+Где
+- `f84d6a337fbc3d3a201d41da99e86b479e7a2554` - хеш нашего контракта, полученный на шаге #1.
+- `name` - строка операции, описанная ранее и возвращающая имя токена.
+
+... не забудьте пароль от аккаунта `qwerty`.
+
+Результат:
+```
+Sent invocation transaction cfdf4c2883d71a4375ab94fbb302a386828e7934541aa222fc38b8bc67e6a2b4
+```                                                                                         
+Теперь давайте подробнее посмотрим на полученную вызывающую транзакцию с помощью `getapplicationlog` RPC-вызова:
+
+```
+curl -d '{ "jsonrpc": "2.0", "id": 1, "method": "getapplicationlog", "params": ["cfdf4c2883d71a4375ab94fbb302a386828e7934541aa222fc38b8bc67e6a2b4"] }' localhost:20331 | json_pp
+```               
+
+Результат:
+```
+"result" : {
+      "txid" : "0xcfdf4c2883d71a4375ab94fbb302a386828e7934541aa222fc38b8bc67e6a2b4",
+      "executions" : [
+         {
+            "contract" : "0xc1c04480d56e04689c0ac4db973516f9a44f277d",
+            "gas_consumed" : "0.059",
+            "notifications" : [],
+            "stack" : [
+               {
+                  "type" : "ByteArray",
+                  "value" : "417765736f6d65204e454f20546f6b656e"
+               }
+            ],
+            "trigger" : "Application",
+            "vmstate" : "HALT"
+         }
+      ]
+   },
+   "id" : 1,
+   "jsonrpc" : "2.0"
+}
+```
+
+Поле `stack` полученного JSON-сообщения содержит массив байтов со значением имени токена.
+
+Следующие команды позволят получить вам дополнительную информацию о токене:
+```
+./bin/neo-go contract invokefunction -e http://localhost:20331 -w my_wallet.json -g 0.00001 f84d6a337fbc3d3a201d41da99e86b479e7a2554 symbol
+./bin/neo-go contract invokefunction -e http://localhost:20331 -w my_wallet.json -g 0.00001 f84d6a337fbc3d3a201d41da99e86b479e7a2554 decimals
+./bin/neo-go contract invokefunction -e http://localhost:20331 -w my_wallet.json -g 0.00001 f84d6a337fbc3d3a201d41da99e86b479e7a2554 totalSupply
+```
 
 #### Шаг #3
 Настало время для более интересных вещей. Для начала проверим баланс nep5 токенов на нашем счету с помощью метода `balanceOf`:
@@ -660,6 +766,315 @@ Sent invocation transaction 11a272f4a0d7912f7219979bab7d094df3b404b89e903337ee72
 ```
 Как и ожидалось, мы видим ровно 5 токенов в поле `stack`.
 Вы можете самостоятельно убедиться, что с нашего аккаунта были списаны 5 токенов, выполнив метод `balanceOf` с аргументом `AK2nJJpJr6o664CWJKi1QRXjqeic2zRp8y`.
+
+## Воркшоп. Часть 3
+В этой части подытожим наши знания о смарт-контрактах и исследуем смарт-контракт [4-domain.go](https://github.com/nspcc-dev/neo-go-sc-wrkshp/blob/master/4-domain.go).
+Данный контракт описывает операции регистрации, переноса и удаления доменов, а также операцию получения информации о зарегистрированном домене.
+
+Начнем!
+
+#### Шаг #1
+Давайте рассмотрим и исследуем [смарт-контракт](https://github.com/nspcc-dev/neo-go-sc-wrkshp/blob/master/4-domain.go). В качестве первого параметра контракт принимает на вход строку - действие, одно из следующих значений:
+- `register` проверяет, существует ли домен с указанным именем. В случае, если такого домена не существует, добавляет пару `[domain_name, owner]` в хранилище. Данная операция требудет дополнительных аргументов:
+   - `domain_name` - новое имя домена.
+   - `owner` - 34-значный адрес аккаунта из нашего [wallet](https://github.com/nspcc-dev/neo-go-sc-wrkshp/blob/master/my_wallet.json), который будет использоваться для вызова контракта.
+- `query` возвращает адрес аккаунта владельца запрашиваемого домена (или false, в случае, если домен с указанным именем не зарегистрирован). Требует дополнительных аргументов:
+   - `domain_name` - имя запрашиваемого домена.
+- `transfer` переводит домен с указанным именем на другой адрес (в случае, если вы являетесь владельцем указанного домена). Требует следующих аргументов:
+   - `domain_name` - имя домена, который вы хотите перевести.
+   - `to_address` - адрес аккаунта, на который вы хотите перевести домен.
+- `delete` удаляет домен из хранилища. Аргументы:
+   - `domain_name` имя домента, который вы хотите удалить.
+ 
+ 
+ В следующих шагах мы скомпилируем и развернем смарт-контракт.
+ После этого мы зарегистрируем новый домен, переведем его на другой аккаунт и запросим информацию о нем.
+
+#### Шаг #2
+
+Скомпилируйте смарт-контракт [4-domain.go](https://github.com/nspcc-dev/neo-go-sc-wrkshp/blob/master/4-domain.go)
+```
+./bin/neo-go contract compile -i 4-domain.go
+```
+
+... и разверните его с [конфигурацией](https://github.com/nspcc-dev/neo-go-sc-wrkshp/blob/master/4-domain.yml):
+```
+./bin/neo-go contract deploy -i 4-domain.avm -c 4-domain.yml -e http://localhost:20331 -w my_wallet.json -g 0.001
+```
+Обратите внимание, что наш контракт использует хранилище и, как и с предыдущим контрактом, необходимо, чтобы флаг `hasstorage` имел значение `true`.
+Этот флаг указывается в файле [конфигурации](https://github.com/nspcc-dev/neo-go-sc-wrkshp/blob/master/4-domain.yml).
+
+... введите пароль `qwerty`:
+```
+Enter account AK2nJJpJr6o664CWJKi1QRXjqeic2zRp8y password >
+```
+
+Результат:
+```
+Sent deployment transaction d41a7fd8a61381707a37bd2aa7628c97b4520866ae6d19f720daeb05eb803cb1 for contract fbc160d7fef3184f688638c4292d45a5215e2ec1
+```   
+Вы догадываетесь, что это значит :)
+
+#### Шаг #3
+
+Вызовите контракт, чтобы зарегистрировать домен с именем `my_first_domain`: 
+```
+./bin/neo-go contract invokefunction -e http://localhost:20331 -w my_wallet.json -g 0.00001 fbc160d7fef3184f688638c4292d45a5215e2ec1 register my_first_domain AK2nJJpJr6o664CWJKi1QRXjqeic2zRp8y
+```
+... пароль: `qwerty`
+```
+Enter account AK2nJJpJr6o664CWJKi1QRXjqeic2zRp8y password >
+```
+Результат:
+```
+Sent invocation transaction 41a706e7b10200a25649dc0b6d0ea0652ece4c24b304a7ddf1c743426c22dda9
+```
+Также вы можете увидеть лог-сообщение в консоли, где запускали ноду neo-go:
+```
+2020-04-03T11:16:38.516+0300	INFO	runtime log	{"script": "c12e5e21a5452d29c43886684f18f3fed760c1fb", "logs": "\"RegisterDomain: my_first_domain\""}
+```
+Все получилось. Теперь проверим, был ли наш домен действительно зарегистрирован, с помощью вызова RPC `getapplicationlog`:
+```
+curl -d '{ "jsonrpc": "2.0", "id": 1, "method": "getapplicationlog", "params": ["41a706e7b10200a25649dc0b6d0ea0652ece4c24b304a7ddf1c743426c22dda9"] }' localhost:20331 | json_pp
+```
+Результат:
+```
+{
+   "result" : {
+      "txid" : "0x41a706e7b10200a25649dc0b6d0ea0652ece4c24b304a7ddf1c743426c22dda9",
+      "executions" : [
+         {
+            "contract" : "0xe4babf9d5e48aa2f034428c1d810b50bb3032873",
+            "trigger" : "Application",
+            "vmstate" : "HALT",
+            "stack" : [
+               {
+                  "type" : "Integer",
+                  "value" : "1"
+               }
+            ],
+            "gas_consumed" : "1.396",
+            "notifications" : [
+               {
+                  "state" : {
+                     "type" : "Array",
+                     "value" : [
+                        {
+                           "value" : "72656769737465726564",
+                           "type" : "ByteArray"
+                        },
+                        {
+                           "value" : "23ba2703c53263e8d6e522dc32203339dcd8eee9",
+                           "type" : "ByteArray"
+                        },
+                        {
+                           "type" : "ByteArray",
+                           "value" : "6d795f7365636f6e645f646f6d61696e"
+                        }
+                     ]
+                  },
+                  "contract" : "0xfbc160d7fef3184f688638c4292d45a5215e2ec1"
+               }
+            ]
+         }
+      ]
+   },
+   "id" : 1,
+   "jsonrpc" : "2.0"
+}
+```
+Здесь мы в особенности заинтересованы в двух полях полученного json:
+
+Первое поле - `notifications`, оно содержит 3 значния:
+- `72656769737465726564` - массив байт. С помощью следующего скрипта можно декодировать это значение:
+```
+package main
+
+import (
+	"encoding/hex"
+	"fmt"
+)
+
+func main() {
+	bytes, _ := hex.DecodeString("72656769737465726564")
+	fmt.Println(string(bytes))
+}
+```
+... что позволит нам увидеть сообщение, содержащееся в уведомлении: `registered`.
+
+- `6d795f66697273745f646f6d61696e` - массив байт, который может быть декодирован в имя нашего домена - `my_first_domain`,
+- `23ba2703c53263e8d6e522dc32203339dcd8eee9` - массив байт, который декодируется в адрес нашего аккаунта `AK2nJJpJr6o664CWJKi1QRXjqeic2zRp8y` с помощью следующего скрипта:
+```
+package main
+
+import (
+	"encoding/hex"
+	"fmt"
+
+	"github.com/nspcc-dev/neo-go/pkg/encoding/address"
+	"github.com/nspcc-dev/neo-go/pkg/util"
+)
+
+func main() {
+	addressBytes, _ := hex.DecodeString("23ba2703c53263e8d6e522dc32203339dcd8eee9")
+	addressUint160, _ := util.Uint160DecodeBytesBE(addressBytes)
+	fmt.Println(address.Uint160ToString(addressUint160))
+}
+```
+
+Второе поле - `stack`, в котором лежит `1` - значение, возвращенное смарт-контрактом.
+
+Все эти значения дают нам понять, что наш домен был успещно зарегистрирован.    
+
+#### Шаг #4
+
+Вызовите контракт, чтобы запросить информацию об адресе аккаунта, зарегистрировавшего домен `my_first_domain`:
+```
+./bin/neo-go contract invokefunction -e http://localhost:20331 -w my_wallet.json -g 0.00001 fbc160d7fef3184f688638c4292d45a5215e2ec1 query my_first_domain
+```
+... любимейший пароль `qwerty`:
+```
+Enter account AK2nJJpJr6o664CWJKi1QRXjqeic2zRp8y password >
+```
+Результат:
+```
+Sent invocation transaction cd06be932fe305ff096ca95633a51df59995f84011fa8cecb37ead90848dfe74
+```
+и лог-сообщение в консоли запущенной ноды neo-go:
+```
+2020-04-03T11:37:10.285+0300	INFO	runtime log	{"script": "c12e5e21a5452d29c43886684f18f3fed760c1fb", "logs": "\"QueryDomain: my_first_domain\""}
+```
+Проверим транзакцию с помощью вызова RPC `getapplicationlog`:
+```
+curl -d '{ "jsonrpc": "2.0", "id": 1, "method": "getapplicationlog", "params": ["cd06be932fe305ff096ca95633a51df59995f84011fa8cecb37ead90848dfe74"] }' localhost:20331 | json_pp
+```
+... что даст нам следующий результат:
+```
+{
+   "result" : {
+      "txid" : "0xcd06be932fe305ff096ca95633a51df59995f84011fa8cecb37ead90848dfe74",
+      "executions" : [
+         {
+            "gas_consumed" : "0.17",
+            "trigger" : "Application",
+            "vmstate" : "HALT",
+            "contract" : "0xc653319a5ba3a71a2a93298d810e68ea9444a54a",
+            "notifications" : [],
+            "stack" : [
+               {
+                  "type" : "ByteArray",
+                  "value" : "23ba2703c53263e8d6e522dc32203339dcd8eee9"
+               }
+            ]
+         }
+      ]
+   },
+   "jsonrpc" : "2.0",
+   "id" : 1
+}
+```
+
+с шестнадцатеричным представлением адреса аккаунта `AK2nJJpJr6o664CWJKi1QRXjqeic2zRp8y` на стеке и в уведомлениях, что означает, что домен `my_first_domain` был зарегистрирован владельцем с полученным адресом аккаунта.
+
+#### Шаг #5
+
+Вызовите контракт для передачи домена другому аккаунту (например, аккаунту с адресом `AKkkumHbBipZ46UMZJoFynJMXzSRnBvKcs`):
+```
+./bin/neo-go contract invokefunction -e http://localhost:20331 -w my_wallet.json -g 0.00001 fbc160d7fef3184f688638c4292d45a5215e2ec1 transfer my_first_domain AKkkumHbBipZ46UMZJoFynJMXzSRnBvKcs
+```
+... пароль: `qwerty`
+```
+Enter account AK2nJJpJr6o664CWJKi1QRXjqeic2zRp8y password >
+```
+Результат:
+```
+Sent invocation transaction edc0ac81555782602f5507ab0b7cb6957382623d722c87f08fe071af33743d56
+```
+и лог-сообщение:
+```
+2020-04-03T11:44:25.539+0300	INFO	runtime log	{"script": "c12e5e21a5452d29c43886684f18f3fed760c1fb", "logs": "\"TransferDomain: my_first_domain\""}
+```
+Отлично. И `getapplicationlog` вызов RPC...
+```
+curl -d '{ "jsonrpc": "2.0", "id": 1, "method": "getapplicationlog", "params": ["edc0ac81555782602f5507ab0b7cb6957382623d722c87f08fe071af33743d56"] }' localhost:20331 | json_pp
+```
+... говорит нам:
+```
+{
+   "id" : 1,
+   "result" : {
+      "executions" : [
+         {
+            "gas_consumed" : "1.406",
+            "notifications" : [
+               {
+                  "contract" : "0xfbc160d7fef3184f688638c4292d45a5215e2ec1",
+                  "state" : {
+                     "value" : [
+                        {
+                           "type" : "ByteArray",
+                           "value" : "64656c65746564"
+                        },
+                        {
+                           "type" : "ByteArray",
+                           "value" : "23ba2703c53263e8d6e522dc32203339dcd8eee9"
+                        },
+                        {
+                           "value" : "6d795f66697273745f646f6d61696e",
+                           "type" : "ByteArray"
+                        }
+                     ],
+                     "type" : "Array"
+                  }
+               },
+               {
+                  "state" : {
+                     "value" : [
+                        {
+                           "type" : "ByteArray",
+                           "value" : "72656769737465726564"
+                        },
+                        {
+                           "value" : "2baa76ad534b886cb87c6b3720a34943d9000fa9",
+                           "type" : "ByteArray"
+                        },
+                        {
+                           "value" : "6d795f66697273745f646f6d61696e",
+                           "type" : "ByteArray"
+                        }
+                     ],
+                     "type" : "Array"
+                  },
+                  "contract" : "0xfbc160d7fef3184f688638c4292d45a5215e2ec1"
+               }
+            ],
+            "stack" : [
+               {
+                  "value" : "1",
+                  "type" : "Integer"
+               }
+            ],
+            "contract" : "0xb09f9a5abb066d593b5bf05c97aaa28176cf4ad7",
+            "vmstate" : "HALT",
+            "trigger" : "Application"
+         }
+      ],
+      "txid" : "0xedc0ac81555782602f5507ab0b7cb6957382623d722c87f08fe071af33743d56"
+   },
+   "jsonrpc" : "2.0"
+}
+```
+Достаточно детальный json. Поле `notifications` содержит два значения:
+- массив с полем `64656c65746564`, декодируемым в `deleted`, и полями с дополнительной информацией (домен `my_first_domain` был удален с аккаунта с адресом `AK2nJJpJr6o664CWJKi1QRXjqeic2zRp8y`),
+- массив с полем `72656769737465726564`, декодируемым в `registered`, и полями с дополнительной информацией (домен `my_first_domain` бфл зарегистрирован аккаунтом с адресом `AKkkumHbBipZ46UMZJoFynJMXzSRnBvKcs`).
+Поле `stack` содержит `1`, что значит, что домен был успешно перемещен.
+
+#### Шаг #6
+
+Оставшийся вызов - `delete`, вы можете попробовать выполнить его самостоятельно, создав перед этим еще один домен, например, с именем `my_second_domain`, а затем удалить его из хранилища с помощью:
+```
+./bin/neo-go contract invokefunction -e http://localhost:20331 -w my_wallet.json -g 0.00001 fbc160d7fef3184f688638c4292d45a5215e2ec1 delete my_second_domain
+```
 
 Спасибо!
 
