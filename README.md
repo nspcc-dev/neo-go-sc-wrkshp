@@ -311,7 +311,7 @@ This is it. There are only 5 steps to make deployment and they look easy, aren�
 Thank you!
 
 ## Workshop. Part 2
-In this part we'll look at RPC calls, NEP5 token and try to write, deploy and invoke more complicated smart contract. 
+In this part we'll look at RPC calls and try to write, deploy and invoke smart contract with storage. 
 Let’s go!
 
 ### RPC calls
@@ -431,6 +431,223 @@ curl -d '{ "jsonrpc": "2.0", "id": 5, "method": "getaccountstate", "params": ["A
 ```
 
 List of supported by neo-go node RPC commands you can find [here](https://github.com/nspcc-dev/neo-go/blob/master/docs/rpc.md#supported-methods).
+
+### Storage smart contract
+
+Let's take a look at the another smart contract example: [2-storage.go](https://github.com/nspcc-dev/neo-go-sc-wrkshp/blob/master/2-storage.go).
+This contract is quite simple and, as the previous one, doesn't take any arguments.
+On the other hand, it is able to count the number of its own invocations by storing an integer value and increment it after each invocation.
+We are interested in this contract as far as it's able to *store* values, i.e. it has a *storage* which can be shared within all contract invocations.
+
+Unfortunately, we have to pay some GAS for storage usage, so it should be noted in the contract configuration [2-storage.yml](https://github.com/nspcc-dev/neo-go-sc-wrkshp/blob/master/2-storage.yml) by the following parameter:
+```
+hasstorage: true
+```
+If you don't set the flag `hasstorage` to `true` value, you won't be able to use the storage in your contract.
+
+Now, when we learned about the storage, let's try to deploy and invoke our contract!
+
+#### Step #1
+Compile smart contract [2-storage.go](https://github.com/nspcc-dev/neo-go-sc-wrkshp/blob/master/2-storage.go):
+```
+./bin/neo-go contract compile -i 2-storage.go
+```
+
+Result:
+
+Compiled smart-contract: `2-storage.avm`
+
+#### Step #2
+Deploy compiled smart contract with [configuration](https://github.com/nspcc-dev/neo-go-sc-wrkshp/blob/master/2-storage.yml):
+```
+./bin/neo-go contract deploy -i 2-storage.avm -c 2-storage.yaml -e http://localhost:20331 -w my_wallet.json -g 0.001
+```
+... enter the password `qwerty`:
+```
+Enter account AK2nJJpJr6o664CWJKi1QRXjqeic2zRp8y password >
+```
+
+Result:
+```
+Sent deployment transaction d79e5e39d87c2911b623d3efe98842cfde41eddc34d85cee394783b7320813e8 for contract 85cf2075f3e297d489ff3c4c1745ca80d44e2a68
+```   
+
+Which means that our contract was deployed and now we can invoke it.
+
+#### Step #3
+Let's invoke our contract. As far as we have never invoked this contract, there's no value in the storage, so the contract should create a new one (which is `1`) and put it into storage.
+Let's check:
+```
+./bin/neo-go contract invokefunction -e http://localhost:20331 -w my_wallet.json -g 0.00001 85cf2075f3e297d489ff3c4c1745ca80d44e2a68
+```
+... enter the password `qwerty`:
+```
+Enter account AK2nJJpJr6o664CWJKi1QRXjqeic2zRp8y password >
+```
+Result:
+```
+Sent invocation transaction 6f27f523da9c71297f4a81a254274b0c2a78f893b81c500429be6230254be0bf
+```
+To check the counter value, call `getapplicaionlog` RPC-call for the invocation transaction:
+```
+curl -d '{ "jsonrpc": "2.0", "id": 1, "method": "getapplicationlog", "params": ["6f27f523da9c71297f4a81a254274b0c2a78f893b81c500429be6230254be0bf"] }' localhost:20331 | json_pp
+```
+The JSON result is:
+```
+{
+   "id" : 1,
+   "result" : {
+      "executions" : [
+         {
+            "vmstate" : "HALT",
+            "gas_consumed" : "1.159",
+            "trigger" : "Application",
+            "contract" : "0x343b284abf1e6a441a1361c5de76bdcb15b8e332",
+            "notifications" : [
+               {
+                  "contract" : "0x85cf2075f3e297d489ff3c4c1745ca80d44e2a68",
+                  "state" : {
+                     "type" : "Array",
+                     "value" : [
+                        {
+                           "type" : "ByteArray",
+                           "value" : "56616c756520726561642066726f6d2073746f72616765"
+                        }
+                     ]
+                  }
+               },
+               {
+                  "contract" : "0x85cf2075f3e297d489ff3c4c1745ca80d44e2a68",
+                  "state" : {
+                     "type" : "Array",
+                     "value" : [
+                        {
+                           "type" : "ByteArray",
+                           "value" : "53746f72616765206b6579206e6f7420796574207365742e2053657474696e6720746f2031"
+                        }
+                     ]
+                  }
+               },
+               {
+                  "state" : {
+                     "value" : [
+                        {
+                           "value" : "4e65772076616c7565207772697474656e20696e746f2073746f72616765",
+                           "type" : "ByteArray"
+                        }
+                     ],
+                     "type" : "Array"
+                  },
+                  "contract" : "0x85cf2075f3e297d489ff3c4c1745ca80d44e2a68"
+               }
+            ],
+            "stack" : [
+               {
+                  "value" : "1",
+                  "type" : "Integer"
+               }
+            ]
+         }
+      ],
+      "txid" : "0x6f27f523da9c71297f4a81a254274b0c2a78f893b81c500429be6230254be0bf"
+   },
+   "jsonrpc" : "2.0"
+}
+```
+Pay attention to `notification` field. It contains messages, which where passed to `runtime.Notify` method.
+This one contains hexadecimal byte arrays which can be decoded into 3 messages:
+  - `Value read from storage` which was called after we've got the counter value from storage
+  - `Storage key not yet set. Setting to 1` which was called when we realised that counter value is 0
+  - `New value written into storage` which was called after the counter value was put in the storage.
+  
+The final part is `stack` field. This field contains all returned by the contract values, so here you can see integer value `1`,
+which is the counter value denoted to the number of contract invocations.
+
+#### Step #4
+To ensure that all works as expected, let's invoke the contract one more time and check, whether the counter will be incremented: 
+```
+./bin/neo-go contract invokefunction -e http://localhost:20331 -w my_wallet.json -g 0.00001 85cf2075f3e297d489ff3c4c1745ca80d44e2a68
+```
+... enter the password `qwerty`:
+```
+Enter account AK2nJJpJr6o664CWJKi1QRXjqeic2zRp8y password >
+```
+Result:
+```
+Sent invocation transaction dcf53cdb69c816f0f9ab27ba509fb656b6eddd2dad5a658e9f534e9dba38462b
+```
+To check the counter value, call `getapplicaionlog` RPC-call for the invocation transaction:
+```
+curl -d '{ "jsonrpc": "2.0", "id": 1, "method": "getapplicationlog", "params": ["dcf53cdb69c816f0f9ab27ba509fb656b6eddd2dad5a658e9f534e9dba38462b"] }' localhost:20331 | json_pp
+```
+The JSON result is:
+```
+{
+   "jsonrpc" : "2.0",
+   "id" : 1,
+   "result" : {
+      "executions" : [
+         {
+            "vmstate" : "HALT",
+            "contract" : "0x343b284abf1e6a441a1361c5de76bdcb15b8e332",
+            "trigger" : "Application",
+            "notifications" : [
+               {
+                  "state" : {
+                     "type" : "Array",
+                     "value" : [
+                        {
+                           "value" : "56616c756520726561642066726f6d2073746f72616765",
+                           "type" : "ByteArray"
+                        }
+                     ]
+                  },
+                  "contract" : "0x85cf2075f3e297d489ff3c4c1745ca80d44e2a68"
+               },
+               {
+                  "contract" : "0x85cf2075f3e297d489ff3c4c1745ca80d44e2a68",
+                  "state" : {
+                     "type" : "Array",
+                     "value" : [
+                        {
+                           "type" : "ByteArray",
+                           "value" : "53746f72616765206b657920616c7265616479207365742e20496e6372656d656e74696e672062792031"
+                        }
+                     ]
+                  }
+               },
+               {
+                  "contract" : "0x85cf2075f3e297d489ff3c4c1745ca80d44e2a68",
+                  "state" : {
+                     "value" : [
+                        {
+                           "value" : "4e65772076616c7565207772697474656e20696e746f2073746f72616765",
+                           "type" : "ByteArray"
+                        }
+                     ],
+                     "type" : "Array"
+                  }
+               }
+            ],
+            "stack" : [
+               {
+                  "type" : "Integer",
+                  "value" : "2"
+               }
+            ],
+            "gas_consumed" : "1.161"
+         }
+      ],
+      "txid" : "0xdcf53cdb69c816f0f9ab27ba509fb656b6eddd2dad5a658e9f534e9dba38462b"
+   }
+}
+```
+
+The `stack` field contains now `2` integer value, so the counter was incremented as we expected.
+
+## Workshop. Part 3
+In this part we'll know about NEP5 token standard and try to write, deploy and invoke more complicated smart contract. 
+Let’s go!
 
 ### NEP5
 [NEP5](https://docs.neo.org/docs/en-us/sc/write/nep5.html) is a token standard for the Neo blockchain that provides systems with a generalized interaction mechanism for tokenized smart contracts.
@@ -773,7 +990,7 @@ The `getapplicationlog` RPC-call for this transaction tells us the following:
 ```
 Here we are! There are exactly 5 tokens at the `stack` field. You can also ensure that these 5 tokens were debited from `AK2nJJpJr6o664CWJKi1QRXjqeic2zRp8y` account by using `balanceOf` method.
 
-## Workshop. Part 3
+## Workshop. Part 4
 In this part we'll summarise our knowledge about smart contracts by investigating [4-domain](https://github.com/nspcc-dev/neo-go-sc-wrkshp/blob/master/4-domain.go) smart contract. This contract 
 contains code for domain registration, transferring, deletion and getting information about registered domains.
 
