@@ -85,7 +85,7 @@ Commands:
 package main
 
 import (
-	"github.com/CityOfZion/neo-go/pkg/interop/runtime"
+	"github.com/nspcc-dev/neo-go/pkg/interop/runtime"
 )
 
 func Main() {
@@ -193,7 +193,7 @@ $ make start
 package main
 
 import (
-	"github.com/CityOfZion/neo-go/pkg/interop/runtime"
+	"github.com/nspcc-dev/neo-go/pkg/interop/runtime"
 )
 
 func Main() {

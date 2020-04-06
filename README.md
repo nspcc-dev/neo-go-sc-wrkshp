@@ -88,7 +88,7 @@ As you can see there are a lot of options to play with it. Let’s take simple s
 package main
 
 import (
-	"github.com/CityOfZion/neo-go/pkg/interop/runtime"
+	"github.com/nspcc-dev/neo-go/pkg/interop/runtime"
 )
 
 func Main() {
@@ -196,7 +196,7 @@ Create basic "Hello World" smart contract(or use the one presented in this repo)
 package main
 
 import (
-	"github.com/CityOfZion/neo-go/pkg/interop/runtime"
+	"github.com/nspcc-dev/neo-go/pkg/interop/runtime"
 )
 
 func Main() {
