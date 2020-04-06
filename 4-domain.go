@@ -49,7 +49,7 @@ func Main(operation string, args []interface{}) interface{} {
 		}
 
 		storage.Delete(ctx, domainName)
-		runtime.Notify([]interface{}{"deleted", owner, domainName})
+		runtime.Notify("deleted", owner, domainName)
 		return true
 	}
 
@@ -75,7 +75,7 @@ func Main(operation string, args []interface{}) interface{} {
 		}
 
 		storage.Put(ctx, domainName, owner)
-		runtime.Notify([]interface{}{"registered", owner, domainName})
+		runtime.Notify("registered", owner, domainName)
 		return true
 	}
 
@@ -101,8 +101,8 @@ func Main(operation string, args []interface{}) interface{} {
 
 		toAddress := args[1].([]byte)
 		storage.Put(ctx, domainName, toAddress)
-		runtime.Notify([]interface{}{"deleted", owner, domainName})
-		runtime.Notify([]interface{}{"registered", toAddress, domainName})
+		runtime.Notify("deleted", owner, domainName)
+		runtime.Notify("registered", toAddress, domainName)
 		return true
 	}
 
