@@ -1,8 +1,8 @@
 package storage
 
 import (
-	"github.com/CityOfZion/neo-go/pkg/interop/runtime"
-	"github.com/CityOfZion/neo-go/pkg/interop/storage"
+	"github.com/nspcc-dev/neo-go/pkg/interop/runtime"
+	"github.com/nspcc-dev/neo-go/pkg/interop/storage"
 )
 
 func Main() interface{} {

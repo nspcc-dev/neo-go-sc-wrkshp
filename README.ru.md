@@ -85,7 +85,7 @@ Commands:
 package main
 
 import (
-	"github.com/CityOfZion/neo-go/pkg/interop/runtime"
+	"github.com/nspcc-dev/neo-go/pkg/interop/runtime"
 )
 
 func Main() {
@@ -193,7 +193,7 @@ $ make start
 package main
 
 import (
-	"github.com/CityOfZion/neo-go/pkg/interop/runtime"
+	"github.com/nspcc-dev/neo-go/pkg/interop/runtime"
 )
 
 func Main() {
@@ -308,7 +308,7 @@ INFO[0227] script cfd6043c3b6fc291eb777a2bde93ee91a8ec1e6d logs: "Hello, world!"
 Спасибо!
 
 ## Воркшоп. Часть 2
-В этой части мы выполним несколько RPC вызовов и попробуем написать, задеплоить и вызвать более сложный смарт-контракт. Начнем!
+В этой части мы выполним несколько RPC вызовов и попробуем написать, задеплоить и вызвать смарт-контракт, использующий хранилище. Начнем!
 
 ### Вызовы RPC
 Давайте рассмотрим более детально, что происходит с нашим смарт-контрактом при развертывании и вызове. 
@@ -425,6 +425,223 @@ curl -d '{ "jsonrpc": "2.0", "id": 5, "method": "getaccountstate", "params": ["A
 ```
 
 Список всех поддерживаемых нодой neo-go вызовов RPC вы найдете [здесь](https://github.com/nspcc-dev/neo-go/blob/master/docs/rpc.md#supported-methods).
+
+### Смарт-контракт, использующий хранилище
+
+Давайте изучим еще один пример смарт-контракта: [2-storage.go](https://github.com/nspcc-dev/neo-go-sc-wrkshp/blob/master/2-storage.go).
+Он достаточно простой и, так же как предыдущий, не принимает никаких аргументов.
+С другой стороны, этот контракт умеет считать количество его вызовов, сохраняя целое число и увеличивая его на 1 после каждого вызова.
+Подобный контракт будет интересен нам, поскольку он способен *хранить* значения, т.е. обладает *хранилищем*, которое является общим для всех вызовов данного контракта.
+
+К сожалению, за все хорошее нужно платить, в том числе и за наличие хранилища у нашего контракта.
+Чтобы обозначить, что контракт имеет хранилище, в его конфигурации [2-storage.yml](https://github.com/nspcc-dev/neo-go-sc-wrkshp/blob/master/2-storage.yml) мы обязаны установить значение следующего флага:
+```
+hasstorage: true
+```
+В противном случае мы не сможем воспользоваться хранилищем в контракте.
+
+Теперь, когда мы узнали о хранилище, давайте скомпилируем, развернем и вызовем смарт-контракт.
+
+#### Шаг #1
+Скомпилируйте смарт-контракт [2-storage.go](https://github.com/nspcc-dev/neo-go-sc-wrkshp/blob/master/2-storage.go):
+```
+./bin/neo-go contract compile -i 2-storage.go
+```
+
+Результат:
+
+Скомпилированный смарт-контракт: `2-storage.avm`
+
+#### Шаг #2
+Разверните скомпилированный смарт-контракт с [конфигурацией](https://github.com/nspcc-dev/neo-go-sc-wrkshp/blob/master/2-storage.yml):
+```
+./bin/neo-go contract deploy -i 2-storage.avm -c 2-storage.yaml -e http://localhost:20331 -w my_wallet.json -g 0.001
+```
+... введите пароль `qwerty`:
+```
+Enter account AK2nJJpJr6o664CWJKi1QRXjqeic2zRp8y password >
+```
+
+Результат:
+```
+Sent deployment transaction d79e5e39d87c2911b623d3efe98842cfde41eddc34d85cee394783b7320813e8 for contract 85cf2075f3e297d489ff3c4c1745ca80d44e2a68
+```   
+
+Что означает, что наш контракт развернуть и теперь мы можем вызывать его.
+
+#### Шаг #3
+Поскольку мы не вызывали наш смарт-контракт раньше, в его хранилище нет никаких значений, поэтому при первом вызове он должен создать новое значение (равное `1`) и положить его в хранилище.
+Давайте проверим:
+```
+./bin/neo-go contract invokefunction -e http://localhost:20331 -w my_wallet.json -g 0.00001 85cf2075f3e297d489ff3c4c1745ca80d44e2a68
+```
+... введите пароль `qwerty`:
+```
+Enter account AK2nJJpJr6o664CWJKi1QRXjqeic2zRp8y password >
+```
+Результат:
+```
+Sent invocation transaction 6f27f523da9c71297f4a81a254274b0c2a78f893b81c500429be6230254be0bf
+```
+Для проверки значения счетчика вызовем `getapplicaionlog` вызов RPC для вызывающей транзакции:
+```
+curl -d '{ "jsonrpc": "2.0", "id": 1, "method": "getapplicationlog", "params": ["6f27f523da9c71297f4a81a254274b0c2a78f893b81c500429be6230254be0bf"] }' localhost:20331 | json_pp
+```
+Результат:
+```
+{
+   "id" : 1,
+   "result" : {
+      "executions" : [
+         {
+            "vmstate" : "HALT",
+            "gas_consumed" : "1.159",
+            "trigger" : "Application",
+            "contract" : "0x343b284abf1e6a441a1361c5de76bdcb15b8e332",
+            "notifications" : [
+               {
+                  "contract" : "0x85cf2075f3e297d489ff3c4c1745ca80d44e2a68",
+                  "state" : {
+                     "type" : "Array",
+                     "value" : [
+                        {
+                           "type" : "ByteArray",
+                           "value" : "56616c756520726561642066726f6d2073746f72616765"
+                        }
+                     ]
+                  }
+               },
+               {
+                  "contract" : "0x85cf2075f3e297d489ff3c4c1745ca80d44e2a68",
+                  "state" : {
+                     "type" : "Array",
+                     "value" : [
+                        {
+                           "type" : "ByteArray",
+                           "value" : "53746f72616765206b6579206e6f7420796574207365742e2053657474696e6720746f2031"
+                        }
+                     ]
+                  }
+               },
+               {
+                  "state" : {
+                     "value" : [
+                        {
+                           "value" : "4e65772076616c7565207772697474656e20696e746f2073746f72616765",
+                           "type" : "ByteArray"
+                        }
+                     ],
+                     "type" : "Array"
+                  },
+                  "contract" : "0x85cf2075f3e297d489ff3c4c1745ca80d44e2a68"
+               }
+            ],
+            "stack" : [
+               {
+                  "value" : "1",
+                  "type" : "Integer"
+               }
+            ]
+         }
+      ],
+      "txid" : "0x6f27f523da9c71297f4a81a254274b0c2a78f893b81c500429be6230254be0bf"
+   },
+   "jsonrpc" : "2.0"
+}
+```
+Обратите внимание на поле `notification`. Оно содержит сообщения, переданные методу `runtime.Notify`.
+В нашем случае у нем находятся три шестнадцатеричных массива байт, которые можно декодировать в следующие сообщения:
+  - `Value read from storage`, которое было вызвано после того как мы попытались достать значение счетчика из хранилища
+  - `Storage key not yet set. Setting to 1`, которое было вызвано после того, как мы поняли, что полученное значение = 0
+  - `New value written into storage`, которое было вызвано после того, как мы записали новое значение в хранилище
+  
+И последняя часть - поле `stack`. Данное поле содержит все возвращенные контрактом значения, поэтому здесь вы можете увидеть целое `1`,
+которое является значением счетчика, определяющего количество вызовов смарт-контракта.
+
+#### Шаг #4
+Для того чтобы убедиться, что все работает как надо, давайте вызовем наш контракт еще раз и проверим, что счетчик будет увеличен: 
+```
+./bin/neo-go contract invokefunction -e http://localhost:20331 -w my_wallet.json -g 0.00001 85cf2075f3e297d489ff3c4c1745ca80d44e2a68
+```
+... введите пароль `qwerty`:
+```
+Enter account AK2nJJpJr6o664CWJKi1QRXjqeic2zRp8y password >
+```
+Результат:
+```
+Sent invocation transaction dcf53cdb69c816f0f9ab27ba509fb656b6eddd2dad5a658e9f534e9dba38462b
+```
+Для проверки значения счетчика, выполните `getapplicaionlog` вызов RPC для вызывающей транзакции:
+```
+curl -d '{ "jsonrpc": "2.0", "id": 1, "method": "getapplicationlog", "params": ["dcf53cdb69c816f0f9ab27ba509fb656b6eddd2dad5a658e9f534e9dba38462b"] }' localhost:20331 | json_pp
+```
+Результат:
+```
+{
+   "jsonrpc" : "2.0",
+   "id" : 1,
+   "result" : {
+      "executions" : [
+         {
+            "vmstate" : "HALT",
+            "contract" : "0x343b284abf1e6a441a1361c5de76bdcb15b8e332",
+            "trigger" : "Application",
+            "notifications" : [
+               {
+                  "state" : {
+                     "type" : "Array",
+                     "value" : [
+                        {
+                           "value" : "56616c756520726561642066726f6d2073746f72616765",
+                           "type" : "ByteArray"
+                        }
+                     ]
+                  },
+                  "contract" : "0x85cf2075f3e297d489ff3c4c1745ca80d44e2a68"
+               },
+               {
+                  "contract" : "0x85cf2075f3e297d489ff3c4c1745ca80d44e2a68",
+                  "state" : {
+                     "type" : "Array",
+                     "value" : [
+                        {
+                           "type" : "ByteArray",
+                           "value" : "53746f72616765206b657920616c7265616479207365742e20496e6372656d656e74696e672062792031"
+                        }
+                     ]
+                  }
+               },
+               {
+                  "contract" : "0x85cf2075f3e297d489ff3c4c1745ca80d44e2a68",
+                  "state" : {
+                     "value" : [
+                        {
+                           "value" : "4e65772076616c7565207772697474656e20696e746f2073746f72616765",
+                           "type" : "ByteArray"
+                        }
+                     ],
+                     "type" : "Array"
+                  }
+               }
+            ],
+            "stack" : [
+               {
+                  "type" : "Integer",
+                  "value" : "2"
+               }
+            ],
+            "gas_consumed" : "1.161"
+         }
+      ],
+      "txid" : "0xdcf53cdb69c816f0f9ab27ba509fb656b6eddd2dad5a658e9f534e9dba38462b"
+   }
+}
+```
+
+Теперь поле `stack` содержит значение `2` - счетчик был увеличен, как мы и ожидали.
+
+## Воркшоп. Часть 3
+В этой части мы узнаем о стандарте токена NEP5 и попробуем написать, задеплоить и вызвать более сложный смарт-контракт. Начнем!
 
 ### NEP5
 [NEP5](https://docs.neo.org/docs/en-us/sc/write/nep5.html) - это стандарт токена блокчейна Neo, обеспечивающий системы обобщенным механизмом взаимодействия для токенизированных смарт-контрактов.
@@ -767,7 +984,7 @@ Sent invocation transaction 11a272f4a0d7912f7219979bab7d094df3b404b89e903337ee72
 Как и ожидалось, мы видим ровно 5 токенов в поле `stack`.
 Вы можете самостоятельно убедиться, что с нашего аккаунта были списаны 5 токенов, выполнив метод `balanceOf` с аргументом `AK2nJJpJr6o664CWJKi1QRXjqeic2zRp8y`.
 
-## Воркшоп. Часть 3
+## Воркшоп. Часть 4
 В этой части подытожим наши знания о смарт-контрактах и исследуем смарт-контракт [4-domain.go](https://github.com/nspcc-dev/neo-go-sc-wrkshp/blob/master/4-domain.go).
 Данный контракт описывает операции регистрации, переноса и удаления доменов, а также операцию получения информации о зарегистрированном домене.
 
