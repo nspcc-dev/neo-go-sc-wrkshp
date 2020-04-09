@@ -116,11 +116,11 @@ INDEX    OPCODE          PARAMETER
 37       RET     
 ```
 Later we will use this compiled contract in a workshop =).
-More information how to use cli you can find [here](https://github.com/nspcc-dev/neo-go/blob/master/docs/cli.md)
+More information how to use cli you can find [here](https://github.com/nspcc-dev/neo-go/blob/master-2.x/docs/cli.md)
 
 #### Network
 Network layer is one of the most important parts of the node. In our case we have P2P protocol which allows nodes to communicate with each other and RPC -- which is used for getting some information from node like balance, accounts, current state, etc.
-Here is the document where you can find supported [RPC calls](https://github.com/nspcc-dev/neo-go/blob/master/docs/rpc.md).
+Here is the document where you can find supported [RPC calls](https://github.com/nspcc-dev/neo-go/blob/master-2.x/docs/rpc.md).
 
 #### Consensus
 Consensus is a mechanism allowing nodes to agree on a specific value (block in case of blockchain). We use our own go-implementation of dBFT algorithm.
@@ -150,10 +150,11 @@ For this workshop you will need Debian 10, Docker, docker-compose, go to be inst
 - [go](https://golang.org/dl/)
 
 #### Step 1
-Download neo-go and build it
+Download neo-go and build it (master-2.x branch):
 ```
 git clone https://github.com/nspcc-dev/neo-go.git
 $ cd neo-go
+$ git checkout -b master-2.x origin/master-2.x
 $ make build 
 ```
 
@@ -215,7 +216,7 @@ $ ./bin/neo-go contract compile -i '/1-print.go'
 ```
 Where
 - `./bin/neo-go` runs neo-go
-- `contract compile` command with arguments in [neo-go](https://github.com/nspcc-dev/neo-go/blob/master/cli/smartcontract/smart_contract.go#L43)
+- `contract compile` command with arguments in [neo-go](https://github.com/nspcc-dev/neo-go/blob/master-2.x/cli/smartcontract/smart_contract.go#L43)
 - `-i '/1-print.go'` path to smart contract
 
 Result:
@@ -430,7 +431,7 @@ curl -d '{ "jsonrpc": "2.0", "id": 5, "method": "getconnectioncount", "params": 
 curl -d '{ "jsonrpc": "2.0", "id": 5, "method": "getaccountstate", "params": ["AK2nJJpJr6o664CWJKi1QRXjqeic2zRp8y"] }' localhost:20331
 ```
 
-List of supported by neo-go node RPC commands you can find [here](https://github.com/nspcc-dev/neo-go/blob/master/docs/rpc.md#supported-methods).
+List of supported by neo-go node RPC commands you can find [here](https://github.com/nspcc-dev/neo-go/blob/master-2.x/docs/rpc.md#supported-methods).
 
 ### Storage smart contract
 
@@ -651,9 +652,9 @@ Let’s go!
 
 ### NEP5
 [NEP5](https://docs.neo.org/docs/en-us/sc/write/nep5.html) is a token standard for the Neo blockchain that provides systems with a generalized interaction mechanism for tokenized smart contracts.
-The example with implementation of all required by the standard methods you can find in [nep5.go](https://github.com/nspcc-dev/neo-go/blob/master/examples/token/nep5/nep5.go)
+The example with implementation of all required by the standard methods you can find in [nep5.go](https://github.com/nspcc-dev/neo-go/blob/master-2.x/examples/token/nep5/nep5.go)
  
-Let's take a view on the example of smart contract with NEP5: [token.go](https://github.com/nspcc-dev/neo-go/blob/master/examples/token/token.go)
+Let's take a view on the example of smart contract with NEP5: [token.go](https://github.com/nspcc-dev/neo-go/blob/master-2.x/examples/token/token.go)
  
 This smart contract initialises nep5 token interface and takes operation string as a parameter, which is one of:
 - `name` returns name of created nep5 token 
@@ -671,7 +672,7 @@ This smart contract initialises nep5 token interface and takes operation string 
 Let's perform several operations with our contract.
 
 #### Step #1
-Compile smart contract [token.go](https://github.com/nspcc-dev/neo-go/blob/master/examples/token/token.go):
+Compile smart contract [token.go](https://github.com/nspcc-dev/neo-go/blob/master-2.x/examples/token/token.go):
 ```
 ./bin/neo-go contract compile -i examples/token/token.go
 ```
