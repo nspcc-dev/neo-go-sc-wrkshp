@@ -113,11 +113,11 @@ INDEX    OPCODE          PARAMETER
 37       RET     
 ```
 Этот скомпилированный контракт пригодится нам позже =).
-Больше информации об использовании CLI [здесь](https://github.com/nspcc-dev/neo-go/blob/master/docs/cli.md).
+Больше информации об использовании CLI [здесь](https://github.com/nspcc-dev/neo-go/blob/master-2.x/docs/cli.md).
 
 #### Сетевой слой
 Network-слой - один из самых важных частей ноды. В нашем случае поддерживаются два протокола: протокол P2P позволяет нодам взаимодействовать друг с другом, а протокол RPC используется для получения информации о балансе, аккаунтах, текущем состоянии чейна и т.д.
-Здесь вы найдете поддерживаемые [вызовы RPC](https://github.com/nspcc-dev/neo-go/blob/master/docs/rpc.md).
+Здесь вы найдете поддерживаемые [вызовы RPC](https://github.com/nspcc-dev/neo-go/blob/master-2.x/docs/rpc.md).
 
 #### Консенсус
 Консенсус - это механизм, позволяющий нодам приходить к общему значению (блокам в случае блокчейна). Мы используем нашу собственную реализацию алгоритма dBFT.
@@ -146,10 +146,11 @@ Network-слой - один из самых важных частей ноды. 
 - [go](https://golang.org/dl/)
 
 #### Шаг 1
-Скачайте neo-go и соберите проект:
+Скачайте neo-go и соберите проект (ветку master-2.x):
 ```
 git clone https://github.com/nspcc-dev/neo-go.git
 $ cd neo-go
+$ git checkout -b master-2.x origin/master-2.x
 $ make build 
 ```
 
@@ -213,7 +214,7 @@ $ ./bin/neo-go contract compile -i '/1-print.go'
 
 Где
 - `./bin/neo-go` запускает neo-go
-- `contract compile` команда с аргументами из [neo-go](https://github.com/nspcc-dev/neo-go/blob/master/cli/smartcontract/smart_contract.go#L43)
+- `contract compile` команда с аргументами из [neo-go](https://github.com/nspcc-dev/neo-go/blob/master-2.x/cli/smartcontract/smart_contract.go#L43)
 - `-i '/1-print.go'` путь к смарт-контракту
 
 Результат: 
@@ -424,7 +425,7 @@ curl -d '{ "jsonrpc": "2.0", "id": 5, "method": "getconnectioncount", "params": 
 curl -d '{ "jsonrpc": "2.0", "id": 5, "method": "getaccountstate", "params": ["AK2nJJpJr6o664CWJKi1QRXjqeic2zRp8y"] }' localhost:20331
 ```
 
-Список всех поддерживаемых нодой neo-go вызовов RPC вы найдете [здесь](https://github.com/nspcc-dev/neo-go/blob/master/docs/rpc.md#supported-methods).
+Список всех поддерживаемых нодой neo-go вызовов RPC вы найдете [здесь](https://github.com/nspcc-dev/neo-go/blob/master-2.x/docs/rpc.md#supported-methods).
 
 ### Смарт-контракт, использующий хранилище
 
@@ -645,9 +646,9 @@ curl -d '{ "jsonrpc": "2.0", "id": 1, "method": "getapplicationlog", "params": [
 
 ### NEP5
 [NEP5](https://docs.neo.org/docs/en-us/sc/write/nep5.html) - это стандарт токена блокчейна Neo, обеспечивающий системы обобщенным механизмом взаимодействия для токенизированных смарт-контрактов.
-Пример с реализацией всех требуемых стандартом методов вы можете найти в [nep5.go](https://github.com/nspcc-dev/neo-go/blob/master/examples/token/nep5/nep5.go)
+Пример с реализацией всех требуемых стандартом методов вы можете найти в [nep5.go](https://github.com/nspcc-dev/neo-go/blob/master-2.x/examples/token/nep5/nep5.go)
  
-Давайте посмотрим на пример смарт-контракта NEP5: [token.go](https://github.com/nspcc-dev/neo-go/blob/master/examples/token/token.go)
+Давайте посмотрим на пример смарт-контракта NEP5: [token.go](https://github.com/nspcc-dev/neo-go/blob/master-2.x/examples/token/token.go)
  
 Этот смарт-контракт принимает в качестве параетра строку с операцией, которая может принимать следующие значения:
 - `name` возвращает имя созданного токена nep5 
@@ -666,7 +667,7 @@ curl -d '{ "jsonrpc": "2.0", "id": 1, "method": "getapplicationlog", "params": [
 Давайте проведем несколько операций с помощью этого контракта.
 
 #### Шаг #1
-Скомпилируйте смарт-контракт [token.go](https://github.com/nspcc-dev/neo-go/blob/master/examples/token/token.go):
+Скомпилируйте смарт-контракт [token.go](https://github.com/nspcc-dev/neo-go/blob/master-2.x/examples/token/token.go):
 ```
 ./bin/neo-go contract compile -i examples/token/token.go
 ```
