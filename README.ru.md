@@ -282,11 +282,11 @@ Sent deployment transaction ea93196802fe3517d2d028e4d4f244aa734a9b1988456740d96f
 #### Шаг 7
 Вызовите контракт.
 ```
-$ ./bin/neo-go contract invokefunction -e http://localhost:20331 -w my_wallet.json -g 0.00001 6d1eeca891ee93de2b7a77eb91c26f3b3c04d6cf
+$ ./bin/neo-go contract invoke -e http://localhost:20331 -w my_wallet.json -g 0.00001 6d1eeca891ee93de2b7a77eb91c26f3b3c04d6cf
 ```
 
 Где
-- `contract invokefunction` запускает вызов контракта с заданными параметрами
+- `contract invoke` запускает вызов контракта с заданными параметрами
 - `-e http://localhost:20331` определяет эндпоинт RPC, используемый для вызова функции
 - `-w my_wallet.json` - бумажник
 - `-g 0.00001` определяет количество газа, которое будет использовано для вызова смарт-контракта
@@ -474,7 +474,7 @@ Sent deployment transaction d79e5e39d87c2911b623d3efe98842cfde41eddc34d85cee3947
 Поскольку мы не вызывали наш смарт-контракт раньше, в его хранилище нет никаких значений, поэтому при первом вызове он должен создать новое значение (равное `1`) и положить его в хранилище.
 Давайте проверим:
 ```
-./bin/neo-go contract invokefunction -e http://localhost:20331 -w my_wallet.json -g 0.00001 85cf2075f3e297d489ff3c4c1745ca80d44e2a68
+./bin/neo-go contract invoke -e http://localhost:20331 -w my_wallet.json -g 0.00001 85cf2075f3e297d489ff3c4c1745ca80d44e2a68
 ```
 ... введите пароль `qwerty`:
 ```
@@ -562,7 +562,7 @@ curl -d '{ "jsonrpc": "2.0", "id": 1, "method": "getapplicationlog", "params": [
 #### Шаг #4
 Для того чтобы убедиться, что все работает как надо, давайте вызовем наш контракт еще раз и проверим, что счетчик будет увеличен: 
 ```
-./bin/neo-go contract invokefunction -e http://localhost:20331 -w my_wallet.json -g 0.00001 85cf2075f3e297d489ff3c4c1745ca80d44e2a68
+./bin/neo-go contract invoke -e http://localhost:20331 -w my_wallet.json -g 0.00001 85cf2075f3e297d489ff3c4c1745ca80d44e2a68
 ```
 ... введите пароль `qwerty`:
 ```

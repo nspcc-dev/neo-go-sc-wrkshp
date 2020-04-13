@@ -286,11 +286,11 @@ At this point your ‘Hello World’ contract is deployed and could be invoked. 
 #### Step 7
 Invoke contract.
 ```
-$ ./bin/neo-go contract invokefunction -e http://localhost:20331 -w my_wallet.json -g 0.00001 6d1eeca891ee93de2b7a77eb91c26f3b3c04d6cf
+$ ./bin/neo-go contract invoke -e http://localhost:20331 -w my_wallet.json -g 0.00001 6d1eeca891ee93de2b7a77eb91c26f3b3c04d6cf
 ```
 
 Where
-- `contract invokefunction` runs invoke with provided parameters
+- `contract invoke` runs invoke with provided parameters
 - `-e http://localhost:20331` defines RPC endpoint used for function call
 - `-w my_wallet.json` is a wallet
 - `-g 0.00001` defines amount of GAS to be used for invoke operation
@@ -479,7 +479,7 @@ Which means that our contract was deployed and now we can invoke it.
 Let's invoke our contract. As far as we have never invoked this contract, there's no value in the storage, so the contract should create a new one (which is `1`) and put it into storage.
 Let's check:
 ```
-./bin/neo-go contract invokefunction -e http://localhost:20331 -w my_wallet.json -g 0.00001 85cf2075f3e297d489ff3c4c1745ca80d44e2a68
+./bin/neo-go contract invoke -e http://localhost:20331 -w my_wallet.json -g 0.00001 85cf2075f3e297d489ff3c4c1745ca80d44e2a68
 ```
 ... enter the password `qwerty`:
 ```
@@ -567,7 +567,7 @@ which is the counter value denoted to the number of contract invocations.
 #### Step #4
 To ensure that all works as expected, let's invoke the contract one more time and check, whether the counter will be incremented: 
 ```
-./bin/neo-go contract invokefunction -e http://localhost:20331 -w my_wallet.json -g 0.00001 85cf2075f3e297d489ff3c4c1745ca80d44e2a68
+./bin/neo-go contract invoke -e http://localhost:20331 -w my_wallet.json -g 0.00001 85cf2075f3e297d489ff3c4c1745ca80d44e2a68
 ```
 ... enter the password `qwerty`:
 ```
