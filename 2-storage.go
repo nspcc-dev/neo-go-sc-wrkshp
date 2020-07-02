@@ -8,17 +8,17 @@ import (
 func Main() interface{} {
 	ctx := storage.GetContext()
 	itemKey := "test-storage-key"
-	itemValue := storage.Get(ctx, itemKey).(int)
+	itemValue := storage.Get(ctx, itemKey)
 	msg := "Value read from storage"
 
 	runtime.Notify(msg)
 
-	if itemValue == 0 {
+	if itemValue == nil {
 		runtime.Notify("Storage key not yet set. Setting to 1")
 		itemValue = 1
 	} else {
 		runtime.Notify("Storage key already set. Incrementing by 1")
-		itemValue += 1
+		itemValue = itemValue.(int) + 1
 	}
 
 	storage.Put(ctx, itemKey, itemValue)

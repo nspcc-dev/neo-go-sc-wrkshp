@@ -1,11 +1,3 @@
-project:
-  author: Random Guy
-  email: joe@example.com
-  version: 1.0
-  name: 4-domain
-  description: '4-domain contract example'
-  hasstorage: true
-  hasdynamicinvocation: false
-  ispayable: false
-  returntype: ByteArray
-  parameters: ['String', 'Array']
+hasstorage: true
+ispayable: false
+events: []
