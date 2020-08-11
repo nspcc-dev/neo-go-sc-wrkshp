@@ -5,65 +5,20 @@ import (
 	"github.com/nspcc-dev/neo-go/pkg/interop/storage"
 )
 
-// Main is a very useful function.
-func Main(operation string, args []interface{}) interface{} {
-	// Queries the domain owner
-	if operation == "query" {
-		if len(args) != 1 {
-			return false
-		}
+var ctx storage.Context
 
-		message := "QueryDomain: " + args[0].(string)
-		runtime.Log(message)
-
-		return Query(args[0].([]byte))
-	}
-
-	// Deletes the domain
-	if operation == "delete" {
-		if len(args) != 1 {
-			return false
-		}
-
-		message := "DeleteDomain: " + args[0].(string)
-		runtime.Log(message)
-
-		return Delete(args[0].([]byte))
-	}
-
-	// Registers new domain
-	if operation == "register" {
-		if len(args) != 2 {
-			return false
-		}
-
-		message := "RegisterDomain: " + args[0].(string)
-		runtime.Log(message)
-
-		return Register(args[0].([]byte), args[1].([]byte))
-	}
-
-	// Transfers domain from one address to another
-	if operation == "transfer" {
-		if len(args) != 2 {
-			return false
-		}
-
-		message := "TransferDomain: " + args[0].(string)
-		runtime.Log(message)
-
-		return Transfer(args[0].([]byte), args[1].([]byte))
-	}
-
-	return false
+func init() {
+	ctx = storage.GetContext()
 }
 
 // Query returns the owner of the domain with the specified name.
 func Query(domainName []byte) interface{} {
-	ctx := storage.GetContext()
+	message := "QueryDomain: " + string(domainName)
+	runtime.Log(message)
+
 	owner := storage.Get(ctx, domainName)
 	if owner != nil {
-		runtime.Log(owner.(string))
+		runtime.Log("Domain is already registered")
 		return owner
 	}
 
@@ -73,7 +28,9 @@ func Query(domainName []byte) interface{} {
 
 // Delete deletes domain with the specified name.
 func Delete(domainName []byte) bool {
-	ctx := storage.GetContext()
+	message := "DeleteDomain: " + string(domainName)
+	runtime.Log(message)
+
 	owner := storage.Get(ctx, domainName)
 	if owner == nil {
 		runtime.Log("Domain is not yet registered")
@@ -92,7 +49,8 @@ func Delete(domainName []byte) bool {
 
 // Register registers new domain with specified name and owner.
 func Register(domainName []byte, owner []byte) bool {
-	ctx := storage.GetContext()
+	message := "RegisterDomain: " + string(domainName)
+	runtime.Log(message)
 
 	if !runtime.CheckWitness(owner) {
 		runtime.Log("Owner argument is not the same as the sender")
@@ -111,7 +69,9 @@ func Register(domainName []byte, owner []byte) bool {
 
 // Transfer transfers domain from owner to the specified address.
 func Transfer(domainName []byte, toAddress []byte) bool {
-	ctx := storage.GetContext()
+	message := "TransferDomain: " + string(domainName)
+	runtime.Log(message)
+
 	owner := storage.Get(ctx, domainName)
 	if owner == nil {
 		runtime.Log("Domain is not yet registered")

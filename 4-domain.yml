@@ -1,3 +1,16 @@
 hasstorage: true
 ispayable: false
-events: []
+supportedstandards: []
+events:
+  - name: registered
+    parameters:
+      - name: address
+        type: ByteString
+      - name: domainName
+        type: ByteString
+  - name: deleted
+    parameters:
+      - name: address
+        type: ByteString
+      - name: domainName
+        type: ByteString
