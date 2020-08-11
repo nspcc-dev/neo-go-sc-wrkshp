@@ -1,3 +1,9 @@
 hasstorage: true
 ispayable: false
-events: []
+supportedstandards: []
+events:
+  - name: info
+    parameters:
+      - name: message
+        type: ByteString
+

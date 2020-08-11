@@ -11,17 +11,17 @@ func Main() interface{} {
 	itemValue := storage.Get(ctx, itemKey)
 	msg := "Value read from storage"
 
-	runtime.Notify(msg)
+	runtime.Notify("info", msg)
 
 	if itemValue == nil {
-		runtime.Notify("Storage key not yet set. Setting to 1")
+		runtime.Notify("info", "Storage key not yet set. Setting to 1")
 		itemValue = 1
 	} else {
-		runtime.Notify("Storage key already set. Incrementing by 1")
+		runtime.Notify("info", "Storage key already set. Incrementing by 1")
 		itemValue = itemValue.(int) + 1
 	}
 
 	storage.Put(ctx, itemKey, itemValue)
-	runtime.Notify("New value written into storage")
+	runtime.Notify("info", []byte("New value written into storage"))
 	return itemValue
 }
