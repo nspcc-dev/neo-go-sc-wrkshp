@@ -157,7 +157,8 @@ This workshop contains basic tutorial notes for Neo 3 version.
 If you want to continue with Neo 2, please, refer to [master-2.x branch](https://github.com/nspcc-dev/neo-go-sc-wrkshp/tree/master-2.x).
 
 #### Step 1
-Download neo-go and build it (master branch):
+If you already have neo-go or go smart-contracts, please, update go modules in order to be up-to-date with the current interop API changes.
+If not, download neo-go and build it (master branch):
 ```
 $ git clone https://github.com/nspcc-dev/neo-go.git
 $ cd neo-go

@@ -153,7 +153,8 @@ Network-слой - один из самых важных частей ноды. 
 Если вы хотите продолжить с Neo 2, воспользуйтесь веткой [master-2.x branch](https://github.com/nspcc-dev/neo-go-sc-wrkshp/tree/master-2.x).
 
 #### Шаг 1
-Скачайте neo-go и соберите проект (ветку master):
+Если у вас уже установлен neo-go или есть смарт-контракты на go, пожалуйста, обновите go modules чтобы использовать свежую версию API интеропов.
+Если нет, скачайте neo-go и соберите проект (ветку master):
 ```
 $ git clone https://github.com/nspcc-dev/neo-go.git
 $ cd neo-go
