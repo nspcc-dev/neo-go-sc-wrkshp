@@ -257,13 +257,13 @@ $ ./bin/neo-go node --privnet
 2. Подпишите созданную транзакцию, используя адрес второй ноды:
 
     ```
-    $ ./bin/neo-go wallet multisig sign -w .docker/wallets/wallet2.json --in my_tx.json --out my_tx2.json --addr NUVPACMnKFhpuHjsRjhUvXz1XhqfGZYVtY
+    $ ./bin/neo-go wallet multisig sign -w .docker/wallets/wallet2.json --in my_tx.json --out my_tx2.json --address NUVPACMnKFhpuHjsRjhUvXz1XhqfGZYVtY
     ```
     Где
     - `-w .docker/wallets/wallet2.json` - путь к [кошельку](https://github.com/nspcc-dev/neo-go/blob/master/.docker/wallets/wallet2.json) для второй ноды в частной сети
     - `--in my_tx.json` - транзакция перевода, созданная на предыдущем шаге
     - `--out my_tx2.json` - выходной файл для записи подписанной транзакции
-    - `--addr NUVPACMnKFhpuHjsRjhUvXz1XhqfGZYVtY` - мультисиговый аккаунт для подписи транзакции
+    - `--address NUVPACMnKFhpuHjsRjhUvXz1XhqfGZYVtY` - мультисиговый аккаунт для подписи транзакции
     
     Введите пароль `two`:
     ```
@@ -274,7 +274,7 @@ $ ./bin/neo-go node --privnet
 
 3. Подпишите транзакцию, использую адрес третьей ноды и отправьте ее в цепочку:
     ```
-    $ ./bin/neo-go wallet multisig sign -w ./.docker/wallets/wallet3.json --in my_tx2.json --out my_tx3.json --addr NUVPACMnKFhpuHjsRjhUvXz1XhqfGZYVtY -r http://localhost:20331
+    $ ./bin/neo-go wallet multisig sign -w ./.docker/wallets/wallet3.json --in my_tx2.json --out my_tx3.json --address NUVPACMnKFhpuHjsRjhUvXz1XhqfGZYVtY -r http://localhost:20331
     ```
     Введите пароль `three`:
     ```

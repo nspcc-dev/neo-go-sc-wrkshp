@@ -259,13 +259,13 @@ Transfer some GAS from multisig account to our account.
 2. Sign the created transaction using the second node address:
 
     ```
-    $ ./bin/neo-go wallet multisig sign -w .docker/wallets/wallet2.json --in my_tx.json --out my_tx2.json --addr NUVPACMnKFhpuHjsRjhUvXz1XhqfGZYVtY
+    $ ./bin/neo-go wallet multisig sign -w .docker/wallets/wallet2.json --in my_tx.json --out my_tx2.json --address NUVPACMnKFhpuHjsRjhUvXz1XhqfGZYVtY
     ```
     Where
     - `-w .docker/wallets/wallet2.json` - path to the [wallet](https://github.com/nspcc-dev/neo-go/blob/master/.docker/wallets/wallet2.json) for the second node in private network
     - `--in my_tx.json` - previously created transfer transaction
     - `--out my_tx2.json` - output file for the signed transaction
-    - `--addr NUVPACMnKFhpuHjsRjhUvXz1XhqfGZYVtY` - multisig account to sign the transaction
+    - `--address NUVPACMnKFhpuHjsRjhUvXz1XhqfGZYVtY` - multisig account to sign the transaction
     
     Enter the password `two`:
     ```
@@ -276,7 +276,7 @@ Transfer some GAS from multisig account to our account.
 
 3. Sign the transaction using the third node address and push it to the chain:
     ```
-    $ ./bin/neo-go wallet multisig sign -w ./.docker/wallets/wallet3.json --in my_tx2.json --out my_tx3.json --addr NUVPACMnKFhpuHjsRjhUvXz1XhqfGZYVtY -r http://localhost:20331
+    $ ./bin/neo-go wallet multisig sign -w ./.docker/wallets/wallet3.json --in my_tx2.json --out my_tx3.json --address NUVPACMnKFhpuHjsRjhUvXz1XhqfGZYVtY -r http://localhost:20331
     ```
     Enter the password `three`:
     ```
