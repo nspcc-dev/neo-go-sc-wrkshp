@@ -259,13 +259,13 @@ Transfer some GAS from multisig account to our account.
 2. Sign the created transaction using the second node address:
 
     ```
-    $ ./bin/neo-go wallet multisig sign -w .docker/wallets/wallet2.json --in my_tx.json --out my_tx2.json --addr NUVPACMnKFhpuHjsRjhUvXz1XhqfGZYVtY
+    $ ./bin/neo-go wallet multisig sign -w .docker/wallets/wallet2.json --in my_tx.json --out my_tx2.json --address NUVPACMnKFhpuHjsRjhUvXz1XhqfGZYVtY
     ```
     Where
     - `-w .docker/wallets/wallet2.json` - path to the [wallet](https://github.com/nspcc-dev/neo-go/blob/master/.docker/wallets/wallet2.json) for the second node in private network
     - `--in my_tx.json` - previously created transfer transaction
     - `--out my_tx2.json` - output file for the signed transaction
-    - `--addr NUVPACMnKFhpuHjsRjhUvXz1XhqfGZYVtY` - multisig account to sign the transaction
+    - `--address NUVPACMnKFhpuHjsRjhUvXz1XhqfGZYVtY` - multisig account to sign the transaction
     
     Enter the password `two`:
     ```
@@ -276,7 +276,7 @@ Transfer some GAS from multisig account to our account.
 
 3. Sign the transaction using the third node address and push it to the chain:
     ```
-    $ ./bin/neo-go wallet multisig sign -w ./.docker/wallets/wallet3.json --in my_tx2.json --out my_tx3.json --addr NUVPACMnKFhpuHjsRjhUvXz1XhqfGZYVtY -r http://localhost:20331
+    $ ./bin/neo-go wallet multisig sign -w ./.docker/wallets/wallet3.json --in my_tx2.json --out my_tx3.json --address NUVPACMnKFhpuHjsRjhUvXz1XhqfGZYVtY -r http://localhost:20331
     ```
     Enter the password `three`:
     ```
@@ -536,6 +536,10 @@ hasstorage: true
 ```
 If you don't set the flag `hasstorage` to `true` value, you won't be able to use the storage in your contract.
 
+This contract also has a special internal `_deploy` method which is executed when the contract is deployed or updated.
+It should return no value and accept single bool argument which will be true on contract update.
+Our `_deploy` method is aimed to initialise the storage value with `0` when the contract will be deployed.
+
 Now, when we learned about the storage, let's try to deploy and invoke our contract!
 
 #### Step #1
@@ -561,48 +565,57 @@ Enter account NULwe3UAHckN2fzNdcVg31tDiaYtMDwANt password >
 
 Result:
 ```
-Sent deployment transaction e3e61ca9d713bddda110a002504f9d5f94f871a15675c2e514d08efb1521ea1b for contract 79edf20dc8ee247981756787a638e9679026c16c
+Contract: 57d271f86ed539fe4e2cfeee613f212f82326b3b
+a2441a771d3f7a99472e17bea6add0801a07d84b1afad3c11e8b1e3aa4a662a8
 ```   
 
 Which means that our contract was deployed and now we can invoke it.
 
-#### Step #3
-Let's invoke our contract. As far as we have never invoked this contract, there's no value in the storage, so the contract should create a new one (which is `1`) and put it into storage.
-Let's check:
+Let's check that the storage value was initialised with `0`. Use `getapplicaionlog` RPC-call for the deployment transaction:
 ```
-$ ./bin/neo-go contract invokefunction -r http://localhost:20331 -w my_wallet.json 79edf20dc8ee247981756787a638e9679026c16c main
+curl -d '{ "jsonrpc": "2.0", "id": 1, "method": "getapplicationlog", "params": ["a2441a771d3f7a99472e17bea6add0801a07d84b1afad3c11e8b1e3aa4a662a8"] }' localhost:20331 | json_pp
 ```
-... enter the password `qwerty`:
-```
-Enter account NULwe3UAHckN2fzNdcVg31tDiaYtMDwANt password >
-```
-Result:
-```
-Sent invocation transaction 7f658d0008f7c9bb3f05d655450ead36b9e5d7a2ad0f9e5f7895a43579d2616d
-```
-To check the counter value, call `getapplicaionlog` RPC-call for the invocation transaction:
-```
-curl -d '{ "jsonrpc": "2.0", "id": 1, "method": "getapplicationlog", "params": ["7f658d0008f7c9bb3f05d655450ead36b9e5d7a2ad0f9e5f7895a43579d2616d"] }' localhost:20331 | json_pp
-```
+
 The JSON result is:
 ```
 {
+   "id" : 1,
+   "jsonrpc" : "2.0",
    "result" : {
+      "trigger" : "Application",
       "stack" : [
          {
-            "value" : "1",
-            "type" : "Integer"
+            "type" : "Array",
+            "value" : [
+               {
+                  "value" : "VwMBeKonigAAAEGb9mfOIXAMBGluZm8MJVN0b3JhZ2Uga2V5IG5vdCB5ZXQgc2V0LiBTZXR0aW5nIHRvIDARwFBBlQFvYSEQcWgMEHRlc3Qtc3RvcmFnZS1rZXlpU0HmPxiEIQwEaW5mbwwaU3RvcmFnZSBrZXkgaXMgaW5pdGlhbGlzZWQRwFBBlQFvYSFAVwMAQZv2Z84hcGgMEHRlc3Qtc3RvcmFnZS1rZXlQQZJd6DEhcQwEaW5mbwwXVmFsdWUgcmVhZCBmcm9tIHN0b3JhZ2URwFBBlQFvYSEMBGluZm8MKlN0b3JhZ2Uga2V5IGFscmVhZHkgc2V0LiBJbmNyZW1lbnRpbmcgYnkgMRHAUEGVAW9hIWnbIRGecWgMEHRlc3Qtc3RvcmFnZS1rZXlpU0HmPxiEIQwEaW5mbwweTmV3IHZhbHVlIHdyaXR0ZW4gaW50byBzdG9yYWdl2zARwFBBlQFvYSFpQA==",
+                  "type" : "ByteString"
+               },
+               {
+                  "value" : "eyJhYmkiOnsiaGFzaCI6IjB4NTdkMjcxZjg2ZWQ1MzlmZTRlMmNmZWVlNjEzZjIxMmY4MjMyNmIzYiIsIm1ldGhvZHMiOlt7Im5hbWUiOiJfZGVwbG95Iiwib2Zmc2V0IjowLCJwYXJhbWV0ZXJzIjpbeyJuYW1lIjoiaXNVcGRhdGUiLCJ0eXBlIjoiQm9vbGVhbiJ9XSwicmV0dXJudHlwZSI6IlZvaWQifSx7Im5hbWUiOiJtYWluIiwib2Zmc2V0IjoxNDQsInBhcmFtZXRlcnMiOltdLCJyZXR1cm50eXBlIjoiQW55In1dLCJldmVudHMiOlt7Im5hbWUiOiJpbmZvIiwicGFyYW1ldGVycyI6W3sibmFtZSI6Im1lc3NhZ2UiLCJ0eXBlIjoiQnl0ZUFycmF5In1dfV19LCJncm91cHMiOltdLCJmZWF0dXJlcyI6eyJwYXlhYmxlIjpmYWxzZSwic3RvcmFnZSI6dHJ1ZX0sInBlcm1pc3Npb25zIjpbeyJjb250cmFjdCI6IioiLCJtZXRob2RzIjoiKiJ9XSwic3VwcG9ydGVkc3RhbmRhcmRzIjpbXSwidHJ1c3RzIjpbXSwic2FmZW1ldGhvZHMiOltdLCJleHRyYSI6bnVsbH0=",
+                  "type" : "ByteString"
+               },
+               {
+                  "value" : true,
+                  "type" : "Boolean"
+               },
+               {
+                  "value" : false,
+                  "type" : "Boolean"
+               }
+            ]
          }
       ],
+      "gasconsumed" : "88842960",
       "notifications" : [
          {
-            "contract" : "0x79edf20dc8ee247981756787a638e9679026c16c",
             "eventname" : "info",
+            "contract" : "0x57d271f86ed539fe4e2cfeee613f212f82326b3b",
             "state" : {
                "value" : [
                   {
-                     "type" : "ByteString",
-                     "value" : "VmFsdWUgcmVhZCBmcm9tIHN0b3JhZ2U="
+                     "value" : "U3RvcmFnZSBrZXkgbm90IHlldCBzZXQuIFNldHRpbmcgdG8gMA==",
+                     "type" : "ByteString"
                   }
                ],
                "type" : "Array"
@@ -614,34 +627,107 @@ The JSON result is:
                "type" : "Array",
                "value" : [
                   {
-                     "value" : "U3RvcmFnZSBrZXkgbm90IHlldCBzZXQuIFNldHRpbmcgdG8gMQ==",
-                     "type" : "ByteString"
+                     "type" : "ByteString",
+                     "value" : "U3RvcmFnZSBrZXkgaXMgaW5pdGlhbGlzZWQ="
                   }
                ]
             },
-            "contract" : "0x79edf20dc8ee247981756787a638e9679026c16c"
+            "contract" : "0x57d271f86ed539fe4e2cfeee613f212f82326b3b"
+         }
+      ],
+      "vmstate" : "HALT",
+      "txid" : "0xa2441a771d3f7a99472e17bea6add0801a07d84b1afad3c11e8b1e3aa4a662a8"
+   }
+}
+```
+
+Pay attention to the `notifications` JSON field: it contains two `info` notifications with base64-encoded messages.
+To decode them just use `echo string | base64 -d` CLI command, e.g.:
+```
+$ echo U3RvcmFnZSBrZXkgbm90IHlldCBzZXQuIFNldHRpbmcgdG8gMA== | base64 -d
+```
+which results in `Storage key not yet set. Setting to 0` and
+```
+$ echo U3RvcmFnZSBrZXkgaXMgaW5pdGlhbGlzZWQ= | base64 -d
+```
+which is `Storage key is initialised`.
+
+#### Step #3
+Let's invoke our contract. As far as we have never invoked this contract, it should increment value from the storage (which is `0`) and put the new `1` value back into the storage.
+Let's check:
+```
+$ ./bin/neo-go contract invokefunction -r http://localhost:20331 -w my_wallet.json 57d271f86ed539fe4e2cfeee613f212f82326b3b main
+```
+... enter the password `qwerty`:
+```
+Enter account NULwe3UAHckN2fzNdcVg31tDiaYtMDwANt password >
+```
+Result:
+```
+Sent invocation transaction dd9e802198bd655ea1abe237d22bd2cadd6e2367233d95cd4f00e1f43bfd7ba4
+```
+To check the counter value, call `getapplicaionlog` RPC-call for the invocation transaction:
+```
+curl -d '{ "jsonrpc": "2.0", "id": 1, "method": "getapplicationlog", "params": ["dd9e802198bd655ea1abe237d22bd2cadd6e2367233d95cd4f00e1f43bfd7ba4"] }' localhost:20331 | json_pp
+```
+The JSON result is:
+```
+{
+   "result" : {
+      "gasconsumed" : "5292310",
+      "stack" : [
+         {
+            "type" : "Integer",
+            "value" : "1"
+         }
+      ],
+      "vmstate" : "HALT",
+      "txid" : "0xdd9e802198bd655ea1abe237d22bd2cadd6e2367233d95cd4f00e1f43bfd7ba4",
+      "notifications" : [
+         {
+            "state" : {
+               "value" : [
+                  {
+                     "type" : "ByteString",
+                     "value" : "VmFsdWUgcmVhZCBmcm9tIHN0b3JhZ2U="
+                  }
+               ],
+               "type" : "Array"
+            },
+            "eventname" : "info",
+            "contract" : "0x57d271f86ed539fe4e2cfeee613f212f82326b3b"
          },
          {
-            "contract" : "0x79edf20dc8ee247981756787a638e9679026c16c",
+            "contract" : "0x57d271f86ed539fe4e2cfeee613f212f82326b3b",
             "eventname" : "info",
             "state" : {
                "type" : "Array",
                "value" : [
                   {
-                     "value" : "TmV3IHZhbHVlIHdyaXR0ZW4gaW50byBzdG9yYWdl",
-                     "type" : "ByteString"
+                     "type" : "ByteString",
+                     "value" : "U3RvcmFnZSBrZXkgYWxyZWFkeSBzZXQuIEluY3JlbWVudGluZyBieSAx"
                   }
                ]
             }
+         },
+         {
+            "eventname" : "info",
+            "contract" : "0x57d271f86ed539fe4e2cfeee613f212f82326b3b",
+            "state" : {
+               "value" : [
+                  {
+                     "type" : "ByteString",
+                     "value" : "TmV3IHZhbHVlIHdyaXR0ZW4gaW50byBzdG9yYWdl"
+                  }
+               ],
+               "type" : "Array"
+            }
          }
       ],
-      "gasconsumed" : "5212830",
-      "txid" : "0x7f658d0008f7c9bb3f05d655450ead36b9e5d7a2ad0f9e5f7895a43579d2616d",
-      "trigger" : "Application",
-      "vmstate" : "HALT"
+      "trigger" : "Application"
    },
-   "id" : 1,
-   "jsonrpc" : "2.0"
+   "jsonrpc" : "2.0",
+   "id" : 1
 }
 ```
 Pay attention to `notifications` field. It contains messages, which where passed to `runtime.Notify` method.
@@ -656,7 +742,7 @@ Value read from storage
 ```
 So, these 3 messages are:
   - `Value read from storage` which was called after we've got the counter value from storage
-  - `Storage key not yet set. Setting to 1` which was called when we realised that counter value is 0
+  - `Storage key already set. Incrementing by 1` which was called when we realised that counter value is 0
   - `New value written into storage` which was called after the counter value was put in the storage.
   
 The final part is `stack` field. This field contains all returned by the contract values, so here you can see integer value `1`,
@@ -665,7 +751,7 @@ which is the counter value denoted to the number of contract invocations.
 #### Step #4
 To ensure that all works as expected, let's invoke the contract one more time and check, whether the counter will be incremented: 
 ```
-$ ./bin/neo-go contract invokefunction -r http://localhost:20331 -w my_wallet.json 79edf20dc8ee247981756787a638e9679026c16c main
+$ ./bin/neo-go contract invokefunction -r http://localhost:20331 -w my_wallet.json 57d271f86ed539fe4e2cfeee613f212f82326b3b main
 ```
 ... enter the password `qwerty`:
 ```
@@ -673,70 +759,70 @@ Enter account NULwe3UAHckN2fzNdcVg31tDiaYtMDwANt password >
 ```
 Result:
 ```
-Sent invocation transaction bbe338b20228e7067c71da2137d14ac7cbd01158469979d882982aee7f41e316
+Sent invocation transaction f093fc584a06362db89364ce348976a067c48405b277976d0c4d40475033fab6
 ```
 To check the counter value, call `getapplicaionlog` RPC-call for the invocation transaction:
 ```
-curl -d '{ "jsonrpc": "2.0", "id": 1, "method": "getapplicationlog", "params": ["bbe338b20228e7067c71da2137d14ac7cbd01158469979d882982aee7f41e316"] }' localhost:20331 | json_pp
+curl -d '{ "jsonrpc": "2.0", "id": 1, "method": "getapplicationlog", "params": ["f093fc584a06362db89364ce348976a067c48405b277976d0c4d40475033fab6"] }' localhost:20331 | json_pp
 ```
 The JSON result is:
 ```
 {
+   "id" : 1,
+   "jsonrpc" : "2.0",
    "result" : {
-      "trigger" : "Application",
-      "txid" : "0xbbe338b20228e7067c71da2137d14ac7cbd01158469979d882982aee7f41e316",
-      "gasconsumed" : "5293020",
       "notifications" : [
          {
+            "eventname" : "info",
             "state" : {
-               "type" : "Array",
                "value" : [
                   {
-                     "value" : "VmFsdWUgcmVhZCBmcm9tIHN0b3JhZ2U=",
-                     "type" : "ByteString"
+                     "type" : "ByteString",
+                     "value" : "VmFsdWUgcmVhZCBmcm9tIHN0b3JhZ2U="
                   }
-               ]
+               ],
+               "type" : "Array"
             },
-            "contract" : "0x79edf20dc8ee247981756787a638e9679026c16c",
-            "eventname" : "info"
+            "contract" : "0x57d271f86ed539fe4e2cfeee613f212f82326b3b"
          },
          {
+            "contract" : "0x57d271f86ed539fe4e2cfeee613f212f82326b3b",
             "eventname" : "info",
-            "contract" : "0x79edf20dc8ee247981756787a638e9679026c16c",
             "state" : {
+               "type" : "Array",
                "value" : [
                   {
                      "type" : "ByteString",
                      "value" : "U3RvcmFnZSBrZXkgYWxyZWFkeSBzZXQuIEluY3JlbWVudGluZyBieSAx"
                   }
-               ],
-               "type" : "Array"
+               ]
             }
          },
          {
+            "contract" : "0x57d271f86ed539fe4e2cfeee613f212f82326b3b",
+            "eventname" : "info",
             "state" : {
                "type" : "Array",
                "value" : [
                   {
-                     "type" : "ByteString",
-                     "value" : "TmV3IHZhbHVlIHdyaXR0ZW4gaW50byBzdG9yYWdl"
+                     "value" : "TmV3IHZhbHVlIHdyaXR0ZW4gaW50byBzdG9yYWdl",
+                     "type" : "ByteString"
                   }
                ]
-            },
-            "contract" : "0x79edf20dc8ee247981756787a638e9679026c16c",
-            "eventname" : "info"
+            }
          }
       ],
-      "vmstate" : "HALT",
+      "trigger" : "Application",
       "stack" : [
          {
-            "value" : "2",
-            "type" : "Integer"
+            "type" : "Integer",
+            "value" : "2"
          }
-      ]
-   },
-   "id" : 1,
-   "jsonrpc" : "2.0"
+      ],
+      "txid" : "0xf093fc584a06362db89364ce348976a067c48405b277976d0c4d40475033fab6",
+      "gasconsumed" : "5292310",
+      "vmstate" : "HALT"
+   }
 }
 ```
 
