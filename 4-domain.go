@@ -43,7 +43,7 @@ func Delete(domainName []byte) bool {
 	}
 
 	storage.Delete(ctx, domainName)
-	runtime.Notify("deleted", owner, domainName)
+	runtime.Notify("deleted", owner.([]byte), domainName)
 	return true
 }
 
@@ -84,7 +84,7 @@ func Transfer(domainName []byte, toAddress []byte) bool {
 	}
 
 	storage.Put(ctx, domainName, toAddress)
-	runtime.Notify("deleted", owner, domainName)
+	runtime.Notify("deleted", owner.([]byte), domainName)
 	runtime.Notify("registered", toAddress, domainName)
 	return true
 }
