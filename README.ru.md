@@ -203,7 +203,11 @@ $ ./bin/neo-go node --privnet
 
 Результат:
 ```
-2020-06-30T16:26:47.549+0300	INFO	restoring blockchain	{"version": "0.1.0"}
+2020-12-17T14:51:53.200+0300	INFO	no storage version found! creating genesis block
+2020-12-17T14:51:53.203+0300	INFO	starting rpc-server	{"endpoint": ":20331"}
+2020-12-17T14:51:53.203+0300	INFO	service is running	{"service": "Prometheus", "endpoint": ":2112"}
+2020-12-17T14:51:53.203+0300	INFO	service hasn't started since it's disabled	{"service": "Pprof"}
+2020-12-17T14:51:53.203+0300	INFO	node started	{"blockHeight": 0, "headerHeight": 0}
 
     _   ____________        __________
    / | / / ____/ __ \      / ____/ __ \
@@ -211,21 +215,22 @@ $ ./bin/neo-go node --privnet
  / /|  / /___/ /_/ /_____/ /_/ / /_/ /
 /_/ |_/_____/\____/      \____/\____/
 
-/NEO-GO:0.90.0-pre-610-g59d1013a/
+/NEO-GO:0.91.1-pre-657-gc13d6ecc/
 
-2020-06-30T16:26:47.549+0300	INFO	service is running	{"service": "Prometheus", "endpoint": ":2112"}
-2020-06-30T16:26:47.549+0300	INFO	service hasn't started since it's disabled	{"service": "Pprof"}
-2020-06-30T16:26:47.550+0300	INFO	starting rpc-server	{"endpoint": ":20331"}
-2020-06-30T16:26:47.550+0300	INFO	node started	{"blockHeight": 0, "headerHeight": 0}
-2020-06-30T16:26:47.551+0300	INFO	new peer connected	{"addr": "127.0.0.1:20333", "peerCount": 1}
-2020-06-30T16:26:47.551+0300	INFO	new peer connected	{"addr": "127.0.0.1:20334", "peerCount": 2}
-2020-06-30T16:26:47.552+0300	INFO	new peer connected	{"addr": "127.0.0.1:20335", "peerCount": 3}
-2020-06-30T16:26:47.552+0300	INFO	new peer connected	{"addr": "127.0.0.1:20336", "peerCount": 4}
-2020-06-30T16:26:47.553+0300	INFO	started protocol	{"addr": "127.0.0.1:20334", "userAgent": "/NEO-GO:0.90.0-pre-610-g59d1013a/", "startHeight": 3, "id": 2280194870}
-2020-06-30T16:26:47.554+0300	INFO	started protocol	{"addr": "127.0.0.1:20333", "userAgent": "/NEO-GO:0.90.0-pre-610-g59d1013a/", "startHeight": 3, "id": 3666776256}
-2020-06-30T16:26:47.555+0300	INFO	started protocol	{"addr": "127.0.0.1:20336", "userAgent": "/NEO-GO:0.90.0-pre-610-g59d1013a/", "startHeight": 3, "id": 1699156200}
-2020-06-30T16:26:47.555+0300	INFO	started protocol	{"addr": "127.0.0.1:20335", "userAgent": "/NEO-GO:0.90.0-pre-610-g59d1013a/", "startHeight": 3, "id": 874998449}
-2020-06-30T16:26:48.550+0300	INFO	blockchain persist completed	{"persistedBlocks": 0, "persistedKeys": 4, "headerHeight": 3, "blockHeight": 0, "took": "437.278µs"}
+2020-12-17T14:51:53.204+0300	INFO	new peer connected	{"addr": "127.0.0.1:20333", "peerCount": 1}
+2020-12-17T14:51:53.206+0300	INFO	started protocol	{"addr": "127.0.0.1:20333", "userAgent": "/NEO-GO:0.91.1-pre-657-gc13d6ecc/", "startHeight": 0, "id": 3172166887}
+2020-12-17T14:51:54.204+0300	INFO	blockchain persist completed	{"persistedBlocks": 0, "persistedKeys": 71, "headerHeight": 0, "blockHeight": 0, "took": "765.955µs"}
+2020-12-17T14:51:56.204+0300	INFO	new peer connected	{"addr": "127.0.0.1:20336", "peerCount": 2}
+2020-12-17T14:51:56.204+0300	INFO	new peer connected	{"addr": "127.0.0.1:20334", "peerCount": 3}
+2020-12-17T14:51:56.205+0300	INFO	new peer connected	{"addr": "127.0.0.1:20335", "peerCount": 4}
+2020-12-17T14:51:56.205+0300	INFO	new peer connected	{"addr": "127.0.0.1:20333", "peerCount": 5}
+2020-12-17T14:51:56.205+0300	INFO	started protocol	{"addr": "127.0.0.1:20336", "userAgent": "/NEO-GO:0.91.1-pre-657-gc13d6ecc/", "startHeight": 0, "id": 90708676}
+2020-12-17T14:51:56.206+0300	WARN	peer disconnected	{"addr": "127.0.0.1:20333", "reason": "already connected", "peerCount": 4}
+2020-12-17T14:51:56.206+0300	INFO	started protocol	{"addr": "127.0.0.1:20334", "userAgent": "/NEO-GO:0.91.1-pre-657-gc13d6ecc/", "startHeight": 0, "id": 410946741}
+2020-12-17T14:51:56.207+0300	INFO	started protocol	{"addr": "127.0.0.1:20335", "userAgent": "/NEO-GO:0.91.1-pre-657-gc13d6ecc/", "startHeight": 0, "id": 4085957952}
+2020-12-17T14:52:35.213+0300	INFO	blockchain persist completed	{"persistedBlocks": 1, "persistedKeys": 19, "headerHeight": 1, "blockHeight": 1, "took": "518.786µs"}
+2020-12-17T14:52:50.217+0300	INFO	blockchain persist completed	{"persistedBlocks": 1, "persistedKeys": 19, "headerHeight": 2, "blockHeight": 2, "took": "384.966µs"}
+2020-12-17T14:53:05.222+0300	INFO	blockchain persist completed	{"persistedBlocks": 1, "persistedKeys": 19, "headerHeight": 3, "blockHeight": 3, "took": "496.654µs"}
 ...
 ```
 
@@ -235,17 +240,17 @@ $ ./bin/neo-go node --privnet
 
 1. Создадим транзакцию перевода GAS токенов:
     ```
-        $ ./bin/neo-go wallet nep5 transfer -w .docker/wallets/wallet1.json --out my_tx.json -r http://localhost:20331 --from NUVPACMnKFhpuHjsRjhUvXz1XhqfGZYVtY --to NULwe3UAHckN2fzNdcVg31tDiaYtMDwANt --token gas --amount 29999999
+        $ ./bin/neo-go wallet nep17 transfer -w .docker/wallets/wallet1.json --out my_tx.json -r http://localhost:20331 --from NUVPACMnKFhpuHjsRjhUvXz1XhqfGZYVtY --to NULwe3UAHckN2fzNdcVg31tDiaYtMDwANt --token GAS --amount 29999999
     ``` 
     Где
     - `./bin/neo-go` запускает neo-go
-    - `wallet nep5 transfer` - команда с аргументами в [neo-go](https://github.com/nspcc-dev/neo-go/blob/master/cli/wallet/nep5.go#L108)
+    - `wallet nep17 transfer` - команда с аргументами в [neo-go](https://github.com/nspcc-dev/neo-go/blob/master/cli/wallet/nep17.go#L108)
     - `-w .docker/wallets/wallet1.json` - путь к [кошельку](https://github.com/nspcc-dev/neo-go/blob/master/.docker/wallets/wallet1.json) для первой ноды в созданной частной сети
     - `--out my_tx.json` - файл для записи подписанной транзакции
     - `-r http://localhost:20331` - RPC-эндпоинт ноды
     - `--from NUVPACMnKFhpuHjsRjhUvXz1XhqfGZYVtY` - мультисиговый аккаунт, являющийся владельцем GAS
     - `--to NULwe3UAHckN2fzNdcVg31tDiaYtMDwANt` - наш аккаунт из [кошелька](https://github.com/nspcc-dev/neo-go-sc-wrkshp/blob/master/my_wallet.json)
-    - `--token gas` - имя переводимого токена (в данном случае это GAS)
+    - `--token GAS` - имя переводимого токена (в данном случае это GAS)
     - `--amount 29999999` - количество GAS для перевода
     
     Введите пароль `one`:
@@ -286,32 +291,32 @@ $ ./bin/neo-go node --privnet
 4. Проверьте баланс:
 
     На данный момент на балансе аккаунта `NULwe3UAHckN2fzNdcVg31tDiaYtMDwANt` должно находиться 29999999 GAS.
-    Чтобы проверить, что трансфер прошел успешно, воспользуйтесь `getnep5transfers` RPC-вызовом:
+    Чтобы проверить, что трансфер прошел успешно, воспользуйтесь `getnep17transfers` RPC-вызовом:
     ```
-    curl -d '{ "jsonrpc": "2.0", "id": 1, "method": "getnep5transfers", "params": ["NULwe3UAHckN2fzNdcVg31tDiaYtMDwANt"] }' localhost:20331 | json_pp
+    curl -d '{ "jsonrpc": "2.0", "id": 1, "method": "getnep17transfers", "params": ["NULwe3UAHckN2fzNdcVg31tDiaYtMDwANt"] }' localhost:20331 | json_pp
     ```
     Результат должен выглядеть следующим образом:
-    ```
+```
     {
        "jsonrpc" : "2.0",
-       "id" : 1,
        "result" : {
+          "address" : "NULwe3UAHckN2fzNdcVg31tDiaYtMDwANt",
+          "sent" : [],
           "received" : [
              {
-                "amount" : "29999999",
+                "assethash" : "0xa6a6c15dcdc9b997dac448b6926522d22efeedfb",
+                "transfernotifyindex" : 0,
+                "amount" : "2999999900000000",
+                "txhash" : "0xd44399f508e1ea6ebfd01cf9252a52e0e8699a1b799f60c03f3daae8f74af741",
+                "blockindex" : 41,
                 "transferaddress" : "NUVPACMnKFhpuHjsRjhUvXz1XhqfGZYVtY",
-                "blockindex" : 13,
-                "assethash" : "0x668e0c1f9d7b70a99dd9e06eadd4c784d641afbc",
-                "timestamp" : 1597143962082,
-                "txhash" : "0x19a4a1e58a48c9d9c65c451968a3a900e67915cf37ccd8edaa67e0866f1b5d04",
-                "transfernotifyindex" : 0
+                "timestamp" : 1608206555652
              }
-          ],
-          "address" : "NULwe3UAHckN2fzNdcVg31tDiaYtMDwANt",
-          "sent" : []
-       }
-    }    
-   ```
+          ]
+       },
+       "id" : 1
+    }
+```
 
 
 ## Воркшоп. Часть 1.
@@ -377,7 +382,8 @@ Enter account NULwe3UAHckN2fzNdcVg31tDiaYtMDwANt password >
 
 Результат:
 ```
-Sent deployment transaction 8fc1dee25649d4292ac2cb19e7be2e65288ef5fab0add933b3f54c31477852dd for contract 28dbf93dc07a3d9b84ce6499132b874844784f9c
+Contract: 86485ca76761ae5042cba30e380c95e077e00bfa
+5ec9afdcd30b6e38280df690fb0d80490fdcd94af0c2c0bcd3f47b13114f7175
 ```
 
 На данном этапе ваш контракт ‘Hello World’ развернут и может быть вызван. В следующем шаге вызовем этот контракт.
@@ -385,14 +391,14 @@ Sent deployment transaction 8fc1dee25649d4292ac2cb19e7be2e65288ef5fab0add933b3f5
 #### Шаг 4
 Вызовите контракт.
 ```
-$ ./bin/neo-go contract invokefunction -r http://localhost:20331 -w my_wallet.json 28dbf93dc07a3d9b84ce6499132b874844784f9c main
+$ ./bin/neo-go contract invokefunction -r http://localhost:20331 -w my_wallet.json 86485ca76761ae5042cba30e380c95e077e00bfa main
 ```
 
 Где
 - `contract invokefunction` запускает вызов контракта с заданными параметрами
 - `-r http://localhost:20331` определяет эндпоинт RPC, используемый для вызова функции
 - `-w my_wallet.json` - кошелек
-- `28dbf93dc07a3d9b84ce6499132b874844784f9c` хеш контракта, полученный в результате выполнения предыдущей команды (развертывание из шага 6)
+- `86485ca76761ae5042cba30e380c95e077e00bfa` хеш контракта, полученный в результате выполнения предыдущей команды (развертывание из шага 6)
 - `Main` - вызываемый метод контракта
 
 Введите пароль `qwerty` для аккаунта:
@@ -402,11 +408,11 @@ Enter account NULwe3UAHckN2fzNdcVg31tDiaYtMDwANt password >
 
 Результат:
 ```
-Sent invocation transaction 5025daa84c6c41b672444e5f26fc125811900309c84295b35b2db3d70bab18b8
+Sent invocation transaction 31e931f151716960d03188e5ba9fdbe812d7862827d77c255921f3c25a2cdc5f
 ```
 В консоли, где была запущена нода (шаг 5), вы увидите:
 ```
-2020-07-02T17:01:46.175+0300	INFO	runtime log	{"script": "9c4f784448872b139964ce849b3d7ac03df9db28", "logs": "\"Hello, world!\""}
+2020-12-17T15:29:48.790+0300	INFO	runtime log	{"script": "fa0be077e0950c380ea3cb4250ae6167a75c4886", "logs": "\"Hello, world!\""}
 ```
 Что означает, что контракт был выполнен.
 
@@ -430,47 +436,47 @@ RPC-сервер ноды neo-go, запущенной на шаге 5, дост
 
 Запросите информацию о нашей разворачивающей транзакции из шага 3:
 ```
-curl -d '{ "jsonrpc": "2.0", "id": 1, "method": "getrawtransaction", "params": ["8fc1dee25649d4292ac2cb19e7be2e65288ef5fab0add933b3f54c31477852dd", 1] }' localhost:20331 | json_pp
+curl -d '{ "jsonrpc": "2.0", "id": 1, "method": "getrawtransaction", "params": ["5ec9afdcd30b6e38280df690fb0d80490fdcd94af0c2c0bcd3f47b13114f7175", 1] }' localhost:20331 | json_pp
 ```
 
 Где:
 - `"jsonrpc": "2.0"` - версия протокола
 - `"id": 1` - id текущего запроса
 - `"method": "getrawtransaction"` - запрашиваемый метод
-- `"params": ["8fc1dee25649d4292ac2cb19e7be2e65288ef5fab0add933b3f54c31477852dd", 1]` массив параметров запроса, где
-   - `8fc1dee25649d4292ac2cb19e7be2e65288ef5fab0add933b3f54c31477852dd` - хеш разворачивающеей транзакции, полученный после выполнения шага 6
+- `"params": ["5ec9afdcd30b6e38280df690fb0d80490fdcd94af0c2c0bcd3f47b13114f7175", 1]` массив параметров запроса, где
+   - `5ec9afdcd30b6e38280df690fb0d80490fdcd94af0c2c0bcd3f47b13114f7175` - хеш разворачивающеей транзакции, полученный после выполнения шага 6
    - `1` это `verbose` параметр для получения детального ответа в формате json-строки 
 
 Результат:
 ```
 {
    "result" : {
-      "attributes" : [],
-      "blocktime" : 1597144100686,
-      "size" : 511,
-      "nonce" : 3765129059,
-      "blockhash" : "0xef1da7ae391bc0ff88b061adced2e8b9fcb7f4fb6c27c65eef230b2a875aaa59",
-      "sender" : "NULwe3UAHckN2fzNdcVg31tDiaYtMDwANt",
+      "blocktime" : 1608208132012,
       "signers" : [
          {
             "account" : "0xf8d79b436e9d3a54a38cc877d182b71e381d7a5c",
-            "scopes" : "FeeOnly"
+            "scopes" : "None"
          }
       ],
+      "vmstate" : "HALT",
+      "nonce" : 1618563338,
+      "size" : 524,
+      "validuntilblock" : 147,
+      "sysfee" : "0.3319963",
       "witnesses" : [
          {
-            "invocation" : "DEC4KhicN9a3V+sFm7UZfBntVmDY7QOWWpKGRLBjPXjx4m0epLmPQcpq722Y7aR1knqnLDNdcJebKqZ0FyB9tkWT",
+            "invocation" : "DEBsEj8zWf63QbEbGWdeAK13KZuhNgnzk+xnPBCK678oAlai0RREDjPI2m6oysSMXKNE7KHr5fhIZ6FURwV6I74Z",
             "verification" : "DCECqIHFxkXMSrGdFGesF8hU+x8Y9RaRmsEOWyRK4B9eK30LQZVEDXg="
          }
       ],
-      "confirmations" : 23,
-      "validuntilblock" : 22,
-      "hash" : "0x8fc1dee25649d4292ac2cb19e7be2e65288ef5fab0add933b3f54c31477852dd",
-      "netfee" : "2620420",
-      "version" : 0,
-      "vmstate" : "HALT",
-      "sysfee" : "34013180",
-      "script" : "DT4BeyJhYmkiOnsiaGFzaCI6IjB4MjhkYmY5M2RjMDdhM2Q5Yjg0Y2U2NDk5MTMyYjg3NDg0NDc4NGY5YyIsIm1ldGhvZHMiOlt7Im5hbWUiOiJtYWluIiwib2Zmc2V0IjowLCJwYXJhbWV0ZXJzIjpbXSwicmV0dXJudHlwZSI6IlZvaWQifV0sImV2ZW50cyI6W119LCJncm91cHMiOltdLCJmZWF0dXJlcyI6eyJwYXlhYmxlIjpmYWxzZSwic3RvcmFnZSI6ZmFsc2V9LCJwZXJtaXNzaW9ucyI6W3siY29udHJhY3QiOiIqIiwibWV0aG9kcyI6IioifV0sInN1cHBvcnRlZHN0YW5kYXJkcyI6W10sInRydXN0cyI6W10sInNhZmVtZXRob2RzIjpbXSwiZXh0cmEiOm51bGx9DBYMDUhlbGxvLCB3b3JsZCFBz+dHliFAQc41LIU="
+      "script" : "DON7Im5hbWUiOiIiLCJhYmkiOnsibWV0aG9kcyI6W3sibmFtZSI6Im1haW4iLCJvZmZzZXQiOjAsInBhcmFtZXRlcnMiOltdLCJyZXR1cm50eXBlIjoiVm9pZCIsInNhZmUiOmZhbHNlfV0sImV2ZW50cyI6W119LCJncm91cHMiOltdLCJwZXJtaXNzaW9ucyI6W3siY29udHJhY3QiOiIqIiwibWV0aG9kcyI6IioifV0sInN1cHBvcnRlZHN0YW5kYXJkcyI6W10sInRydXN0cyI6W10sImV4dHJhIjpudWxsfQxfTkVGM25lby1nbwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMC45MS4xLXByZS02NTctZ2MxM2Q2ZWNjAAAAAAAAAAAWDA1IZWxsbywgd29ybGQhQc/nR5YhQI6nXW8SwAwGZGVwbG95DBSr1uitn0EJQTdlkc3fmtaCDbeXzUFifVtS",
+      "netfee" : "0.0150755",
+      "confirmations" : 20,
+      "hash" : "0x5ec9afdcd30b6e38280df690fb0d80490fdcd94af0c2c0bcd3f47b13114f7175",
+      "attributes" : [],
+      "blockhash" : "0x02362680cebf31702ebfd725fdae8d2eef7fcfda100b55a80520d3b417c2ee98",
+      "sender" : "NULwe3UAHckN2fzNdcVg31tDiaYtMDwANt",
+      "version" : 0
    },
    "jsonrpc" : "2.0",
    "id" : 1
@@ -482,29 +488,33 @@ curl -d '{ "jsonrpc": "2.0", "id": 1, "method": "getrawtransaction", "params": [
 
 Запросите информацию о контракте для нашей вызывающей транзакции, полученной на шаге 4:
 ```
-curl -d '{ "jsonrpc": "2.0", "id": 1, "method": "getapplicationlog", "params": ["5025daa84c6c41b672444e5f26fc125811900309c84295b35b2db3d70bab18b8"] }' localhost:20331 | json_pp
+curl -d '{ "jsonrpc": "2.0", "id": 1, "method": "getapplicationlog", "params": ["31e931f151716960d03188e5ba9fdbe812d7862827d77c255921f3c25a2cdc5f"] }' localhost:20331 | json_pp
 ```
 
 Где в качестве параметра:
-- `5025daa84c6c41b672444e5f26fc125811900309c84295b35b2db3d70bab18b8` - хеш вызывающей транзакции из шага 4
+- `31e931f151716960d03188e5ba9fdbe812d7862827d77c255921f3c25a2cdc5f` - хеш вызывающей транзакции из шага 4
 
 Результат:
 ```
 {
    "result" : {
-      "txid" : "0x5025daa84c6c41b672444e5f26fc125811900309c84295b35b2db3d70bab18b8",
-      "gasconsumed" : "2007600",
-      "trigger" : "Application",
-      "vmstate" : "HALT",
-      "notifications" : [],
-      "stack" : [
+      "executions" : [
          {
-            "type" : "Any"
+            "stack" : [
+               {
+                  "type" : "Any"
+               }
+            ],
+            "trigger" : "Application",
+            "vmstate" : "HALT",
+            "gasconsumed" : "0.0198222",
+            "notifications" : []
          }
-      ]
+      ],
+      "txid" : "0x31e931f151716960d03188e5ba9fdbe812d7862827d77c255921f3c25a2cdc5f"
    },
-   "id" : 1,
-   "jsonrpc" : "2.0"
+   "jsonrpc" : "2.0",
+   "id" : 1
 }
 ```
 
@@ -513,7 +523,7 @@ curl -d '{ "jsonrpc": "2.0", "id": 1, "method": "getapplicationlog", "params": [
 curl -d '{ "jsonrpc": "2.0", "id": 5, "method": "getversion", "params": [] }' localhost:20331
 curl -d '{ "jsonrpc": "2.0", "id": 5, "method": "getblockcount", "params": [] }' localhost:20331
 curl -d '{ "jsonrpc": "2.0", "id": 5, "method": "getconnectioncount", "params": [] }' localhost:20331
-curl -d '{ "jsonrpc": "2.0", "id": 5, "method": "getcontractstate", "params": ["0x9c33bbf2f5afbbc8fe271dd37508acd93573cffc"] }' localhost:20331
+curl -d '{ "jsonrpc": "2.0", "id": 5, "method": "getcontractstate", "params": ["0x86485ca76761ae5042cba30e380c95e077e00bfa"] }' localhost:20331
 ```
 
 Список всех поддерживаемых нодой neo-go вызовов RPC вы найдете [здесь](https://github.com/nspcc-dev/neo-go/blob/master/docs/rpc.md#supported-methods).
@@ -525,12 +535,7 @@ curl -d '{ "jsonrpc": "2.0", "id": 5, "method": "getcontractstate", "params": ["
 С другой стороны, этот контракт умеет считать количество его вызовов, сохраняя целое число и увеличивая его на 1 после каждого вызова.
 Подобный контракт будет интересен нам, поскольку он способен *хранить* значения, т.е. обладает *хранилищем*, которое является общим для всех вызовов данного контракта.
 
-К сожалению, за все хорошее нужно платить, в том числе и за наличие хранилища у нашего контракта.
-Чтобы обозначить, что контракт имеет хранилище, в его конфигурации [2-storage.yml](https://github.com/nspcc-dev/neo-go-sc-wrkshp/blob/master/2-storage.yml) мы обязаны установить значение следующего флага:
-```
-hasstorage: true
-```
-В противном случае мы не сможем воспользоваться хранилищем в контракте.
+За наличие хранилища у нашего контракта нужно заплатить дополнительное количество GAS, которое определяется вызываемым методом (например, put) и объемом данных.
 
 В контракте `2-storage.go` также описан специальный метод `_deploy`, который выполняется во время развертывания или обновления контракта.
 Данный метод не возвращает никаких значений и принимает единственный булевый аргумент, служащий индикатором обновления контракта.
@@ -560,79 +565,87 @@ Enter account NULwe3UAHckN2fzNdcVg31tDiaYtMDwANt password >
 
 Результат:
 ```
-Contract: 57d271f86ed539fe4e2cfeee613f212f82326b3b
-a2441a771d3f7a99472e17bea6add0801a07d84b1afad3c11e8b1e3aa4a662a8
+Contract: 0d8b4c23d13fc10422ed9ca8875fe9fb942b8f0c
+5b14b2a8aeae2d22456f5870b8ac787ab2faef199a323b51c8612ade6124dafc
 ```   
 
 Что означает, что наш контракт развернут, и теперь мы можем вызывать его.
 
 Давайте проверим, что значение количества вызовов контракта было проинициализировано. Используйте для этого RPC-вызов `getapplicaionlog` с хешем развертывающей транзакции в качестве параметра:
 ```
-curl -d '{ "jsonrpc": "2.0", "id": 1, "method": "getapplicationlog", "params": ["a2441a771d3f7a99472e17bea6add0801a07d84b1afad3c11e8b1e3aa4a662a8"] }' localhost:20331 | json_pp
+curl -d '{ "jsonrpc": "2.0", "id": 1, "method": "getapplicationlog", "params": ["5b14b2a8aeae2d22456f5870b8ac787ab2faef199a323b51c8612ade6124dafc"] }' localhost:20331 | json_pp
 ```
 
 Результат:
 
 ```
 {
-   "id" : 1,
    "jsonrpc" : "2.0",
+   "id" : 1,
    "result" : {
-      "trigger" : "Application",
-      "stack" : [
+      "executions" : [
          {
-            "type" : "Array",
-            "value" : [
+            "notifications" : [
                {
-                  "value" : "VwMBeKonigAAAEGb9mfOIXAMBGluZm8MJVN0b3JhZ2Uga2V5IG5vdCB5ZXQgc2V0LiBTZXR0aW5nIHRvIDARwFBBlQFvYSEQcWgMEHRlc3Qtc3RvcmFnZS1rZXlpU0HmPxiEIQwEaW5mbwwaU3RvcmFnZSBrZXkgaXMgaW5pdGlhbGlzZWQRwFBBlQFvYSFAVwMAQZv2Z84hcGgMEHRlc3Qtc3RvcmFnZS1rZXlQQZJd6DEhcQwEaW5mbwwXVmFsdWUgcmVhZCBmcm9tIHN0b3JhZ2URwFBBlQFvYSEMBGluZm8MKlN0b3JhZ2Uga2V5IGFscmVhZHkgc2V0LiBJbmNyZW1lbnRpbmcgYnkgMRHAUEGVAW9hIWnbIRGecWgMEHRlc3Qtc3RvcmFnZS1rZXlpU0HmPxiEIQwEaW5mbwweTmV3IHZhbHVlIHdyaXR0ZW4gaW50byBzdG9yYWdl2zARwFBBlQFvYSFpQA==",
-                  "type" : "ByteString"
+                  "eventname" : "info",
+                  "contract" : "0x0d8b4c23d13fc10422ed9ca8875fe9fb942b8f0c",
+                  "state" : {
+                     "type" : "Array",
+                     "value" : [
+                        {
+                           "type" : "ByteString",
+                           "value" : "U3RvcmFnZSBrZXkgbm90IHlldCBzZXQuIFNldHRpbmcgdG8gMA=="
+                        }
+                     ]
+                  }
                },
                {
-                  "value" : "eyJhYmkiOnsiaGFzaCI6IjB4NTdkMjcxZjg2ZWQ1MzlmZTRlMmNmZWVlNjEzZjIxMmY4MjMyNmIzYiIsIm1ldGhvZHMiOlt7Im5hbWUiOiJfZGVwbG95Iiwib2Zmc2V0IjowLCJwYXJhbWV0ZXJzIjpbeyJuYW1lIjoiaXNVcGRhdGUiLCJ0eXBlIjoiQm9vbGVhbiJ9XSwicmV0dXJudHlwZSI6IlZvaWQifSx7Im5hbWUiOiJtYWluIiwib2Zmc2V0IjoxNDQsInBhcmFtZXRlcnMiOltdLCJyZXR1cm50eXBlIjoiQW55In1dLCJldmVudHMiOlt7Im5hbWUiOiJpbmZvIiwicGFyYW1ldGVycyI6W3sibmFtZSI6Im1lc3NhZ2UiLCJ0eXBlIjoiQnl0ZUFycmF5In1dfV19LCJncm91cHMiOltdLCJmZWF0dXJlcyI6eyJwYXlhYmxlIjpmYWxzZSwic3RvcmFnZSI6dHJ1ZX0sInBlcm1pc3Npb25zIjpbeyJjb250cmFjdCI6IioiLCJtZXRob2RzIjoiKiJ9XSwic3VwcG9ydGVkc3RhbmRhcmRzIjpbXSwidHJ1c3RzIjpbXSwic2FmZW1ldGhvZHMiOltdLCJleHRyYSI6bnVsbH0=",
-                  "type" : "ByteString"
-               },
-               {
-                  "value" : true,
-                  "type" : "Boolean"
-               },
-               {
-                  "value" : false,
-                  "type" : "Boolean"
+                  "eventname" : "info",
+                  "contract" : "0x0d8b4c23d13fc10422ed9ca8875fe9fb942b8f0c",
+                  "state" : {
+                     "type" : "Array",
+                     "value" : [
+                        {
+                           "type" : "ByteString",
+                           "value" : "U3RvcmFnZSBrZXkgaXMgaW5pdGlhbGlzZWQ="
+                        }
+                     ]
+                  }
                }
-            ]
+            ],
+            "gasconsumed" : "0.9215402",
+            "stack" : [
+               {
+                  "type" : "Array",
+                  "value" : [
+                     {
+                        "type" : "Integer",
+                        "value" : "2"
+                     },
+                     {
+                        "type" : "Integer",
+                        "value" : "0"
+                     },
+                     {
+                        "type" : "ByteString",
+                        "value" : "DI8rlPvpX4eonO0iBME/0SNMiw0="
+                     },
+                     {
+                        "value" : "VwMBeKonjgAAAEGb9mfOIXAMBGluZm8MJVN0b3JhZ2Uga2V5IG5vdCB5ZXQgc2V0LiBTZXR0aW5nIHRvIDDbMBHAUEGVAW9hIRBxaAwQdGVzdC1zdG9yYWdlLWtleWlTQeY/GIQhDARpbmZvDBpTdG9yYWdlIGtleSBpcyBpbml0aWFsaXNlZNswEcBQQZUBb2EhQFcDAEGb9mfOIXBoDBB0ZXN0LXN0b3JhZ2Uta2V5UEGSXegxIXEMBGluZm8MF1ZhbHVlIHJlYWQgZnJvbSBzdG9yYWdl2zARwFBBlQFvYSEMBGluZm8MKlN0b3JhZ2Uga2V5IGFscmVhZHkgc2V0LiBJbmNyZW1lbnRpbmcgYnkgMdswEcBQQZUBb2EhadshEZ5xaAwQdGVzdC1zdG9yYWdlLWtleWlTQeY/GIQhDARpbmZvDB5OZXcgdmFsdWUgd3JpdHRlbiBpbnRvIHN0b3JhZ2XbMBHAUEGVAW9hIWlA",
+                        "type" : "ByteString"
+                     },
+                     {
+                        "value" : "eyJuYW1lIjoiU3RvcmFnZSBjb250cmFjdCIsImFiaSI6eyJtZXRob2RzIjpbeyJuYW1lIjoiX2RlcGxveSIsIm9mZnNldCI6MCwicGFyYW1ldGVycyI6W3sibmFtZSI6ImlzVXBkYXRlIiwidHlwZSI6IkJvb2xlYW4ifV0sInJldHVybnR5cGUiOiJWb2lkIiwic2FmZSI6ZmFsc2V9LHsibmFtZSI6Im1haW4iLCJvZmZzZXQiOjE0OCwicGFyYW1ldGVycyI6W10sInJldHVybnR5cGUiOiJBbnkiLCJzYWZlIjpmYWxzZX1dLCJldmVudHMiOlt7Im5hbWUiOiJpbmZvIiwicGFyYW1ldGVycyI6W3sibmFtZSI6Im1lc3NhZ2UiLCJ0eXBlIjoiQnl0ZUFycmF5In1dfV19LCJncm91cHMiOltdLCJwZXJtaXNzaW9ucyI6W3siY29udHJhY3QiOiIqIiwibWV0aG9kcyI6IioifV0sInN1cHBvcnRlZHN0YW5kYXJkcyI6W10sInRydXN0cyI6W10sImV4dHJhIjpudWxsfQ==",
+                        "type" : "ByteString"
+                     }
+                  ]
+               }
+            ],
+            "vmstate" : "HALT",
+            "trigger" : "Application"
          }
       ],
-      "gasconsumed" : "88842960",
-      "notifications" : [
-         {
-            "eventname" : "info",
-            "contract" : "0x57d271f86ed539fe4e2cfeee613f212f82326b3b",
-            "state" : {
-               "value" : [
-                  {
-                     "value" : "U3RvcmFnZSBrZXkgbm90IHlldCBzZXQuIFNldHRpbmcgdG8gMA==",
-                     "type" : "ByteString"
-                  }
-               ],
-               "type" : "Array"
-            }
-         },
-         {
-            "eventname" : "info",
-            "state" : {
-               "type" : "Array",
-               "value" : [
-                  {
-                     "type" : "ByteString",
-                     "value" : "U3RvcmFnZSBrZXkgaXMgaW5pdGlhbGlzZWQ="
-                  }
-               ]
-            },
-            "contract" : "0x57d271f86ed539fe4e2cfeee613f212f82326b3b"
-         }
-      ],
-      "vmstate" : "HALT",
-      "txid" : "0xa2441a771d3f7a99472e17bea6add0801a07d84b1afad3c11e8b1e3aa4a662a8"
+      "txid" : "0x5b14b2a8aeae2d22456f5870b8ac787ab2faef199a323b51c8612ade6124dafc"
    }
 }
 ```
@@ -653,7 +666,7 @@ $ echo U3RvcmFnZSBrZXkgaXMgaW5pdGlhbGlzZWQ= | base64 -d
 Поскольку мы не вызывали наш смарт-контракт раньше, при первом вызове он должен инкрементировать лежащее в хранилище значение `0` и положить новое значение = 1 в хранилище.
 Давайте проверим:
 ```
-$ ./bin/neo-go contract invokefunction -r http://localhost:20331 -w my_wallet.json 57d271f86ed539fe4e2cfeee613f212f82326b3b main
+$ ./bin/neo-go contract invokefunction -r http://localhost:20331 -w my_wallet.json 0d8b4c23d13fc10422ed9ca8875fe9fb942b8f0c main
 ```
 ... введите пароль `qwerty`:
 ```
@@ -661,69 +674,73 @@ Enter account NULwe3UAHckN2fzNdcVg31tDiaYtMDwANt password >
 ```
 Результат:
 ```
-Sent invocation transaction dd9e802198bd655ea1abe237d22bd2cadd6e2367233d95cd4f00e1f43bfd7ba4
+Sent invocation transaction 1b1f45096411fc64249b4d727d413705d40ed3b84418098a8d369ffeb90a3ea1
 ```
 Для проверки значения счетчика вызовем `getapplicaionlog` вызов RPC для вызывающей транзакции:
 ```
-curl -d '{ "jsonrpc": "2.0", "id": 1, "method": "getapplicationlog", "params": ["dd9e802198bd655ea1abe237d22bd2cadd6e2367233d95cd4f00e1f43bfd7ba4"] }' localhost:20331 | json_pp
+curl -d '{ "jsonrpc": "2.0", "id": 1, "method": "getapplicationlog", "params": ["1b1f45096411fc64249b4d727d413705d40ed3b84418098a8d369ffeb90a3ea1"] }' localhost:20331 | json_pp
 ```
 Результат:
 ```
 {
-   "result" : {
-      "gasconsumed" : "5292310",
-      "stack" : [
-         {
-            "type" : "Integer",
-            "value" : "1"
-         }
-      ],
-      "vmstate" : "HALT",
-      "txid" : "0xdd9e802198bd655ea1abe237d22bd2cadd6e2367233d95cd4f00e1f43bfd7ba4",
-      "notifications" : [
-         {
-            "state" : {
-               "value" : [
-                  {
-                     "type" : "ByteString",
-                     "value" : "VmFsdWUgcmVhZCBmcm9tIHN0b3JhZ2U="
-                  }
-               ],
-               "type" : "Array"
-            },
-            "eventname" : "info",
-            "contract" : "0x57d271f86ed539fe4e2cfeee613f212f82326b3b"
-         },
-         {
-            "contract" : "0x57d271f86ed539fe4e2cfeee613f212f82326b3b",
-            "eventname" : "info",
-            "state" : {
-               "type" : "Array",
-               "value" : [
-                  {
-                     "type" : "ByteString",
-                     "value" : "U3RvcmFnZSBrZXkgYWxyZWFkeSBzZXQuIEluY3JlbWVudGluZyBieSAx"
-                  }
-               ]
-            }
-         },
-         {
-            "eventname" : "info",
-            "contract" : "0x57d271f86ed539fe4e2cfeee613f212f82326b3b",
-            "state" : {
-               "value" : [
-                  {
-                     "type" : "ByteString",
-                     "value" : "TmV3IHZhbHVlIHdyaXR0ZW4gaW50byBzdG9yYWdl"
-                  }
-               ],
-               "type" : "Array"
-            }
-         }
-      ],
-      "trigger" : "Application"
-   },
    "jsonrpc" : "2.0",
+   "result" : {
+      "executions" : [
+         {
+            "trigger" : "Application",
+            "stack" : [
+               {
+                  "value" : "1",
+                  "type" : "Integer"
+               }
+            ],
+            "notifications" : [
+               {
+                  "eventname" : "info",
+                  "contract" : "0x0d8b4c23d13fc10422ed9ca8875fe9fb942b8f0c",
+                  "state" : {
+                     "type" : "Array",
+                     "value" : [
+                        {
+                           "value" : "VmFsdWUgcmVhZCBmcm9tIHN0b3JhZ2U=",
+                           "type" : "ByteString"
+                        }
+                     ]
+                  }
+               },
+               {
+                  "eventname" : "info",
+                  "contract" : "0x0d8b4c23d13fc10422ed9ca8875fe9fb942b8f0c",
+                  "state" : {
+                     "type" : "Array",
+                     "value" : [
+                        {
+                           "type" : "ByteString",
+                           "value" : "U3RvcmFnZSBrZXkgYWxyZWFkeSBzZXQuIEluY3JlbWVudGluZyBieSAx"
+                        }
+                     ]
+                  }
+               },
+               {
+                  "contract" : "0x0d8b4c23d13fc10422ed9ca8875fe9fb942b8f0c",
+                  "state" : {
+                     "type" : "Array",
+                     "value" : [
+                        {
+                           "value" : "TmV3IHZhbHVlIHdyaXR0ZW4gaW50byBzdG9yYWdl",
+                           "type" : "ByteString"
+                        }
+                     ]
+                  },
+                  "eventname" : "info"
+               }
+            ],
+            "vmstate" : "HALT",
+            "gasconsumed" : "0.0542855"
+         }
+      ],
+      "txid" : "0x1b1f45096411fc64249b4d727d413705d40ed3b84418098a8d369ffeb90a3ea1"
+   },
    "id" : 1
 }
 ```
@@ -748,7 +765,7 @@ Value read from storage
 #### Шаг #4
 Для того чтобы убедиться, что все работает как надо, давайте вызовем наш контракт еще раз и проверим, что счетчик будет увеличен: 
 ```
-$ ./bin/neo-go contract invokefunction -r http://localhost:20331 -w my_wallet.json 57d271f86ed539fe4e2cfeee613f212f82326b3b main
+$ ./bin/neo-go contract invokefunction -r http://localhost:20331 -w my_wallet.json 0d8b4c23d13fc10422ed9ca8875fe9fb942b8f0c main
 ```
 ... введите пароль `qwerty`:
 ```
@@ -756,11 +773,11 @@ Enter account NULwe3UAHckN2fzNdcVg31tDiaYtMDwANt password >
 ```
 Результат:
 ```
-Sent invocation transaction f093fc584a06362db89364ce348976a067c48405b277976d0c4d40475033fab6
+Sent invocation transaction 8004612c16e6aa1d67af53c79cc7cc773f6966d70e4791559391bfdc83480894
 ```
 Для проверки значения счетчика, выполните `getapplicaionlog` вызов RPC для вызывающей транзакции:
 ```
-curl -d '{ "jsonrpc": "2.0", "id": 1, "method": "getapplicationlog", "params": ["f093fc584a06362db89364ce348976a067c48405b277976d0c4d40475033fab6"] }' localhost:20331 | json_pp
+curl -d '{ "jsonrpc": "2.0", "id": 1, "method": "getapplicationlog", "params": ["8004612c16e6aa1d67af53c79cc7cc773f6966d70e4791559391bfdc83480894"] }' localhost:20331 | json_pp
 ```
 Результат:
 ```
@@ -768,57 +785,61 @@ curl -d '{ "jsonrpc": "2.0", "id": 1, "method": "getapplicationlog", "params": [
    "id" : 1,
    "jsonrpc" : "2.0",
    "result" : {
-      "notifications" : [
+      "executions" : [
          {
-            "eventname" : "info",
-            "state" : {
-               "value" : [
-                  {
-                     "type" : "ByteString",
-                     "value" : "VmFsdWUgcmVhZCBmcm9tIHN0b3JhZ2U="
+            "vmstate" : "HALT",
+            "gasconsumed" : "0.0532855",
+            "notifications" : [
+               {
+                  "state" : {
+                     "value" : [
+                        {
+                           "value" : "VmFsdWUgcmVhZCBmcm9tIHN0b3JhZ2U=",
+                           "type" : "ByteString"
+                        }
+                     ],
+                     "type" : "Array"
+                  },
+                  "eventname" : "info",
+                  "contract" : "0x0d8b4c23d13fc10422ed9ca8875fe9fb942b8f0c"
+               },
+               {
+                  "contract" : "0x0d8b4c23d13fc10422ed9ca8875fe9fb942b8f0c",
+                  "eventname" : "info",
+                  "state" : {
+                     "type" : "Array",
+                     "value" : [
+                        {
+                           "type" : "ByteString",
+                           "value" : "U3RvcmFnZSBrZXkgYWxyZWFkeSBzZXQuIEluY3JlbWVudGluZyBieSAx"
+                        }
+                     ]
                   }
-               ],
-               "type" : "Array"
-            },
-            "contract" : "0x57d271f86ed539fe4e2cfeee613f212f82326b3b"
-         },
-         {
-            "contract" : "0x57d271f86ed539fe4e2cfeee613f212f82326b3b",
-            "eventname" : "info",
-            "state" : {
-               "type" : "Array",
-               "value" : [
-                  {
-                     "type" : "ByteString",
-                     "value" : "U3RvcmFnZSBrZXkgYWxyZWFkeSBzZXQuIEluY3JlbWVudGluZyBieSAx"
-                  }
-               ]
-            }
-         },
-         {
-            "contract" : "0x57d271f86ed539fe4e2cfeee613f212f82326b3b",
-            "eventname" : "info",
-            "state" : {
-               "type" : "Array",
-               "value" : [
-                  {
-                     "value" : "TmV3IHZhbHVlIHdyaXR0ZW4gaW50byBzdG9yYWdl",
-                     "type" : "ByteString"
-                  }
-               ]
-            }
+               },
+               {
+                  "state" : {
+                     "type" : "Array",
+                     "value" : [
+                        {
+                           "value" : "TmV3IHZhbHVlIHdyaXR0ZW4gaW50byBzdG9yYWdl",
+                           "type" : "ByteString"
+                        }
+                     ]
+                  },
+                  "contract" : "0x0d8b4c23d13fc10422ed9ca8875fe9fb942b8f0c",
+                  "eventname" : "info"
+               }
+            ],
+            "stack" : [
+               {
+                  "type" : "Integer",
+                  "value" : "2"
+               }
+            ],
+            "trigger" : "Application"
          }
       ],
-      "trigger" : "Application",
-      "stack" : [
-         {
-            "type" : "Integer",
-            "value" : "2"
-         }
-      ],
-      "txid" : "0xf093fc584a06362db89364ce348976a067c48405b277976d0c4d40475033fab6",
-      "gasconsumed" : "5292310",
-      "vmstate" : "HALT"
+      "txid" : "0x8004612c16e6aa1d67af53c79cc7cc773f6966d70e4791559391bfdc83480894"
    }
 }
 ```
@@ -826,16 +847,15 @@ curl -d '{ "jsonrpc": "2.0", "id": 1, "method": "getapplicationlog", "params": [
 Теперь поле `stack` содержит значение `2` - счетчик был увеличен, как мы и ожидали.
 
 ## Воркшоп. Часть 3
-В этой части мы узнаем о стандарте токена NEP5 и попробуем написать, задеплоить и вызвать более сложный смарт-контракт. Начнем!
+В этой части мы узнаем о стандарте токена NEP17 и попробуем написать, задеплоить и вызвать более сложный смарт-контракт. Начнем!
 
-### NEP5
-[NEP5](https://docs.neo.org/docs/en-us/sc/write/nep5.html) - это стандарт токена блокчейна Neo, обеспечивающий системы обобщенным механизмом взаимодействия для токенизированных смарт-контрактов.
-Пример с реализацией всех требуемых стандартом методов вы можете найти в [nep5.go](https://github.com/nspcc-dev/neo-go/blob/master/examples/token/nep5/nep5.go)
+### NEP17
+[NEP17](https://github.com/neo-project/proposals/blob/master/nep-17.mediawiki) - это стандарт токена блокчейна Neo, обеспечивающий системы обобщенным механизмом взаимодействия для токенизированных смарт-контрактов.
+Пример с реализацией всех требуемых стандартом методов вы можете найти в [nep17.go](https://github.com/nspcc-dev/neo-go/blob/master/examples/token/nep17/nep17.go)
  
-Давайте посмотрим на пример смарт-контракта NEP5: [token.go](https://github.com/nspcc-dev/neo-go/blob/master/examples/token/token.go)
+Давайте посмотрим на пример смарт-контракта NEP17: [token.go](https://github.com/nspcc-dev/neo-go/blob/master/examples/token/token.go)
  
 Этот смарт-контракт принимает в качестве параетра строку с операцией, которая может принимать следующие значения:
-- `name` возвращает имя созданного токена nep5 
 - `symbol` возвращает код токена
 - `decimals` возвращает количество десятичных знаков токена
 - `totalSupply` возвращает общий множитель * токена
@@ -845,21 +865,18 @@ curl -d '{ "jsonrpc": "2.0", "id": 1, "method": "getapplicationlog", "params": [
   - `from` адрес аккаунта, с которого будет списан токен
   - `to` адрес аккаунта, на который будет зачислен токен
   - `amount` количество токена для перевода
-- `mint` выпускает начальное количество токенов на аккаунт и требует дополнительных аргументов:
-  - `to` адрес аккаунта, на который вы бы хотели выпустить токены  
-
+  - `data` любая дополнительная информация, которая будет передана методу `onPayment` (если получатель является контрактом)
+    
 Давайте проведем несколько операций с помощью этого контракта.
 
 #### Шаг #1
 Для компиляции [token.go](https://github.com/nspcc-dev/neo-go/blob/master/examples/token/token.go)
 можно использовать файл [конфигурации](https://github.com/nspcc-dev/neo-go/blob/master/examples/token/token.yml).
 Поскольку данный контракт использует хранилище, необходимо установить флаг 
-```
-hasstorage: true
-```
+
 Скомпилируйте смарт-контракт:
 ```
-$ ./bin/neo-go contract compile -i examples/token/token.go -c 3-token.yml -m examples/token/token.manifest.json
+$ ./bin/neo-go contract compile -i examples/token/token.go -c examples/token/token.yml -m examples/token/token.manifest.json
 ```
 Разверните скомпилированный контракт:
 ```
@@ -872,94 +889,102 @@ Enter account NULwe3UAHckN2fzNdcVg31tDiaYtMDwANt password >
 
 Результат:
 ```
-Sent deployment transaction d275df152996bdab279efb0942b15fd26c6a2b69965cdc77540f401f6a91aedc for contract 4f84a3b4a32125056b5b2bf5b6c7addc3616985f
+Contract: e95ac155a85c449c881b3dc6b31f93ba9d514bb0
+caadeb13f2c76321dd59c802ae9d34b560d6e7546cf8822d03b7e3712909d3e8
 ```   
 
 Что означает, что наш контракт был развернут, и теперь мы можем вызывать его.
 
 #### Шаг #2
-Давайте вызовем контракт для осуществления операций с nep5.
+Давайте вызовем контракт для осуществления операций с nep17.
 
-Для начала, запросите имя созданного токена nep5:
+Для начала, запросите символ созданного токена nep17:
 
 ```
-$ ./bin/neo-go contract invokefunction -r http://localhost:20331 -w my_wallet.json 4f84a3b4a32125056b5b2bf5b6c7addc3616985f name
+$ ./bin/neo-go contract invokefunction -r http://localhost:20331 -w my_wallet.json e95ac155a85c449c881b3dc6b31f93ba9d514bb0 symbol
 ```                                                                   
 Где
-- `4f84a3b4a32125056b5b2bf5b6c7addc3616985f` - хеш нашего контракта, полученный на шаге #1.
-- `name` - строка операции, описанная ранее и возвращающая имя токена.
+- `e95ac155a85c449c881b3dc6b31f93ba9d514bb0` - хеш нашего контракта, полученный на шаге #1.
+- `name` - строка операции, описанная ранее и возвращающая символ токена.
 
 ... не забудьте пароль от аккаунта `qwerty`.
 
 Результат:
 ```
-Sent invocation transaction de56bd31d785e6656a5eb20f48fd94c98d19700a9de4e721aebf68ba585490f2
+Sent invocation transaction 48f2f4f21aa92fd77247df20c83c652db77163a02dd079960e89f031142895d4
 ```                                                                                         
 Теперь давайте подробнее посмотрим на полученную вызывающую транзакцию с помощью `getapplicationlog` RPC-вызова:
 
 ```
-curl -d '{ "jsonrpc": "2.0", "id": 1, "method": "getapplicationlog", "params": ["de56bd31d785e6656a5eb20f48fd94c98d19700a9de4e721aebf68ba585490f2"] }' localhost:20331 | json_pp
+curl -d '{ "jsonrpc": "2.0", "id": 1, "method": "getapplicationlog", "params": ["48f2f4f21aa92fd77247df20c83c652db77163a02dd079960e89f031142895d4"] }' localhost:20331 | json_pp
 ```               
 
 Результат:
 ```
 {
-   "result" : {
-      "stack" : [
-         {
-            "type" : "ByteString",
-            "value" : "QXdlc29tZSBORU8gVG9rZW4="
-         }
-      ],
-      "txid" : "0xde56bd31d785e6656a5eb20f48fd94c98d19700a9de4e721aebf68ba585490f2",
-      "trigger" : "Application",
-      "vmstate" : "HALT",
-      "notifications" : [],
-      "gasconsumed" : "4647080"
-   },
    "jsonrpc" : "2.0",
-   "id" : 1
+   "id" : 1,
+   "result" : {
+      "txid" : "0x48f2f4f21aa92fd77247df20c83c652db77163a02dd079960e89f031142895d4",
+      "executions" : [
+         {
+            "stack" : [
+               {
+                  "type" : "ByteString",
+                  "value" : "QU5U"
+               }
+            ],
+            "notifications" : [],
+            "trigger" : "Application",
+            "gasconsumed" : "0.0406386",
+            "vmstate" : "HALT"
+         }
+      ]
+   }
 }
 ```
 
-Поле `stack` полученного JSON-сообщения содержит массив байтов в base64 со значением имени токена.
+Поле `stack` полученного JSON-сообщения содержит массив байтов в base64 со значением символа токена.
 
 Следующие команды позволят получить вам дополнительную информацию о токене:
 ```
-$ ./bin/neo-go contract invokefunction -r http://localhost:20331 -w my_wallet.json 4f84a3b4a32125056b5b2bf5b6c7addc3616985f symbol
-$ ./bin/neo-go contract invokefunction -r http://localhost:20331 -w my_wallet.json 4f84a3b4a32125056b5b2bf5b6c7addc3616985f decimals
-$ ./bin/neo-go contract invokefunction -r http://localhost:20331 -w my_wallet.json 4f84a3b4a32125056b5b2bf5b6c7addc3616985f totalSupply
+$ ./bin/neo-go contract invokefunction -r http://localhost:20331 -w my_wallet.json e95ac155a85c449c881b3dc6b31f93ba9d514bb0 decimals
+$ ./bin/neo-go contract invokefunction -r http://localhost:20331 -w my_wallet.json e95ac155a85c449c881b3dc6b31f93ba9d514bb0 totalSupply
 ```
 
 #### Шаг #3
-Настало время для более интересных вещей. Для начала проверим баланс nep5 токенов на нашем счету с помощью метода `balanceOf`:
+Настало время для более интересных вещей. Для начала проверим баланс nep17 токенов на нашем счету с помощью метода `balanceOf`:
 ```
-$ ./bin/neo-go contract invokefunction -r http://localhost:20331 -w my_wallet.json 4f84a3b4a32125056b5b2bf5b6c7addc3616985f balanceOf NULwe3UAHckN2fzNdcVg31tDiaYtMDwANt
+$ ./bin/neo-go contract invokefunction -r http://localhost:20331 -w my_wallet.json e95ac155a85c449c881b3dc6b31f93ba9d514bb0 balanceOf NULwe3UAHckN2fzNdcVg31tDiaYtMDwANt
 ```                             
 ... с паролем `qwerty`. Результат:
 ```
-Sent invocation transaction de1a69a6c0b5389458f35c44e28d1bea0a0ab4fe7b4ad0013e34b36d0995069a
+Sent invocation transaction 6db68a92683ffb5f6f40700d85ebb08058952d3ce0fb23ed837228118cc14025
 ```
 Для более детального рассмотрения транзакции используем `getapplicationlog` RPC-вызов:
 ```
-curl -d '{ "jsonrpc": "2.0", "id": 1, "method": "getapplicationlog", "params": ["de1a69a6c0b5389458f35c44e28d1bea0a0ab4fe7b4ad0013e34b36d0995069a"] }' localhost:20331 | json_pp
+curl -d '{ "jsonrpc": "2.0", "id": 1, "method": "getapplicationlog", "params": ["6db68a92683ffb5f6f40700d85ebb08058952d3ce0fb23ed837228118cc14025"] }' localhost:20331 | json_pp
 ```
 Результат:
 ```
 {
    "id" : 1,
    "result" : {
-      "vmstate" : "HALT",
-      "notifications" : [],
-      "trigger" : "Application",
-      "gasconsumed" : "5423900",
-      "txid" : "0xde1a69a6c0b5389458f35c44e28d1bea0a0ab4fe7b4ad0013e34b36d0995069a",
-      "stack" : [
+      "executions" : [
          {
-            "type" : "Integer",
-            "value" : "0"
+            "gasconsumed" : "0.0508071",
+            "notifications" : [],
+            "stack" : [
+               {
+                  "type" : "Integer",
+                  "value" : "0"
+               }
+            ],
+            "vmstate" : "HALT",
+            "trigger" : "Application"
          }
-      ]
+      ],
+      "txid" : "0x6db68a92683ffb5f6f40700d85ebb08058952d3ce0fb23ed837228118cc14025"
    },
    "jsonrpc" : "2.0"
 }
@@ -976,7 +1001,7 @@ curl -d '{ "jsonrpc": "2.0", "id": 1, "method": "getapplicationlog", "params": [
 Для этой цели существуют *подписанты* транзакции: проверка заданного хэша осуществляется с помощью листа подписантов, прикрепленного к ней.
 Чтобы пройти эту проверку, нам необходимо добавить наш аккаунт с областью CalledByEntry к подписантам транзакции перевода. Давайте выпустим токен на наш адрес:
 ```
-$ ./bin/neo-go contract invokefunction -r http://localhost:20331 -w my_wallet.json 4f84a3b4a32125056b5b2bf5b6c7addc3616985f mint NULwe3UAHckN2fzNdcVg31tDiaYtMDwANt -- f8d79b436e9d3a54a38cc877d182b71e381d7a5c:CalledByEntry
+$ ./bin/neo-go contract invokefunction -r http://localhost:20331 -w my_wallet.json e95ac155a85c449c881b3dc6b31f93ba9d514bb0 mint NULwe3UAHckN2fzNdcVg31tDiaYtMDwANt -- f8d79b436e9d3a54a38cc877d182b71e381d7a5c:CalledByEntry
 ```
 Где
 - `--` специальный разделитель, служащий для обозначения списка подписантов транзакции
@@ -984,77 +1009,84 @@ $ ./bin/neo-go contract invokefunction -r http://localhost:20331 -w my_wallet.js
 
 ... с паролем `qwerty`. Результат:
 ``` 
-Sent invocation transaction 2f4eff5532808080ae4c6a1a844c32a53015ca3cad5c308c5bcf3d8261399d06
+Sent invocation transaction f17d03c82c935cf9c936bb7ea1d4fd2231449a450ae0c5f165474551efb48057
 ```
 `getapplicationlog` RPC-вызов для этой транзакции дает нам следующий результат:
 ```
 {
    "result" : {
-      "stack" : [
+      "executions" : [
          {
-            "value" : "1",
-            "type" : "Integer"
+            "gasconsumed" : "0.1200636",
+            "vmstate" : "HALT",
+            "trigger" : "Application",
+            "notifications" : [
+               {
+                  "eventname" : "Transfer",
+                  "state" : {
+                     "type" : "Array",
+                     "value" : [
+                        {
+                           "type" : "Any"
+                        },
+                        {
+                           "type" : "ByteString",
+                           "value" : "XHodOB63gtF3yIyjVDqdbkOb1/g="
+                        },
+                        {
+                           "type" : "Integer",
+                           "value" : "1100000000000000"
+                        }
+                     ]
+                  },
+                  "contract" : "0xe95ac155a85c449c881b3dc6b31f93ba9d514bb0"
+               }
+            ],
+            "stack" : [
+               {
+                  "value" : "1",
+                  "type" : "Integer"
+               }
+            ]
          }
       ],
-      "vmstate" : "HALT",
-      "notifications" : [
-         {
-            "contract" : "0x4f84a3b4a32125056b5b2bf5b6c7addc3616985f",
-            "state" : {
-               "value" : [
-                  {
-                     "value" : "",
-                     "type" : "ByteString"
-                  },
-                  {
-                     "value" : "XHodOB63gtF3yIyjVDqdbkOb1/g=",
-                     "type" : "ByteString"
-                  },
-                  {
-                     "value" : "1100000000000000",
-                     "type" : "Integer"
-                  }
-               ],
-               "type" : "Array"
-            },
-            "eventname" : "transfer"
-         }
-      ],
-      "txid" : "0x2f4eff5532808080ae4c6a1a844c32a53015ca3cad5c308c5bcf3d8261399d06",
-      "gasconsumed" : "8233460",
-      "trigger" : "Application"
+      "txid" : "0xf17d03c82c935cf9c936bb7ea1d4fd2231449a450ae0c5f165474551efb48057"
    },
-   "jsonrpc" : "2.0",
-   "id" : 1
+   "id" : 1,
+   "jsonrpc" : "2.0"
 }
 ```
 Обратите внимание, что поле `stack` содержит значение `1` - токен был успешно выпущен.
 Давайте убедимся в этом, еще раз запросив баланс нашего аккаунта с помощью метода `balanceOf`:
 ```
-$ ./bin/neo-go contract invokefunction -r http://localhost:20331 -w my_wallet.json 4f84a3b4a32125056b5b2bf5b6c7addc3616985f balanceOf NULwe3UAHckN2fzNdcVg31tDiaYtMDwANt
+$ ./bin/neo-go contract invokefunction -r http://localhost:20331 -w my_wallet.json e95ac155a85c449c881b3dc6b31f93ba9d514bb0 balanceOf NULwe3UAHckN2fzNdcVg31tDiaYtMDwANt
 ```
 ... пароль `qwerty`. Результат:
 ``` 
-Sent invocation transaction cb3a28b2670836d1034655c19b5fbea62593f5f834977e72b1599f28c0ea79d5
+Sent invocation transaction ce8212e93ae6171efbdbb415153184ad06e4dbdd656c15ffdfcbbcd57463d7be
 ```
 ... со следующим сообщением от `getapplicationlog` вызова RPC:
 ```
 {
    "jsonrpc" : "2.0",
+   "id" : 1,
    "result" : {
-      "gasconsumed" : "5504020",
-      "notifications" : [],
-      "vmstate" : "HALT",
-      "txid" : "0xcb3a28b2670836d1034655c19b5fbea62593f5f834977e72b1599f28c0ea79d5",
-      "trigger" : "Application",
-      "stack" : [
+      "txid" : "0xce8212e93ae6171efbdbb415153184ad06e4dbdd656c15ffdfcbbcd57463d7be",
+      "executions" : [
          {
-            "type" : "Integer",
-            "value" : "1100000000000000"
+            "vmstate" : "HALT",
+            "notifications" : [],
+            "gasconsumed" : "0.0514227",
+            "trigger" : "Application",
+            "stack" : [
+               {
+                  "type" : "Integer",
+                  "value" : "1100000000000000"
+               }
+            ]
          }
       ]
-   },
-   "id" : 1
+   }
 }
 ```
 Теперь мы видим целое значение в поле `stack`, а именно, `1100000000000000` является значением баланса токена nep5 на нашем аккаунте.
@@ -1066,77 +1098,85 @@ Sent invocation transaction cb3a28b2670836d1034655c19b5fbea62593f5f834977e72b159
 После того, как мы закончили с выпуском токена, мы можем перевести некоторое количество токена кому-нибудь.
 Давайте переведем 5 токенов аккаунту с адресом `NgzuJWWGVEwFGsRrgzj8knswEYRJrTe7sm` с помощью функции `transfer`:
 ```
-$ ./bin/neo-go contract invokefunction -r http://localhost:20331 -w my_wallet.json 4f84a3b4a32125056b5b2bf5b6c7addc3616985f transfer NULwe3UAHckN2fzNdcVg31tDiaYtMDwANt NgzuJWWGVEwFGsRrgzj8knswEYRJrTe7sm 500000000 -- f8d79b436e9d3a54a38cc877d182b71e381d7a5c:CalledByEntry
+$ ./bin/neo-go contract invokefunction -r http://localhost:20331 -w my_wallet.json e95ac155a85c449c881b3dc6b31f93ba9d514bb0 transfer NULwe3UAHckN2fzNdcVg31tDiaYtMDwANt NgzuJWWGVEwFGsRrgzj8knswEYRJrTe7sm 500000000 null -- f8d79b436e9d3a54a38cc877d182b71e381d7a5c:CalledByEntry
 ```
 ... пароль `qwerty`. Результат:
 ``` 
-Sent invocation transaction 65864bd07566318141fd781ece65a72d3c185f3f7190ac7096f7b9b7b62583ee
+Sent invocation transaction 8fefd5861d865379b6632693a5c74f430eb4465b6abf2efef8bddfd0a17dfa70
 ```
 Наш любимый вызов RPC `getapplicationlog` говорит нам:
 ```
 {
-   "id" : 1,
+   "jsonrpc" : "2.0",
    "result" : {
-      "trigger" : "Application",
-      "txid" : "0x65864bd07566318141fd781ece65a72d3c185f3f7190ac7096f7b9b7b62583ee",
-      "vmstate" : "HALT",
-      "gasconsumed" : "8117770",
-      "notifications" : [
+      "executions" : [
          {
-            "state" : {
-               "type" : "Array",
-               "value" : [
-                  {
-                     "type" : "ByteString",
-                     "value" : "XHodOB63gtF3yIyjVDqdbkOb1/g="
+            "notifications" : [
+               {
+                  "state" : {
+                     "value" : [
+                        {
+                           "value" : "XHodOB63gtF3yIyjVDqdbkOb1/g=",
+                           "type" : "ByteString"
+                        },
+                        {
+                           "value" : "50l6vFaauRKm8hPVkr3Aw2CeHQs=",
+                           "type" : "ByteString"
+                        },
+                        {
+                           "type" : "Integer",
+                           "value" : "500000000"
+                        }
+                     ],
+                     "type" : "Array"
                   },
-                  {
-                     "type" : "ByteString",
-                     "value" : "50l6vFaauRKm8hPVkr3Aw2CeHQs="
-                  },
-                  {
-                     "type" : "Integer",
-                     "value" : "500000000"
-                  }
-               ]
-            },
-            "eventname" : "transfer",
-            "contract" : "0x4f84a3b4a32125056b5b2bf5b6c7addc3616985f"
+                  "eventname" : "Transfer",
+                  "contract" : "0xe95ac155a85c449c881b3dc6b31f93ba9d514bb0"
+               }
+            ],
+            "gasconsumed" : "0.0981362",
+            "trigger" : "Application",
+            "vmstate" : "HALT",
+            "stack" : [
+               {
+                  "value" : "1",
+                  "type" : "Integer"
+               }
+            ]
          }
       ],
-      "stack" : [
-         {
-            "value" : "1",
-            "type" : "Integer"
-         }
-      ]
+      "txid" : "0x8fefd5861d865379b6632693a5c74f430eb4465b6abf2efef8bddfd0a17dfa70"
    },
-   "jsonrpc" : "2.0"
+   "id" : 1
 }
 ```
 Заметьте, что поле `stack` содержит `1`, что означает, что токен был успешно переведен с нашего аккаунта.
 Теперь давайте проверим баланс аккаунта, на который был совершен перевод (`NgzuJWWGVEwFGsRrgzj8knswEYRJrTe7sm`), чтобы убедиться, что количество токена на нем = 5:
 ```
-$ ./bin/neo-go contract invokefunction -r http://localhost:20331 -w my_wallet.json 4f84a3b4a32125056b5b2bf5b6c7addc3616985f balanceOf NgzuJWWGVEwFGsRrgzj8knswEYRJrTe7sm
+$ ./bin/neo-go contract invokefunction -r http://localhost:20331 -w my_wallet.json e95ac155a85c449c881b3dc6b31f93ba9d514bb0 balanceOf NgzuJWWGVEwFGsRrgzj8knswEYRJrTe7sm
 ```
 Вызов RPC `getapplicationlog` для этой транзакции возвращает следующий результат:
 ```
 {
    "result" : {
-      "trigger" : "Application",
-      "stack" : [
+      "txid" : "0x0cb6db18b98a188d15010f8d9002948168897eea119e1b28f3254a4c554feab4",
+      "executions" : [
          {
-            "type" : "Integer",
-            "value" : "500000000"
+            "gasconsumed" : "0.0514227",
+            "trigger" : "Application",
+            "vmstate" : "HALT",
+            "notifications" : [],
+            "stack" : [
+               {
+                  "value" : "500000000",
+                  "type" : "Integer"
+               }
+            ]
          }
-      ],
-      "notifications" : [],
-      "vmstate" : "HALT",
-      "txid" : "0x246aab29aefe81baed1c3a40243b8ee9113689a305e90aa5a89efdaba880bf0e",
-      "gasconsumed" : "5504020"
+      ]
    },
-   "id" : 1,
-   "jsonrpc" : "2.0"
+   "jsonrpc" : "2.0",
+   "id" : 1
 }
 ```
 Как и ожидалось, мы видим ровно 5 токенов в поле `stack`.
@@ -1186,7 +1226,8 @@ Enter account NULwe3UAHckN2fzNdcVg31tDiaYtMDwANt password >
 
 Результат:
 ```
-Sent deployment transaction 2796d6d641d3e7528f7cb7c30cc8b0099e1291e2af3a14ef4a8d89f3dca14c44 for contract 459f3383e8b087a67454da141eeba34521eaccfc
+Contract: a8faf6491a34caaa9766f2f657546cceef9b6d7d
+bfe25b56f0e77738e816a282710e975188dfc2cf28f2c8e37d121bb7d7202334
 ```   
 Вы догадываетесь, что это значит :)
 
@@ -1194,7 +1235,7 @@ Sent deployment transaction 2796d6d641d3e7528f7cb7c30cc8b0099e1291e2af3a14ef4a8d
 
 Вызовите контракт, чтобы зарегистрировать домен с именем `my_first_domain`: 
 ```
-$ ./bin/neo-go contract invokefunction -r http://localhost:20331 -w my_wallet.json 459f3383e8b087a67454da141eeba34521eaccfc register my_first_domain NULwe3UAHckN2fzNdcVg31tDiaYtMDwANt -- f8d79b436e9d3a54a38cc877d182b71e381d7a5c:CalledByEntry
+$ ./bin/neo-go contract invokefunction -r http://localhost:20331 -w my_wallet.json a8faf6491a34caaa9766f2f657546cceef9b6d7d register my_first_domain NULwe3UAHckN2fzNdcVg31tDiaYtMDwANt -- f8d79b436e9d3a54a38cc877d182b71e381d7a5c:CalledByEntry
 ```
 ... пароль: `qwerty`
 ```
@@ -1202,59 +1243,63 @@ Enter account NULwe3UAHckN2fzNdcVg31tDiaYtMDwANt password >
 ```
 Результат:
 ```
-Sent invocation transaction f6995b104a03fdb3dc45b236c371523276b8c17036631e3df9fdc5575d608988
+Sent invocation transaction 9742affb241286181d62832492ff81a982a48fe9d725c263bc0a90e2cbec1a87
 ```
 Также вы можете увидеть лог-сообщение в консоли, где запускали ноду neo-go:
 ```
-2020-07-06T16:50:37.713+0300	INFO	runtime log	{"script": "fcccea2145a3eb1e14da5474a687b0e883339f45", "logs": "\"RegisterDomain: my_first_domain\""}
+2020-12-17T17:31:43.480+0300	INFO	runtime log	{"script": "7d6d9befce6c5457f6f26697aaca341a49f6faa8", "logs": "\"RegisterDomain: my_first_domain\""}
 ```
 Все получилось. Теперь проверим, был ли наш домен действительно зарегистрирован, с помощью вызова RPC `getapplicationlog`:
 ```
-curl -d '{ "jsonrpc": "2.0", "id": 1, "method": "getapplicationlog", "params": ["f6995b104a03fdb3dc45b236c371523276b8c17036631e3df9fdc5575d608988"] }' localhost:20331 | json_pp
+curl -d '{ "jsonrpc": "2.0", "id": 1, "method": "getapplicationlog", "params": ["9742affb241286181d62832492ff81a982a48fe9d725c263bc0a90e2cbec1a87"] }' localhost:20331 | json_pp
 ```
 Результат:
 ```
 {
-   "id" : 1,
-   "jsonrpc" : "2.0",
    "result" : {
-      "vmstate" : "HALT",
-      "txid" : "0xf6995b104a03fdb3dc45b236c371523276b8c17036631e3df9fdc5575d608988",
-      "gasconsumed" : "6223400",
-      "stack" : [
+      "txid" : "0x9742affb241286181d62832492ff81a982a48fe9d725c263bc0a90e2cbec1a87",
+      "executions" : [
          {
-            "type" : "Integer",
-            "value" : "1"
-         }
-      ],
-      "trigger" : "Application",
-      "notifications" : [
-         {
-            "contract" : "0x459f3383e8b087a67454da141eeba34521eaccfc",
-            "eventname" : "registered",
-            "state" : {
-               "type" : "Array",
-               "value" : [
-                  {
-                     "value" : "XHodOB63gtF3yIyjVDqdbkOb1/g=",
-                     "type" : "ByteString"
+            "stack" : [
+               {
+                  "type" : "Integer",
+                  "value" : "1"
+               }
+            ],
+            "gasconsumed" : "0.0763778",
+            "vmstate" : "HALT",
+            "trigger" : "Application",
+            "notifications" : [
+               {
+                  "state" : {
+                     "type" : "Array",
+                     "value" : [
+                        {
+                           "value" : "XHodOB63gtF3yIyjVDqdbkOb1/g=",
+                           "type" : "ByteString"
+                        },
+                        {
+                           "value" : "bXlfZmlyc3RfZG9tYWlu",
+                           "type" : "ByteString"
+                        }
+                     ]
                   },
-                  {
-                     "value" : "bXlfZmlyc3RfZG9tYWlu",
-                     "type" : "ByteString"
-                  }
-               ]
-            }
+                  "contract" : "0xa8faf6491a34caaa9766f2f657546cceef9b6d7d",
+                  "eventname" : "registered"
+               }
+            ]
          }
       ]
-   }
+   },
+   "id" : 1,
+   "jsonrpc" : "2.0"
 }
 ```
 Здесь мы в особенности заинтересованы в двух полях полученного json:
 
 Первое поле - `notifications`, оно содержит одно уведомление с именем `registered`:
 - `bXlfZmlyc3RfZG9tYWlu` - строка в base64, которая может быть декодирована в имя нашего домена - `my_first_domain`,
-- `E9RIbx59YF1EGCw9f0E19Ms6o/A=` - строка, которая декодируется в адрес нашего аккаунта `NULwe3UAHckN2fzNdcVg31tDiaYtMDwANt`.
+- `XHodOB63gtF3yIyjVDqdbkOb1/g=` - строка, которая декодируется в адрес нашего аккаунта `NULwe3UAHckN2fzNdcVg31tDiaYtMDwANt`.
 
 Второе поле - `stack`, в котором лежит `1` - значение, возвращенное смарт-контрактом.
 
@@ -1264,7 +1309,7 @@ curl -d '{ "jsonrpc": "2.0", "id": 1, "method": "getapplicationlog", "params": [
 
 Вызовите контракт, чтобы запросить информацию об адресе аккаунта, зарегистрировавшего домен `my_first_domain`:
 ```
-$ ./bin/neo-go contract invokefunction -r http://localhost:20331 -w my_wallet.json 459f3383e8b087a67454da141eeba34521eaccfc query my_first_domain
+$ ./bin/neo-go contract invokefunction -r http://localhost:20331 -w my_wallet.json a8faf6491a34caaa9766f2f657546cceef9b6d7d query my_first_domain
 ```
 ... любимейший пароль `qwerty`:
 ```
@@ -1272,34 +1317,38 @@ Enter account NULwe3UAHckN2fzNdcVg31tDiaYtMDwANt password >
 ```
 Результат:
 ```
-Sent invocation transaction 7890938840734c26a66ed642ab50ce9d5f1c075aa090a901c87fccb638d92012
+Sent invocation transaction c8cfe3bf1b08ba384263aa4c0e38d1db1094d5522bbf6a56a07f0000b417c840
 ```
 и лог-сообщение в консоли запущенной ноды neo-go:
 ```
-2020-07-06T17:02:10.782+0300	INFO	runtime log	{"script": "fcccea2145a3eb1e14da5474a687b0e883339f45", "logs": "\"QueryDomain: my_first_domain\""}
+2020-12-17T17:39:32.677+0300	INFO	runtime log	{"script": "7d6d9befce6c5457f6f26697aaca341a49f6faa8", "logs": "\"QueryDomain: my_first_domain\""}
 ```
 Проверим транзакцию с помощью вызова RPC `getapplicationlog`:
 ```
-curl -d '{ "jsonrpc": "2.0", "id": 1, "method": "getapplicationlog", "params": ["7890938840734c26a66ed642ab50ce9d5f1c075aa090a901c87fccb638d92012"] }' localhost:20331 | json_pp
+curl -d '{ "jsonrpc": "2.0", "id": 1, "method": "getapplicationlog", "params": ["c8cfe3bf1b08ba384263aa4c0e38d1db1094d5522bbf6a56a07f0000b417c840"] }' localhost:20331 | json_pp
 ```
 ... что даст нам следующий результат:
 ```
 {
-   "jsonrpc" : "2.0",
-   "id" : 1,
    "result" : {
-      "trigger" : "Application",
-      "vmstate" : "HALT",
-      "txid" : "0x7890938840734c26a66ed642ab50ce9d5f1c075aa090a901c87fccb638d92012",
-      "stack" : [
+      "executions" : [
          {
-            "type" : "ByteString",
-            "value" : "XHodOB63gtF3yIyjVDqdbkOb1/g="
+            "notifications" : [],
+            "vmstate" : "HALT",
+            "stack" : [
+               {
+                  "value" : "XHodOB63gtF3yIyjVDqdbkOb1/g=",
+                  "type" : "ByteString"
+               }
+            ],
+            "trigger" : "Application",
+            "gasconsumed" : "0.040908"
          }
       ],
-      "notifications" : [],
-      "gasconsumed" : "4185570"
-   }
+      "txid" : "0xc8cfe3bf1b08ba384263aa4c0e38d1db1094d5522bbf6a56a07f0000b417c840"
+   },
+   "id" : 1,
+   "jsonrpc" : "2.0"
 }
 ```
 
@@ -1309,7 +1358,7 @@ curl -d '{ "jsonrpc": "2.0", "id": 1, "method": "getapplicationlog", "params": [
 
 Вызовите контракт для передачи домена другому аккаунту (например, аккаунту с адресом `NgzuJWWGVEwFGsRrgzj8knswEYRJrTe7sm`):
 ```
-$ ./bin/neo-go contract invokefunction -r http://localhost:20331 -w my_wallet.json 459f3383e8b087a67454da141eeba34521eaccfc transfer my_first_domain NgzuJWWGVEwFGsRrgzj8knswEYRJrTe7sm -- f8d79b436e9d3a54a38cc877d182b71e381d7a5c
+$ ./bin/neo-go contract invokefunction -r http://localhost:20331 -w my_wallet.json a8faf6491a34caaa9766f2f657546cceef9b6d7d transfer my_first_domain NgzuJWWGVEwFGsRrgzj8knswEYRJrTe7sm -- f8d79b436e9d3a54a38cc877d182b71e381d7a5c
 ```
 ... пароль: `qwerty`
 ```
@@ -1317,70 +1366,68 @@ Enter account NULwe3UAHckN2fzNdcVg31tDiaYtMDwANt password >
 ```
 Результат:
 ```
-Sent invocation transaction 7df4b7d4f318e1e2c3007ec919bbcbff620685df71add4834e0f1a35f57ef893
+Sent invocation transaction 1ff49e096a247e4ea25a8164de04fa695035ee02ce0a3096615c87fc4adb2c82
 ```
 и лог-сообщение:
 ```
-2020-07-06T17:10:08.521+0300	INFO	runtime log	{"script": "fcccea2145a3eb1e14da5474a687b0e883339f45", "logs": "\"TransferDomain: my_first_domain\""}
+2020-12-17T17:44:07.536+0300	INFO	runtime log	{"script": "7d6d9befce6c5457f6f26697aaca341a49f6faa8", "logs": "\"TransferDomain: my_first_domain\""}
 ```
 Отлично. И `getapplicationlog` вызов RPC...
 ```
-curl -d '{ "jsonrpc": "2.0", "id": 1, "method": "getapplicationlog", "params": ["7df4b7d4f318e1e2c3007ec919bbcbff620685df71add4834e0f1a35f57ef893"] }' localhost:20331 | json_pp
+curl -d '{ "jsonrpc": "2.0", "id": 1, "method": "getapplicationlog", "params": ["1ff49e096a247e4ea25a8164de04fa695035ee02ce0a3096615c87fc4adb2c82"] }' localhost:20331 | json_pp
 ```
 ... говорит нам:
 ```
 {
    "result" : {
-      "gas_consumed" : "6390910",
-      "stack" : [
+      "txid" : "0x1ff49e096a247e4ea25a8164de04fa695035ee02ce0a3096615c87fc4adb2c82",
+      "executions" : [
          {
-            "value" : "1",
-            "type" : "Integer"
-         }
-      ],
-      "trigger" : "Application",
-      "vmstate" : "HALT",
-      "txid" : "0x5c1da38f000abec53dc135dc404e768a1613749c3377b73d960782fac464d941",
-      "notifications" : [
-         {
-            "state" : {
-               "type" : "Array",
-               "value" : [
-                  {
-                     "value" : "ZGVsZXRlZA==",
-                     "type" : "ByteString"
-                  },
-                  {
-                     "type" : "ByteString",
-                     "value" : "E9RIbx59YF1EGCw9f0E19Ms6o/A="
-                  },
-                  {
-                     "type" : "ByteString",
-                     "value" : "bXlfZmlyc3RfZG9tYWlu"
+            "stack" : [
+               {
+                  "value" : "1",
+                  "type" : "Integer"
+               }
+            ],
+            "vmstate" : "HALT",
+            "notifications" : [
+               {
+                  "eventname" : "deleted",
+                  "contract" : "0xa8faf6491a34caaa9766f2f657546cceef9b6d7d",
+                  "state" : {
+                     "value" : [
+                        {
+                           "type" : "ByteString",
+                           "value" : "XHodOB63gtF3yIyjVDqdbkOb1/g="
+                        },
+                        {
+                           "type" : "ByteString",
+                           "value" : "bXlfZmlyc3RfZG9tYWlu"
+                        }
+                     ],
+                     "type" : "Array"
                   }
-               ]
-            },
-            "contract" : "0x459f3383e8b087a67454da141eeba34521eaccfc"
-         },
-         {
-            "state" : {
-               "value" : [
-                  {
-                     "value" : "cmVnaXN0ZXJlZA==",
-                     "type" : "ByteString"
-                  },
-                  {
-                     "type" : "ByteString",
-                     "value" : "50l6vFaauRKm8hPVkr3Aw2CeHQs="
-                  },
-                  {
-                     "type" : "ByteString",
-                     "value" : "bXlfZmlyc3RfZG9tYWlu"
+               },
+               {
+                  "eventname" : "registered",
+                  "contract" : "0xa8faf6491a34caaa9766f2f657546cceef9b6d7d",
+                  "state" : {
+                     "type" : "Array",
+                     "value" : [
+                        {
+                           "type" : "ByteString",
+                           "value" : "50l6vFaauRKm8hPVkr3Aw2CeHQs="
+                        },
+                        {
+                           "type" : "ByteString",
+                           "value" : "bXlfZmlyc3RfZG9tYWlu"
+                        }
+                     ]
                   }
-               ],
-               "type" : "Array"
-            },
-            "contract" : "0x459f3383e8b087a67454da141eeba34521eaccfc"
+               }
+            ],
+            "trigger" : "Application",
+            "gasconsumed" : "0.0575972"
          }
       ]
    },
@@ -1397,7 +1444,7 @@ curl -d '{ "jsonrpc": "2.0", "id": 1, "method": "getapplicationlog", "params": [
 
 Оставшийся вызов - `delete`, вы можете попробовать выполнить его самостоятельно, создав перед этим еще один домен, например, с именем `my_second_domain`, а затем удалить его из хранилища с помощью:
 ```
-$ ./bin/neo-go contract invokefunction -r http://localhost:20331 -w my_wallet.json 459f3383e8b087a67454da141eeba34521eaccfc delete my_second_domain -- f8d79b436e9d3a54a38cc877d182b71e381d7a5c
+$ ./bin/neo-go contract invokefunction -r http://localhost:20331 -w my_wallet.json a8faf6491a34caaa9766f2f657546cceef9b6d7d delete my_second_domain -- f8d79b436e9d3a54a38cc877d182b71e381d7a5c
 ```
 
 Спасибо!

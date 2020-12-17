@@ -206,7 +206,11 @@ $ ./bin/neo-go node --privnet
 
 Result:
 ```
-2020-06-30T16:26:47.549+0300	INFO	restoring blockchain	{"version": "0.1.0"}
+2020-12-17T14:51:53.200+0300	INFO	no storage version found! creating genesis block
+2020-12-17T14:51:53.203+0300	INFO	starting rpc-server	{"endpoint": ":20331"}
+2020-12-17T14:51:53.203+0300	INFO	service is running	{"service": "Prometheus", "endpoint": ":2112"}
+2020-12-17T14:51:53.203+0300	INFO	service hasn't started since it's disabled	{"service": "Pprof"}
+2020-12-17T14:51:53.203+0300	INFO	node started	{"blockHeight": 0, "headerHeight": 0}
 
     _   ____________        __________
    / | / / ____/ __ \      / ____/ __ \
@@ -214,40 +218,41 @@ Result:
  / /|  / /___/ /_/ /_____/ /_/ / /_/ /
 /_/ |_/_____/\____/      \____/\____/
 
-/NEO-GO:0.90.0-pre-610-g59d1013a/
+/NEO-GO:0.91.1-pre-657-gc13d6ecc/
 
-2020-06-30T16:26:47.549+0300	INFO	service is running	{"service": "Prometheus", "endpoint": ":2112"}
-2020-06-30T16:26:47.549+0300	INFO	service hasn't started since it's disabled	{"service": "Pprof"}
-2020-06-30T16:26:47.550+0300	INFO	starting rpc-server	{"endpoint": ":20331"}
-2020-06-30T16:26:47.550+0300	INFO	node started	{"blockHeight": 0, "headerHeight": 0}
-2020-06-30T16:26:47.551+0300	INFO	new peer connected	{"addr": "127.0.0.1:20333", "peerCount": 1}
-2020-06-30T16:26:47.551+0300	INFO	new peer connected	{"addr": "127.0.0.1:20334", "peerCount": 2}
-2020-06-30T16:26:47.552+0300	INFO	new peer connected	{"addr": "127.0.0.1:20335", "peerCount": 3}
-2020-06-30T16:26:47.552+0300	INFO	new peer connected	{"addr": "127.0.0.1:20336", "peerCount": 4}
-2020-06-30T16:26:47.553+0300	INFO	started protocol	{"addr": "127.0.0.1:20334", "userAgent": "/NEO-GO:0.90.0-pre-610-g59d1013a/", "startHeight": 3, "id": 2280194870}
-2020-06-30T16:26:47.554+0300	INFO	started protocol	{"addr": "127.0.0.1:20333", "userAgent": "/NEO-GO:0.90.0-pre-610-g59d1013a/", "startHeight": 3, "id": 3666776256}
-2020-06-30T16:26:47.555+0300	INFO	started protocol	{"addr": "127.0.0.1:20336", "userAgent": "/NEO-GO:0.90.0-pre-610-g59d1013a/", "startHeight": 3, "id": 1699156200}
-2020-06-30T16:26:47.555+0300	INFO	started protocol	{"addr": "127.0.0.1:20335", "userAgent": "/NEO-GO:0.90.0-pre-610-g59d1013a/", "startHeight": 3, "id": 874998449}
-2020-06-30T16:26:48.550+0300	INFO	blockchain persist completed	{"persistedBlocks": 0, "persistedKeys": 4, "headerHeight": 3, "blockHeight": 0, "took": "437.278µs"}
+2020-12-17T14:51:53.204+0300	INFO	new peer connected	{"addr": "127.0.0.1:20333", "peerCount": 1}
+2020-12-17T14:51:53.206+0300	INFO	started protocol	{"addr": "127.0.0.1:20333", "userAgent": "/NEO-GO:0.91.1-pre-657-gc13d6ecc/", "startHeight": 0, "id": 3172166887}
+2020-12-17T14:51:54.204+0300	INFO	blockchain persist completed	{"persistedBlocks": 0, "persistedKeys": 71, "headerHeight": 0, "blockHeight": 0, "took": "765.955µs"}
+2020-12-17T14:51:56.204+0300	INFO	new peer connected	{"addr": "127.0.0.1:20336", "peerCount": 2}
+2020-12-17T14:51:56.204+0300	INFO	new peer connected	{"addr": "127.0.0.1:20334", "peerCount": 3}
+2020-12-17T14:51:56.205+0300	INFO	new peer connected	{"addr": "127.0.0.1:20335", "peerCount": 4}
+2020-12-17T14:51:56.205+0300	INFO	new peer connected	{"addr": "127.0.0.1:20333", "peerCount": 5}
+2020-12-17T14:51:56.205+0300	INFO	started protocol	{"addr": "127.0.0.1:20336", "userAgent": "/NEO-GO:0.91.1-pre-657-gc13d6ecc/", "startHeight": 0, "id": 90708676}
+2020-12-17T14:51:56.206+0300	WARN	peer disconnected	{"addr": "127.0.0.1:20333", "reason": "already connected", "peerCount": 4}
+2020-12-17T14:51:56.206+0300	INFO	started protocol	{"addr": "127.0.0.1:20334", "userAgent": "/NEO-GO:0.91.1-pre-657-gc13d6ecc/", "startHeight": 0, "id": 410946741}
+2020-12-17T14:51:56.207+0300	INFO	started protocol	{"addr": "127.0.0.1:20335", "userAgent": "/NEO-GO:0.91.1-pre-657-gc13d6ecc/", "startHeight": 0, "id": 4085957952}
+2020-12-17T14:52:35.213+0300	INFO	blockchain persist completed	{"persistedBlocks": 1, "persistedKeys": 19, "headerHeight": 1, "blockHeight": 1, "took": "518.786µs"}
+2020-12-17T14:52:50.217+0300	INFO	blockchain persist completed	{"persistedBlocks": 1, "persistedKeys": 19, "headerHeight": 2, "blockHeight": 2, "took": "384.966µs"}
+2020-12-17T14:53:05.222+0300	INFO	blockchain persist completed	{"persistedBlocks": 1, "persistedKeys": 19, "headerHeight": 3, "blockHeight": 3, "took": "496.654µs"}
 ...
 ```
 
 #### Step 4
 Transfer some GAS from multisig account to our account.
 
-1. Create NEP5 transfer transaction:
+1. Create NEP17 transfer transaction:
     ```
-        $ ./bin/neo-go wallet nep5 transfer -w .docker/wallets/wallet1.json --out my_tx.json -r http://localhost:20331 --from NUVPACMnKFhpuHjsRjhUvXz1XhqfGZYVtY --to NULwe3UAHckN2fzNdcVg31tDiaYtMDwANt --token gas --amount 29999999
+        $ ./bin/neo-go wallet nep17 transfer -w .docker/wallets/wallet1.json --out my_tx.json -r http://localhost:20331 --from NUVPACMnKFhpuHjsRjhUvXz1XhqfGZYVtY --to NULwe3UAHckN2fzNdcVg31tDiaYtMDwANt --token GAS --amount 29999999
     ``` 
     Where
     - `./bin/neo-go` runs neo-go
-    - `wallet nep5 transfer` - command with arguments in [neo-go](https://github.com/nspcc-dev/neo-go/blob/master/cli/wallet/nep5.go#L108)
+    - `wallet nep17 transfer` - command with arguments in [neo-go](https://github.com/nspcc-dev/neo-go/blob/master/cli/wallet/nep17.go#L108)
     - `-w .docker/wallets/wallet1.json` - path to the [wallet](https://github.com/nspcc-dev/neo-go/blob/master/.docker/wallets/wallet1.json) for the first node in the private network
     - `--out my_tx.json` - output file for the signed transaction
     - `-r http://localhost:20331` - RPC node endpoint
     - `--from NUVPACMnKFhpuHjsRjhUvXz1XhqfGZYVtY` - multisig account to transfer GAS from
     - `--to NULwe3UAHckN2fzNdcVg31tDiaYtMDwANt` - our account from the [wallet](https://github.com/nspcc-dev/neo-go-sc-wrkshp/blob/master/my_wallet.json)
-    - `--token gas` - transferred token name, which is GAS
+    - `--token GAS` - transferred token name, which is GAS
     - `--amount 29999999` - amount of GAS to transfer
     
     Enter the password `one`:
@@ -288,32 +293,32 @@ Transfer some GAS from multisig account to our account.
 4. Check the balance:
 
     Now you should have 29999999 GAS on the balance of `NULwe3UAHckN2fzNdcVg31tDiaYtMDwANt` account.
-    To check the transfer was successfully submitted use `getnep5transfers` RPC call:
+    To check the transfer was successfully submitted use `getnep17transfers` RPC call:
     ```
-    curl -d '{ "jsonrpc": "2.0", "id": 1, "method": "getnep5transfers", "params": ["NULwe3UAHckN2fzNdcVg31tDiaYtMDwANt"] }' localhost:20331 | json_pp
+    curl -d '{ "jsonrpc": "2.0", "id": 1, "method": "getnep17transfers", "params": ["NULwe3UAHckN2fzNdcVg31tDiaYtMDwANt"] }' localhost:20331 | json_pp
     ```
     The result should look like the following:
-    ```
+```
     {
        "jsonrpc" : "2.0",
-       "id" : 1,
        "result" : {
+          "address" : "NULwe3UAHckN2fzNdcVg31tDiaYtMDwANt",
+          "sent" : [],
           "received" : [
              {
-                "amount" : "29999999",
+                "assethash" : "0xa6a6c15dcdc9b997dac448b6926522d22efeedfb",
+                "transfernotifyindex" : 0,
+                "amount" : "2999999900000000",
+                "txhash" : "0xd44399f508e1ea6ebfd01cf9252a52e0e8699a1b799f60c03f3daae8f74af741",
+                "blockindex" : 41,
                 "transferaddress" : "NUVPACMnKFhpuHjsRjhUvXz1XhqfGZYVtY",
-                "blockindex" : 13,
-                "assethash" : "0x668e0c1f9d7b70a99dd9e06eadd4c784d641afbc",
-                "timestamp" : 1597143962082,
-                "txhash" : "0x19a4a1e58a48c9d9c65c451968a3a900e67915cf37ccd8edaa67e0866f1b5d04",
-                "transfernotifyindex" : 0
+                "timestamp" : 1608206555652
              }
-          ],
-          "address" : "NULwe3UAHckN2fzNdcVg31tDiaYtMDwANt",
-          "sent" : []
-       }
+          ]
+       },
+       "id" : 1
     }
-    ```
+```
 
 
 ## Workshop. Part 1
@@ -379,7 +384,8 @@ Enter account NULwe3UAHckN2fzNdcVg31tDiaYtMDwANt password >
 
 Result:
 ```
-Sent deployment transaction 8fc1dee25649d4292ac2cb19e7be2e65288ef5fab0add933b3f54c31477852dd for contract 28dbf93dc07a3d9b84ce6499132b874844784f9c
+Contract: 86485ca76761ae5042cba30e380c95e077e00bfa
+5ec9afdcd30b6e38280df690fb0d80490fdcd94af0c2c0bcd3f47b13114f7175
 ```
 
 At this point your ‘Hello World’ contract is deployed and could be invoked. Let’s do it as a final step.
@@ -387,14 +393,14 @@ At this point your ‘Hello World’ contract is deployed and could be invoked. 
 #### Step 4
 Invoke contract.
 ```
-$ ./bin/neo-go contract invokefunction -r http://localhost:20331 -w my_wallet.json 28dbf93dc07a3d9b84ce6499132b874844784f9c main
+$ ./bin/neo-go contract invokefunction -r http://localhost:20331 -w my_wallet.json 86485ca76761ae5042cba30e380c95e077e00bfa main
 ```
 
 Where
 - `contract invokefunction` runs invoke with provided parameters
 - `-r http://localhost:20331` defines RPC endpoint used for function call
 - `-w my_wallet.json` is a wallet
-- `28dbf93dc07a3d9b84ce6499132b874844784f9c` contract hash got as an output from the previous command (deployment in step 6)
+- `86485ca76761ae5042cba30e380c95e077e00bfa` contract hash got as an output from the previous command (deployment in step 6)
 - `main` - method to be called
 
 Enter password `qwerty` for account:
@@ -404,11 +410,11 @@ Enter account NULwe3UAHckN2fzNdcVg31tDiaYtMDwANt password >
 
 Result:
 ```
-Sent invocation transaction 5025daa84c6c41b672444e5f26fc125811900309c84295b35b2db3d70bab18b8
+Sent invocation transaction 31e931f151716960d03188e5ba9fdbe812d7862827d77c255921f3c25a2cdc5f
 ```
 In the console where you were running step #5 you will get:
 ```
-2020-07-02T17:01:46.175+0300	INFO	runtime log	{"script": "9c4f784448872b139964ce849b3d7ac03df9db28", "logs": "\"Hello, world!\""}
+2020-12-17T15:29:48.790+0300	INFO	runtime log	{"script": "fa0be077e0950c380ea3cb4250ae6167a75c4886", "logs": "\"Hello, world!\""}
 ```
 Which means that this contract was executed.
 
@@ -434,15 +440,15 @@ the corresponding transaction information, based on the specified hash value.
 
 Request information about our deployment transaction:
 ```
-curl -d '{ "jsonrpc": "2.0", "id": 1, "method": "getrawtransaction", "params": ["8fc1dee25649d4292ac2cb19e7be2e65288ef5fab0add933b3f54c31477852dd", 1] }' localhost:20331 | json_pp
+curl -d '{ "jsonrpc": "2.0", "id": 1, "method": "getrawtransaction", "params": ["5ec9afdcd30b6e38280df690fb0d80490fdcd94af0c2c0bcd3f47b13114f7175", 1] }' localhost:20331 | json_pp
 ```
 
 Where
 - `"jsonrpc": "2.0"` is protocol version
 - `"id": 1` is id of current request
 - `"method": "getrawtransaction"` is requested method
-- `"params": ["8fc1dee25649d4292ac2cb19e7be2e65288ef5fab0add933b3f54c31477852dd", 1]` is an array of parameters, where
-   - `8fc1dee25649d4292ac2cb19e7be2e65288ef5fab0add933b3f54c31477852dd` is deployment transaction hash
+- `"params": ["5ec9afdcd30b6e38280df690fb0d80490fdcd94af0c2c0bcd3f47b13114f7175", 1]` is an array of parameters, where
+   - `5ec9afdcd30b6e38280df690fb0d80490fdcd94af0c2c0bcd3f47b13114f7175` is deployment transaction hash
    - `1` is `verbose` parameter for detailed JSON string output
 - `json_pp` just makes the JSON output prettier
 
@@ -450,32 +456,32 @@ Result:
 ```
 {
    "result" : {
-      "attributes" : [],
-      "blocktime" : 1597144100686,
-      "size" : 511,
-      "nonce" : 3765129059,
-      "blockhash" : "0xef1da7ae391bc0ff88b061adced2e8b9fcb7f4fb6c27c65eef230b2a875aaa59",
-      "sender" : "NULwe3UAHckN2fzNdcVg31tDiaYtMDwANt",
+      "blocktime" : 1608208132012,
       "signers" : [
          {
             "account" : "0xf8d79b436e9d3a54a38cc877d182b71e381d7a5c",
-            "scopes" : "FeeOnly"
+            "scopes" : "None"
          }
       ],
+      "vmstate" : "HALT",
+      "nonce" : 1618563338,
+      "size" : 524,
+      "validuntilblock" : 147,
+      "sysfee" : "0.3319963",
       "witnesses" : [
          {
-            "invocation" : "DEC4KhicN9a3V+sFm7UZfBntVmDY7QOWWpKGRLBjPXjx4m0epLmPQcpq722Y7aR1knqnLDNdcJebKqZ0FyB9tkWT",
+            "invocation" : "DEBsEj8zWf63QbEbGWdeAK13KZuhNgnzk+xnPBCK678oAlai0RREDjPI2m6oysSMXKNE7KHr5fhIZ6FURwV6I74Z",
             "verification" : "DCECqIHFxkXMSrGdFGesF8hU+x8Y9RaRmsEOWyRK4B9eK30LQZVEDXg="
          }
       ],
-      "confirmations" : 23,
-      "validuntilblock" : 22,
-      "hash" : "0x8fc1dee25649d4292ac2cb19e7be2e65288ef5fab0add933b3f54c31477852dd",
-      "netfee" : "2620420",
-      "version" : 0,
-      "vmstate" : "HALT",
-      "sysfee" : "34013180",
-      "script" : "DT4BeyJhYmkiOnsiaGFzaCI6IjB4MjhkYmY5M2RjMDdhM2Q5Yjg0Y2U2NDk5MTMyYjg3NDg0NDc4NGY5YyIsIm1ldGhvZHMiOlt7Im5hbWUiOiJtYWluIiwib2Zmc2V0IjowLCJwYXJhbWV0ZXJzIjpbXSwicmV0dXJudHlwZSI6IlZvaWQifV0sImV2ZW50cyI6W119LCJncm91cHMiOltdLCJmZWF0dXJlcyI6eyJwYXlhYmxlIjpmYWxzZSwic3RvcmFnZSI6ZmFsc2V9LCJwZXJtaXNzaW9ucyI6W3siY29udHJhY3QiOiIqIiwibWV0aG9kcyI6IioifV0sInN1cHBvcnRlZHN0YW5kYXJkcyI6W10sInRydXN0cyI6W10sInNhZmVtZXRob2RzIjpbXSwiZXh0cmEiOm51bGx9DBYMDUhlbGxvLCB3b3JsZCFBz+dHliFAQc41LIU="
+      "script" : "DON7Im5hbWUiOiIiLCJhYmkiOnsibWV0aG9kcyI6W3sibmFtZSI6Im1haW4iLCJvZmZzZXQiOjAsInBhcmFtZXRlcnMiOltdLCJyZXR1cm50eXBlIjoiVm9pZCIsInNhZmUiOmZhbHNlfV0sImV2ZW50cyI6W119LCJncm91cHMiOltdLCJwZXJtaXNzaW9ucyI6W3siY29udHJhY3QiOiIqIiwibWV0aG9kcyI6IioifV0sInN1cHBvcnRlZHN0YW5kYXJkcyI6W10sInRydXN0cyI6W10sImV4dHJhIjpudWxsfQxfTkVGM25lby1nbwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMC45MS4xLXByZS02NTctZ2MxM2Q2ZWNjAAAAAAAAAAAWDA1IZWxsbywgd29ybGQhQc/nR5YhQI6nXW8SwAwGZGVwbG95DBSr1uitn0EJQTdlkc3fmtaCDbeXzUFifVtS",
+      "netfee" : "0.0150755",
+      "confirmations" : 20,
+      "hash" : "0x5ec9afdcd30b6e38280df690fb0d80490fdcd94af0c2c0bcd3f47b13114f7175",
+      "attributes" : [],
+      "blockhash" : "0x02362680cebf31702ebfd725fdae8d2eef7fcfda100b55a80520d3b417c2ee98",
+      "sender" : "NULwe3UAHckN2fzNdcVg31tDiaYtMDwANt",
+      "version" : 0
    },
    "jsonrpc" : "2.0",
    "id" : 1
@@ -487,29 +493,33 @@ Result:
 
 Request application log for invocation transaction from step #4:
 ```
-curl -d '{ "jsonrpc": "2.0", "id": 1, "method": "getapplicationlog", "params": ["5025daa84c6c41b672444e5f26fc125811900309c84295b35b2db3d70bab18b8"] }' localhost:20331 | json_pp
+curl -d '{ "jsonrpc": "2.0", "id": 1, "method": "getapplicationlog", "params": ["31e931f151716960d03188e5ba9fdbe812d7862827d77c255921f3c25a2cdc5f"] }' localhost:20331 | json_pp
 ```
 
 With a single parameter:
-- `5025daa84c6c41b672444e5f26fc125811900309c84295b35b2db3d70bab18b8` - invocation transaction hash from step #7
+- `31e931f151716960d03188e5ba9fdbe812d7862827d77c255921f3c25a2cdc5f` - invocation transaction hash from step #7
 
 Result:
 ```
 {
    "result" : {
-      "txid" : "0x5025daa84c6c41b672444e5f26fc125811900309c84295b35b2db3d70bab18b8",
-      "gasconsumed" : "2007600",
-      "trigger" : "Application",
-      "vmstate" : "HALT",
-      "notifications" : [],
-      "stack" : [
+      "executions" : [
          {
-            "type" : "Any"
+            "stack" : [
+               {
+                  "type" : "Any"
+               }
+            ],
+            "trigger" : "Application",
+            "vmstate" : "HALT",
+            "gasconsumed" : "0.0198222",
+            "notifications" : []
          }
-      ]
+      ],
+      "txid" : "0x31e931f151716960d03188e5ba9fdbe812d7862827d77c255921f3c25a2cdc5f"
    },
-   "id" : 1,
-   "jsonrpc" : "2.0"
+   "jsonrpc" : "2.0",
+   "id" : 1
 }
 ```
 
@@ -518,7 +528,7 @@ Result:
 curl -d '{ "jsonrpc": "2.0", "id": 5, "method": "getversion", "params": [] }' localhost:20331
 curl -d '{ "jsonrpc": "2.0", "id": 5, "method": "getblockcount", "params": [] }' localhost:20331
 curl -d '{ "jsonrpc": "2.0", "id": 5, "method": "getconnectioncount", "params": [] }' localhost:20331
-curl -d '{ "jsonrpc": "2.0", "id": 5, "method": "getcontractstate", "params": ["0x9c33bbf2f5afbbc8fe271dd37508acd93573cffc"] }' localhost:20331
+curl -d '{ "jsonrpc": "2.0", "id": 5, "method": "getcontractstate", "params": ["0x86485ca76761ae5042cba30e380c95e077e00bfa"] }' localhost:20331
 ```
 
 List of supported by neo-go node RPC commands you can find [here](https://github.com/nspcc-dev/neo-go/blob/master/docs/rpc.md#supported-methods).
@@ -529,12 +539,8 @@ Let's take a look at the another smart contract example: [2-storage.go](https://
 This contract is quite simple and, as the previous one, doesn't take any arguments.
 On the other hand, it is able to count the number of its own invocations by storing an integer value and increment it after each invocation.
 We are interested in this contract as far as it's able to *store* values, i.e. it has a *storage* which can be shared within all contract invocations.
+We have to pay some GAS for storage usage, the amount depends on the storage operation (e.g. put) and data size.
 
-Unfortunately, we have to pay some GAS for storage usage, so it should be noted in the contract configuration [2-storage.yml](https://github.com/nspcc-dev/neo-go-sc-wrkshp/blob/master/2-storage.yml) by the following parameter:
-```
-hasstorage: true
-```
-If you don't set the flag `hasstorage` to `true` value, you won't be able to use the storage in your contract.
 
 This contract also has a special internal `_deploy` method which is executed when the contract is deployed or updated.
 It should return no value and accept single bool argument which will be true on contract update.
@@ -565,78 +571,86 @@ Enter account NULwe3UAHckN2fzNdcVg31tDiaYtMDwANt password >
 
 Result:
 ```
-Contract: 57d271f86ed539fe4e2cfeee613f212f82326b3b
-a2441a771d3f7a99472e17bea6add0801a07d84b1afad3c11e8b1e3aa4a662a8
+Contract: 0d8b4c23d13fc10422ed9ca8875fe9fb942b8f0c
+5b14b2a8aeae2d22456f5870b8ac787ab2faef199a323b51c8612ade6124dafc
 ```   
 
 Which means that our contract was deployed and now we can invoke it.
 
 Let's check that the storage value was initialised with `0`. Use `getapplicaionlog` RPC-call for the deployment transaction:
 ```
-curl -d '{ "jsonrpc": "2.0", "id": 1, "method": "getapplicationlog", "params": ["a2441a771d3f7a99472e17bea6add0801a07d84b1afad3c11e8b1e3aa4a662a8"] }' localhost:20331 | json_pp
+curl -d '{ "jsonrpc": "2.0", "id": 1, "method": "getapplicationlog", "params": ["5b14b2a8aeae2d22456f5870b8ac787ab2faef199a323b51c8612ade6124dafc"] }' localhost:20331 | json_pp
 ```
 
 The JSON result is:
 ```
 {
-   "id" : 1,
    "jsonrpc" : "2.0",
+   "id" : 1,
    "result" : {
-      "trigger" : "Application",
-      "stack" : [
+      "executions" : [
          {
-            "type" : "Array",
-            "value" : [
+            "notifications" : [
                {
-                  "value" : "VwMBeKonigAAAEGb9mfOIXAMBGluZm8MJVN0b3JhZ2Uga2V5IG5vdCB5ZXQgc2V0LiBTZXR0aW5nIHRvIDARwFBBlQFvYSEQcWgMEHRlc3Qtc3RvcmFnZS1rZXlpU0HmPxiEIQwEaW5mbwwaU3RvcmFnZSBrZXkgaXMgaW5pdGlhbGlzZWQRwFBBlQFvYSFAVwMAQZv2Z84hcGgMEHRlc3Qtc3RvcmFnZS1rZXlQQZJd6DEhcQwEaW5mbwwXVmFsdWUgcmVhZCBmcm9tIHN0b3JhZ2URwFBBlQFvYSEMBGluZm8MKlN0b3JhZ2Uga2V5IGFscmVhZHkgc2V0LiBJbmNyZW1lbnRpbmcgYnkgMRHAUEGVAW9hIWnbIRGecWgMEHRlc3Qtc3RvcmFnZS1rZXlpU0HmPxiEIQwEaW5mbwweTmV3IHZhbHVlIHdyaXR0ZW4gaW50byBzdG9yYWdl2zARwFBBlQFvYSFpQA==",
-                  "type" : "ByteString"
+                  "eventname" : "info",
+                  "contract" : "0x0d8b4c23d13fc10422ed9ca8875fe9fb942b8f0c",
+                  "state" : {
+                     "type" : "Array",
+                     "value" : [
+                        {
+                           "type" : "ByteString",
+                           "value" : "U3RvcmFnZSBrZXkgbm90IHlldCBzZXQuIFNldHRpbmcgdG8gMA=="
+                        }
+                     ]
+                  }
                },
                {
-                  "value" : "eyJhYmkiOnsiaGFzaCI6IjB4NTdkMjcxZjg2ZWQ1MzlmZTRlMmNmZWVlNjEzZjIxMmY4MjMyNmIzYiIsIm1ldGhvZHMiOlt7Im5hbWUiOiJfZGVwbG95Iiwib2Zmc2V0IjowLCJwYXJhbWV0ZXJzIjpbeyJuYW1lIjoiaXNVcGRhdGUiLCJ0eXBlIjoiQm9vbGVhbiJ9XSwicmV0dXJudHlwZSI6IlZvaWQifSx7Im5hbWUiOiJtYWluIiwib2Zmc2V0IjoxNDQsInBhcmFtZXRlcnMiOltdLCJyZXR1cm50eXBlIjoiQW55In1dLCJldmVudHMiOlt7Im5hbWUiOiJpbmZvIiwicGFyYW1ldGVycyI6W3sibmFtZSI6Im1lc3NhZ2UiLCJ0eXBlIjoiQnl0ZUFycmF5In1dfV19LCJncm91cHMiOltdLCJmZWF0dXJlcyI6eyJwYXlhYmxlIjpmYWxzZSwic3RvcmFnZSI6dHJ1ZX0sInBlcm1pc3Npb25zIjpbeyJjb250cmFjdCI6IioiLCJtZXRob2RzIjoiKiJ9XSwic3VwcG9ydGVkc3RhbmRhcmRzIjpbXSwidHJ1c3RzIjpbXSwic2FmZW1ldGhvZHMiOltdLCJleHRyYSI6bnVsbH0=",
-                  "type" : "ByteString"
-               },
-               {
-                  "value" : true,
-                  "type" : "Boolean"
-               },
-               {
-                  "value" : false,
-                  "type" : "Boolean"
+                  "eventname" : "info",
+                  "contract" : "0x0d8b4c23d13fc10422ed9ca8875fe9fb942b8f0c",
+                  "state" : {
+                     "type" : "Array",
+                     "value" : [
+                        {
+                           "type" : "ByteString",
+                           "value" : "U3RvcmFnZSBrZXkgaXMgaW5pdGlhbGlzZWQ="
+                        }
+                     ]
+                  }
                }
-            ]
+            ],
+            "gasconsumed" : "0.9215402",
+            "stack" : [
+               {
+                  "type" : "Array",
+                  "value" : [
+                     {
+                        "type" : "Integer",
+                        "value" : "2"
+                     },
+                     {
+                        "type" : "Integer",
+                        "value" : "0"
+                     },
+                     {
+                        "type" : "ByteString",
+                        "value" : "DI8rlPvpX4eonO0iBME/0SNMiw0="
+                     },
+                     {
+                        "value" : "VwMBeKonjgAAAEGb9mfOIXAMBGluZm8MJVN0b3JhZ2Uga2V5IG5vdCB5ZXQgc2V0LiBTZXR0aW5nIHRvIDDbMBHAUEGVAW9hIRBxaAwQdGVzdC1zdG9yYWdlLWtleWlTQeY/GIQhDARpbmZvDBpTdG9yYWdlIGtleSBpcyBpbml0aWFsaXNlZNswEcBQQZUBb2EhQFcDAEGb9mfOIXBoDBB0ZXN0LXN0b3JhZ2Uta2V5UEGSXegxIXEMBGluZm8MF1ZhbHVlIHJlYWQgZnJvbSBzdG9yYWdl2zARwFBBlQFvYSEMBGluZm8MKlN0b3JhZ2Uga2V5IGFscmVhZHkgc2V0LiBJbmNyZW1lbnRpbmcgYnkgMdswEcBQQZUBb2EhadshEZ5xaAwQdGVzdC1zdG9yYWdlLWtleWlTQeY/GIQhDARpbmZvDB5OZXcgdmFsdWUgd3JpdHRlbiBpbnRvIHN0b3JhZ2XbMBHAUEGVAW9hIWlA",
+                        "type" : "ByteString"
+                     },
+                     {
+                        "value" : "eyJuYW1lIjoiU3RvcmFnZSBjb250cmFjdCIsImFiaSI6eyJtZXRob2RzIjpbeyJuYW1lIjoiX2RlcGxveSIsIm9mZnNldCI6MCwicGFyYW1ldGVycyI6W3sibmFtZSI6ImlzVXBkYXRlIiwidHlwZSI6IkJvb2xlYW4ifV0sInJldHVybnR5cGUiOiJWb2lkIiwic2FmZSI6ZmFsc2V9LHsibmFtZSI6Im1haW4iLCJvZmZzZXQiOjE0OCwicGFyYW1ldGVycyI6W10sInJldHVybnR5cGUiOiJBbnkiLCJzYWZlIjpmYWxzZX1dLCJldmVudHMiOlt7Im5hbWUiOiJpbmZvIiwicGFyYW1ldGVycyI6W3sibmFtZSI6Im1lc3NhZ2UiLCJ0eXBlIjoiQnl0ZUFycmF5In1dfV19LCJncm91cHMiOltdLCJwZXJtaXNzaW9ucyI6W3siY29udHJhY3QiOiIqIiwibWV0aG9kcyI6IioifV0sInN1cHBvcnRlZHN0YW5kYXJkcyI6W10sInRydXN0cyI6W10sImV4dHJhIjpudWxsfQ==",
+                        "type" : "ByteString"
+                     }
+                  ]
+               }
+            ],
+            "vmstate" : "HALT",
+            "trigger" : "Application"
          }
       ],
-      "gasconsumed" : "88842960",
-      "notifications" : [
-         {
-            "eventname" : "info",
-            "contract" : "0x57d271f86ed539fe4e2cfeee613f212f82326b3b",
-            "state" : {
-               "value" : [
-                  {
-                     "value" : "U3RvcmFnZSBrZXkgbm90IHlldCBzZXQuIFNldHRpbmcgdG8gMA==",
-                     "type" : "ByteString"
-                  }
-               ],
-               "type" : "Array"
-            }
-         },
-         {
-            "eventname" : "info",
-            "state" : {
-               "type" : "Array",
-               "value" : [
-                  {
-                     "type" : "ByteString",
-                     "value" : "U3RvcmFnZSBrZXkgaXMgaW5pdGlhbGlzZWQ="
-                  }
-               ]
-            },
-            "contract" : "0x57d271f86ed539fe4e2cfeee613f212f82326b3b"
-         }
-      ],
-      "vmstate" : "HALT",
-      "txid" : "0xa2441a771d3f7a99472e17bea6add0801a07d84b1afad3c11e8b1e3aa4a662a8"
+      "txid" : "0x5b14b2a8aeae2d22456f5870b8ac787ab2faef199a323b51c8612ade6124dafc"
    }
 }
 ```
@@ -656,7 +670,7 @@ which is `Storage key is initialised`.
 Let's invoke our contract. As far as we have never invoked this contract, it should increment value from the storage (which is `0`) and put the new `1` value back into the storage.
 Let's check:
 ```
-$ ./bin/neo-go contract invokefunction -r http://localhost:20331 -w my_wallet.json 57d271f86ed539fe4e2cfeee613f212f82326b3b main
+$ ./bin/neo-go contract invokefunction -r http://localhost:20331 -w my_wallet.json 0d8b4c23d13fc10422ed9ca8875fe9fb942b8f0c main
 ```
 ... enter the password `qwerty`:
 ```
@@ -664,69 +678,73 @@ Enter account NULwe3UAHckN2fzNdcVg31tDiaYtMDwANt password >
 ```
 Result:
 ```
-Sent invocation transaction dd9e802198bd655ea1abe237d22bd2cadd6e2367233d95cd4f00e1f43bfd7ba4
+Sent invocation transaction 1b1f45096411fc64249b4d727d413705d40ed3b84418098a8d369ffeb90a3ea1
 ```
 To check the counter value, call `getapplicaionlog` RPC-call for the invocation transaction:
 ```
-curl -d '{ "jsonrpc": "2.0", "id": 1, "method": "getapplicationlog", "params": ["dd9e802198bd655ea1abe237d22bd2cadd6e2367233d95cd4f00e1f43bfd7ba4"] }' localhost:20331 | json_pp
+curl -d '{ "jsonrpc": "2.0", "id": 1, "method": "getapplicationlog", "params": ["1b1f45096411fc64249b4d727d413705d40ed3b84418098a8d369ffeb90a3ea1"] }' localhost:20331 | json_pp
 ```
 The JSON result is:
 ```
 {
-   "result" : {
-      "gasconsumed" : "5292310",
-      "stack" : [
-         {
-            "type" : "Integer",
-            "value" : "1"
-         }
-      ],
-      "vmstate" : "HALT",
-      "txid" : "0xdd9e802198bd655ea1abe237d22bd2cadd6e2367233d95cd4f00e1f43bfd7ba4",
-      "notifications" : [
-         {
-            "state" : {
-               "value" : [
-                  {
-                     "type" : "ByteString",
-                     "value" : "VmFsdWUgcmVhZCBmcm9tIHN0b3JhZ2U="
-                  }
-               ],
-               "type" : "Array"
-            },
-            "eventname" : "info",
-            "contract" : "0x57d271f86ed539fe4e2cfeee613f212f82326b3b"
-         },
-         {
-            "contract" : "0x57d271f86ed539fe4e2cfeee613f212f82326b3b",
-            "eventname" : "info",
-            "state" : {
-               "type" : "Array",
-               "value" : [
-                  {
-                     "type" : "ByteString",
-                     "value" : "U3RvcmFnZSBrZXkgYWxyZWFkeSBzZXQuIEluY3JlbWVudGluZyBieSAx"
-                  }
-               ]
-            }
-         },
-         {
-            "eventname" : "info",
-            "contract" : "0x57d271f86ed539fe4e2cfeee613f212f82326b3b",
-            "state" : {
-               "value" : [
-                  {
-                     "type" : "ByteString",
-                     "value" : "TmV3IHZhbHVlIHdyaXR0ZW4gaW50byBzdG9yYWdl"
-                  }
-               ],
-               "type" : "Array"
-            }
-         }
-      ],
-      "trigger" : "Application"
-   },
    "jsonrpc" : "2.0",
+   "result" : {
+      "executions" : [
+         {
+            "trigger" : "Application",
+            "stack" : [
+               {
+                  "value" : "1",
+                  "type" : "Integer"
+               }
+            ],
+            "notifications" : [
+               {
+                  "eventname" : "info",
+                  "contract" : "0x0d8b4c23d13fc10422ed9ca8875fe9fb942b8f0c",
+                  "state" : {
+                     "type" : "Array",
+                     "value" : [
+                        {
+                           "value" : "VmFsdWUgcmVhZCBmcm9tIHN0b3JhZ2U=",
+                           "type" : "ByteString"
+                        }
+                     ]
+                  }
+               },
+               {
+                  "eventname" : "info",
+                  "contract" : "0x0d8b4c23d13fc10422ed9ca8875fe9fb942b8f0c",
+                  "state" : {
+                     "type" : "Array",
+                     "value" : [
+                        {
+                           "type" : "ByteString",
+                           "value" : "U3RvcmFnZSBrZXkgYWxyZWFkeSBzZXQuIEluY3JlbWVudGluZyBieSAx"
+                        }
+                     ]
+                  }
+               },
+               {
+                  "contract" : "0x0d8b4c23d13fc10422ed9ca8875fe9fb942b8f0c",
+                  "state" : {
+                     "type" : "Array",
+                     "value" : [
+                        {
+                           "value" : "TmV3IHZhbHVlIHdyaXR0ZW4gaW50byBzdG9yYWdl",
+                           "type" : "ByteString"
+                        }
+                     ]
+                  },
+                  "eventname" : "info"
+               }
+            ],
+            "vmstate" : "HALT",
+            "gasconsumed" : "0.0542855"
+         }
+      ],
+      "txid" : "0x1b1f45096411fc64249b4d727d413705d40ed3b84418098a8d369ffeb90a3ea1"
+   },
    "id" : 1
 }
 ```
@@ -751,7 +769,7 @@ which is the counter value denoted to the number of contract invocations.
 #### Step #4
 To ensure that all works as expected, let's invoke the contract one more time and check, whether the counter will be incremented: 
 ```
-$ ./bin/neo-go contract invokefunction -r http://localhost:20331 -w my_wallet.json 57d271f86ed539fe4e2cfeee613f212f82326b3b main
+$ ./bin/neo-go contract invokefunction -r http://localhost:20331 -w my_wallet.json 0d8b4c23d13fc10422ed9ca8875fe9fb942b8f0c main
 ```
 ... enter the password `qwerty`:
 ```
@@ -759,11 +777,11 @@ Enter account NULwe3UAHckN2fzNdcVg31tDiaYtMDwANt password >
 ```
 Result:
 ```
-Sent invocation transaction f093fc584a06362db89364ce348976a067c48405b277976d0c4d40475033fab6
+Sent invocation transaction 8004612c16e6aa1d67af53c79cc7cc773f6966d70e4791559391bfdc83480894
 ```
 To check the counter value, call `getapplicaionlog` RPC-call for the invocation transaction:
 ```
-curl -d '{ "jsonrpc": "2.0", "id": 1, "method": "getapplicationlog", "params": ["f093fc584a06362db89364ce348976a067c48405b277976d0c4d40475033fab6"] }' localhost:20331 | json_pp
+curl -d '{ "jsonrpc": "2.0", "id": 1, "method": "getapplicationlog", "params": ["8004612c16e6aa1d67af53c79cc7cc773f6966d70e4791559391bfdc83480894"] }' localhost:20331 | json_pp
 ```
 The JSON result is:
 ```
@@ -771,57 +789,61 @@ The JSON result is:
    "id" : 1,
    "jsonrpc" : "2.0",
    "result" : {
-      "notifications" : [
+      "executions" : [
          {
-            "eventname" : "info",
-            "state" : {
-               "value" : [
-                  {
-                     "type" : "ByteString",
-                     "value" : "VmFsdWUgcmVhZCBmcm9tIHN0b3JhZ2U="
+            "vmstate" : "HALT",
+            "gasconsumed" : "0.0532855",
+            "notifications" : [
+               {
+                  "state" : {
+                     "value" : [
+                        {
+                           "value" : "VmFsdWUgcmVhZCBmcm9tIHN0b3JhZ2U=",
+                           "type" : "ByteString"
+                        }
+                     ],
+                     "type" : "Array"
+                  },
+                  "eventname" : "info",
+                  "contract" : "0x0d8b4c23d13fc10422ed9ca8875fe9fb942b8f0c"
+               },
+               {
+                  "contract" : "0x0d8b4c23d13fc10422ed9ca8875fe9fb942b8f0c",
+                  "eventname" : "info",
+                  "state" : {
+                     "type" : "Array",
+                     "value" : [
+                        {
+                           "type" : "ByteString",
+                           "value" : "U3RvcmFnZSBrZXkgYWxyZWFkeSBzZXQuIEluY3JlbWVudGluZyBieSAx"
+                        }
+                     ]
                   }
-               ],
-               "type" : "Array"
-            },
-            "contract" : "0x57d271f86ed539fe4e2cfeee613f212f82326b3b"
-         },
-         {
-            "contract" : "0x57d271f86ed539fe4e2cfeee613f212f82326b3b",
-            "eventname" : "info",
-            "state" : {
-               "type" : "Array",
-               "value" : [
-                  {
-                     "type" : "ByteString",
-                     "value" : "U3RvcmFnZSBrZXkgYWxyZWFkeSBzZXQuIEluY3JlbWVudGluZyBieSAx"
-                  }
-               ]
-            }
-         },
-         {
-            "contract" : "0x57d271f86ed539fe4e2cfeee613f212f82326b3b",
-            "eventname" : "info",
-            "state" : {
-               "type" : "Array",
-               "value" : [
-                  {
-                     "value" : "TmV3IHZhbHVlIHdyaXR0ZW4gaW50byBzdG9yYWdl",
-                     "type" : "ByteString"
-                  }
-               ]
-            }
+               },
+               {
+                  "state" : {
+                     "type" : "Array",
+                     "value" : [
+                        {
+                           "value" : "TmV3IHZhbHVlIHdyaXR0ZW4gaW50byBzdG9yYWdl",
+                           "type" : "ByteString"
+                        }
+                     ]
+                  },
+                  "contract" : "0x0d8b4c23d13fc10422ed9ca8875fe9fb942b8f0c",
+                  "eventname" : "info"
+               }
+            ],
+            "stack" : [
+               {
+                  "type" : "Integer",
+                  "value" : "2"
+               }
+            ],
+            "trigger" : "Application"
          }
       ],
-      "trigger" : "Application",
-      "stack" : [
-         {
-            "type" : "Integer",
-            "value" : "2"
-         }
-      ],
-      "txid" : "0xf093fc584a06362db89364ce348976a067c48405b277976d0c4d40475033fab6",
-      "gasconsumed" : "5292310",
-      "vmstate" : "HALT"
+      "txid" : "0x8004612c16e6aa1d67af53c79cc7cc773f6966d70e4791559391bfdc83480894"
    }
 }
 ```
@@ -832,14 +854,13 @@ The `stack` field contains now `2` integer value, so the counter was incremented
 In this part we'll know about NEP5 token standard and try to write, deploy and invoke more complicated smart contract. 
 Let’s go!
 
-### NEP5
-[NEP5](https://docs.neo.org/docs/en-us/sc/write/nep5.html) is a token standard for the Neo blockchain that provides systems with a generalized interaction mechanism for tokenized smart contracts.
-The example with implementation of all required by the standard methods you can find in [nep5.go](https://github.com/nspcc-dev/neo-go/blob/master/examples/token/nep5/nep5.go)
+### NEP17
+[NEP17](https://github.com/neo-project/proposals/blob/master/nep-17.mediawiki) is a token standard for the Neo blockchain that provides systems with a generalized interaction mechanism for tokenized smart contracts.
+The example with implementation of all required by the standard methods you can find in [nep17.go](https://github.com/nspcc-dev/neo-go/blob/master/examples/token/nep17/nep17.go)
  
-Let's take a view on the example of smart contract with NEP5: [token.go](https://github.com/nspcc-dev/neo-go/blob/master/examples/token/token.go)
+Let's take a view on the example of smart contract with NEP17: [token.go](https://github.com/nspcc-dev/neo-go/blob/master/examples/token/token.go)
  
 This smart contract initialises nep5 token interface and takes operation string as a parameter, which is one of:
-- `name` returns name of created nep5 token 
 - `symbol` returns ticker symbol of the token
 - `decimals` returns amount of decimals for the token
 - `totalSupply` returns total token * multiplier
@@ -849,20 +870,16 @@ This smart contract initialises nep5 token interface and takes operation string 
   - `from` is account which you'd like to transfer tokens from
   - `to` is account which you'd like to transfer tokens to
   - `amount` is the amount of token to transfer
-- `mint` supplies initial amount of token to account and requires additional arguments:
-  - `to` is account address which you'd like to transfer initial token to
+  - `data` is any additional parameter which shall be passed to `onPayment` method (if the receiver is a contract)
 Let's perform several operations with our contract.
 
 #### Step #1
 To compile [token.go](https://github.com/nspcc-dev/neo-go/blob/master/examples/token/token.go)
 you can use [configuration](https://github.com/nspcc-dev/neo-go/blob/master/examples/token/token.yml).
-As far as our contract uses storage, the flag `hasstorage` should be set to `true`:
-```
-hasstorage: true
-```
+
 Compile smart contract:
 ```
-$ ./bin/neo-go contract compile -i examples/token/token.go -c 3-token.yml -m examples/token/token.manifest.json
+$ ./bin/neo-go contract compile -i examples/token/token.go -c examples/token/token.yml -m examples/token/token.manifest.json
 ```
 
 Deploy smart contract:
@@ -876,7 +893,8 @@ Enter account NULwe3UAHckN2fzNdcVg31tDiaYtMDwANt password >
 
 Result:
 ```
-Sent deployment transaction d275df152996bdab279efb0942b15fd26c6a2b69965cdc77540f401f6a91aedc for contract 4f84a3b4a32125056b5b2bf5b6c7addc3616985f
+Contract: e95ac155a85c449c881b3dc6b31f93ba9d514bb0
+caadeb13f2c76321dd59c802ae9d34b560d6e7546cf8822d03b7e3712909d3e8
 ```   
 
 Which means that our contract was deployed and now we can invoke it.
@@ -884,70 +902,73 @@ Which means that our contract was deployed and now we can invoke it.
 #### Step #2
 Let's invoke the contract to perform different operations.
 
-To start with, query `Name` of the created nep5 token:
+To start with, query `Symbol` of the created nep17 token:
 
 ```
-$ ./bin/neo-go contract invokefunction -r http://localhost:20331 -w my_wallet.json 4f84a3b4a32125056b5b2bf5b6c7addc3616985f name
+$ ./bin/neo-go contract invokefunction -r http://localhost:20331 -w my_wallet.json e95ac155a85c449c881b3dc6b31f93ba9d514bb0 symbol
 ```                                                                   
 Where
-- `4f84a3b4a32125056b5b2bf5b6c7addc3616985f` is our contract hash from step #1
-- `name` is operation string which was described earlier and returns token name
+- `e95ac155a85c449c881b3dc6b31f93ba9d514bb0` is our contract hash from step #1
+- `symbol` is operation string which was described earlier and returns token symbol
 
 ... and don't forget the password of your account `qwerty`.
 
 Result:
 ```
-Sent invocation transaction de56bd31d785e6656a5eb20f48fd94c98d19700a9de4e721aebf68ba585490f2
+Sent invocation transaction 48f2f4f21aa92fd77247df20c83c652db77163a02dd079960e89f031142895d4
 ```                                                                                         
 Now, let's take a detailed look at this invocation transaction with `getapplicationlog` RPC call:
 
 ```
-curl -d '{ "jsonrpc": "2.0", "id": 1, "method": "getapplicationlog", "params": ["de56bd31d785e6656a5eb20f48fd94c98d19700a9de4e721aebf68ba585490f2"] }' localhost:20331 | json_pp
+curl -d '{ "jsonrpc": "2.0", "id": 1, "method": "getapplicationlog", "params": ["48f2f4f21aa92fd77247df20c83c652db77163a02dd079960e89f031142895d4"] }' localhost:20331 | json_pp
 ```               
 
 Result:
 ```
 {
-   "result" : {
-      "stack" : [
-         {
-            "type" : "ByteString",
-            "value" : "QXdlc29tZSBORU8gVG9rZW4="
-         }
-      ],
-      "txid" : "0xde56bd31d785e6656a5eb20f48fd94c98d19700a9de4e721aebf68ba585490f2",
-      "trigger" : "Application",
-      "vmstate" : "HALT",
-      "notifications" : [],
-      "gasconsumed" : "4647080"
-   },
    "jsonrpc" : "2.0",
-   "id" : 1
+   "id" : 1,
+   "result" : {
+      "txid" : "0x48f2f4f21aa92fd77247df20c83c652db77163a02dd079960e89f031142895d4",
+      "executions" : [
+         {
+            "stack" : [
+               {
+                  "type" : "ByteString",
+                  "value" : "QU5U"
+               }
+            ],
+            "notifications" : [],
+            "trigger" : "Application",
+            "gasconsumed" : "0.0406386",
+            "vmstate" : "HALT"
+         }
+      ]
+   }
 }
 ```
 
-At least, you can see that `stack` field of JSON result is not empty: it contains base64 byte array with the name of our token.
+At least, you can see that `stack` field of JSON result is not empty: it contains base64 byte array with the symbol of our token.
 
 Following commands able you to get some additional information about token:
 ```
-$ ./bin/neo-go contract invokefunction -r http://localhost:20331 -w my_wallet.json 4f84a3b4a32125056b5b2bf5b6c7addc3616985f symbol
-$ ./bin/neo-go contract invokefunction -r http://localhost:20331 -w my_wallet.json 4f84a3b4a32125056b5b2bf5b6c7addc3616985f decimals
-$ ./bin/neo-go contract invokefunction -r http://localhost:20331 -w my_wallet.json 4f84a3b4a32125056b5b2bf5b6c7addc3616985f totalSupply
+$ ./bin/neo-go contract invokefunction -r http://localhost:20331 -w my_wallet.json e95ac155a85c449c881b3dc6b31f93ba9d514bb0 decimals
+$ ./bin/neo-go contract invokefunction -r http://localhost:20331 -w my_wallet.json e95ac155a85c449c881b3dc6b31f93ba9d514bb0 totalSupply
 ```
 
 #### Step #3
 
 Now it's time for more interesting things. First of all, let's check the balance of nep5 token on our account by using `balanceOf`:
 ```
-$ ./bin/neo-go contract invokefunction -r http://localhost:20331 -w my_wallet.json 4f84a3b4a32125056b5b2bf5b6c7addc3616985f balanceOf NULwe3UAHckN2fzNdcVg31tDiaYtMDwANt
+$ ./bin/neo-go contract invokefunction -r http://localhost:20331 -w my_wallet.json e95ac155a85c449c881b3dc6b31f93ba9d514bb0 balanceOf NULwe3UAHckN2fzNdcVg31tDiaYtMDwANt
 ```                             
 ... with `qwerty` password. The result is:
 ```
-Sent invocation transaction de1a69a6c0b5389458f35c44e28d1bea0a0ab4fe7b4ad0013e34b36d0995069a
+Sent invocation transaction 6db68a92683ffb5f6f40700d85ebb08058952d3ce0fb23ed837228118cc14025
 ```
 And take a closer look at the transaction's details with `getapplicationlog` RPC-call:
 ```
-curl -d '{ "jsonrpc": "2.0", "id": 1, "method": "getapplicationlog", "params": ["de1a69a6c0b5389458f35c44e28d1bea0a0ab4fe7b4ad0013e34b36d0995069a"] }' localhost:20331 | json_pp
+curl -d '{ "jsonrpc": "2.0", "id": 1, "method": "getapplicationlog", "params": ["6db68a92683ffb5f6f40700d85ebb08058952d3ce0fb23ed837228118cc14025"] }' localhost:20331 | json_pp
 ```
 Result:
 ```
@@ -981,7 +1002,7 @@ to manage initial supply of tokens. That's the purpose of transaction's *signers
 against the values provided in the list of signers. To pass this check we should add our account to
 transaction's signers list with CalledByEntry scope. So let's mint token to our address:
 ```
-$ ./bin/neo-go contract invokefunction -r http://localhost:20331 -w my_wallet.json 4f84a3b4a32125056b5b2bf5b6c7addc3616985f mint NULwe3UAHckN2fzNdcVg31tDiaYtMDwANt -- f8d79b436e9d3a54a38cc877d182b71e381d7a5c:CalledByEntry
+$ ./bin/neo-go contract invokefunction -r http://localhost:20331 -w my_wallet.json e95ac155a85c449c881b3dc6b31f93ba9d514bb0 mint NULwe3UAHckN2fzNdcVg31tDiaYtMDwANt -- f8d79b436e9d3a54a38cc877d182b71e381d7a5c:CalledByEntry
 ```
 Where:
 - `--` is a special delimiter of transaction's cosigners list
@@ -989,77 +1010,84 @@ Where:
 
 ... with `qwerty` pass. The result:
 ``` 
-Sent invocation transaction 2f4eff5532808080ae4c6a1a844c32a53015ca3cad5c308c5bcf3d8261399d06
+Sent invocation transaction f17d03c82c935cf9c936bb7ea1d4fd2231449a450ae0c5f165474551efb48057
 ```
 `getapplicationlog` RPC-call for this transaction tells us the following:
 ```
 {
    "result" : {
-      "stack" : [
+      "executions" : [
          {
-            "value" : "1",
-            "type" : "Integer"
+            "gasconsumed" : "0.1200636",
+            "vmstate" : "HALT",
+            "trigger" : "Application",
+            "notifications" : [
+               {
+                  "eventname" : "Transfer",
+                  "state" : {
+                     "type" : "Array",
+                     "value" : [
+                        {
+                           "type" : "Any"
+                        },
+                        {
+                           "type" : "ByteString",
+                           "value" : "XHodOB63gtF3yIyjVDqdbkOb1/g="
+                        },
+                        {
+                           "type" : "Integer",
+                           "value" : "1100000000000000"
+                        }
+                     ]
+                  },
+                  "contract" : "0xe95ac155a85c449c881b3dc6b31f93ba9d514bb0"
+               }
+            ],
+            "stack" : [
+               {
+                  "value" : "1",
+                  "type" : "Integer"
+               }
+            ]
          }
       ],
-      "vmstate" : "HALT",
-      "notifications" : [
-         {
-            "contract" : "0x4f84a3b4a32125056b5b2bf5b6c7addc3616985f",
-            "state" : {
-               "value" : [
-                  {
-                     "value" : "",
-                     "type" : "ByteString"
-                  },
-                  {
-                     "value" : "XHodOB63gtF3yIyjVDqdbkOb1/g=",
-                     "type" : "ByteString"
-                  },
-                  {
-                     "value" : "1100000000000000",
-                     "type" : "Integer"
-                  }
-               ],
-               "type" : "Array"
-            },
-            "eventname" : "transfer"
-         }
-      ],
-      "txid" : "0x2f4eff5532808080ae4c6a1a844c32a53015ca3cad5c308c5bcf3d8261399d06",
-      "gasconsumed" : "8233460",
-      "trigger" : "Application"
+      "txid" : "0xf17d03c82c935cf9c936bb7ea1d4fd2231449a450ae0c5f165474551efb48057"
    },
-   "jsonrpc" : "2.0",
-   "id" : 1
+   "id" : 1,
+   "jsonrpc" : "2.0"
 }
 ```
 Here we have `1` at the `stack` field, which means that token was successfully minted.
 Let's just ensure that by querying `balanceOf` one more time:
 ```
-$ ./bin/neo-go contract invokefunction -r http://localhost:20331 -w my_wallet.json 4f84a3b4a32125056b5b2bf5b6c7addc3616985f balanceOf NULwe3UAHckN2fzNdcVg31tDiaYtMDwANt
+$ ./bin/neo-go contract invokefunction -r http://localhost:20331 -w my_wallet.json e95ac155a85c449c881b3dc6b31f93ba9d514bb0 balanceOf NULwe3UAHckN2fzNdcVg31tDiaYtMDwANt
 ```
 ... with `qwerty` pass. The result:
 ``` 
-Sent invocation transaction cb3a28b2670836d1034655c19b5fbea62593f5f834977e72b1599f28c0ea79d5
+Sent invocation transaction ce8212e93ae6171efbdbb415153184ad06e4dbdd656c15ffdfcbbcd57463d7be
 ```
 ... with the following `getapplicationlog` JSON message:
 ```
 {
    "jsonrpc" : "2.0",
+   "id" : 1,
    "result" : {
-      "gasconsumed" : "5504020",
-      "notifications" : [],
-      "vmstate" : "HALT",
-      "txid" : "0xcb3a28b2670836d1034655c19b5fbea62593f5f834977e72b1599f28c0ea79d5",
-      "trigger" : "Application",
-      "stack" : [
+      "txid" : "0xce8212e93ae6171efbdbb415153184ad06e4dbdd656c15ffdfcbbcd57463d7be",
+      "executions" : [
          {
-            "type" : "Integer",
-            "value" : "1100000000000000"
+            "vmstate" : "HALT",
+            "notifications" : [],
+            "gasconsumed" : "0.0514227",
+            "trigger" : "Application",
+            "stack" : [
+               {
+                  "type" : "Integer",
+                  "value" : "1100000000000000"
+               }
+            ]
          }
       ]
-   },
-   "id" : 1
+   }
 }
 ```
 Now we can see integer value at the `stack` field, so `1100000000000000` is the nep5 token balance of our account.
@@ -1071,77 +1099,85 @@ Note, that token can be minted only once.
 After we are done with minting, it's possible to transfer token to someone else.
 Let's transfer 5 tokens from our account to `NgzuJWWGVEwFGsRrgzj8knswEYRJrTe7sm` with `transfer` call:
 ```
-$ ./bin/neo-go contract invokefunction -r http://localhost:20331 -w my_wallet.json 4f84a3b4a32125056b5b2bf5b6c7addc3616985f transfer NULwe3UAHckN2fzNdcVg31tDiaYtMDwANt NgzuJWWGVEwFGsRrgzj8knswEYRJrTe7sm 500000000 -- f8d79b436e9d3a54a38cc877d182b71e381d7a5c:CalledByEntry
+$ ./bin/neo-go contract invokefunction -r http://localhost:20331 -w my_wallet.json e95ac155a85c449c881b3dc6b31f93ba9d514bb0 transfer NULwe3UAHckN2fzNdcVg31tDiaYtMDwANt NgzuJWWGVEwFGsRrgzj8knswEYRJrTe7sm 500000000 null -- f8d79b436e9d3a54a38cc877d182b71e381d7a5c:CalledByEntry
 ```
 ... with password `qwerty` and following result:
 ``` 
-Sent invocation transaction 65864bd07566318141fd781ece65a72d3c185f3f7190ac7096f7b9b7b62583ee
+Sent invocation transaction 8fefd5861d865379b6632693a5c74f430eb4465b6abf2efef8bddfd0a17dfa70
 ```
 Our favourite `getapplicationlog` RPC-call tells us:
 ```
 {
-   "id" : 1,
+   "jsonrpc" : "2.0",
    "result" : {
-      "trigger" : "Application",
-      "txid" : "0x65864bd07566318141fd781ece65a72d3c185f3f7190ac7096f7b9b7b62583ee",
-      "vmstate" : "HALT",
-      "gasconsumed" : "8117770",
-      "notifications" : [
+      "executions" : [
          {
-            "state" : {
-               "type" : "Array",
-               "value" : [
-                  {
-                     "type" : "ByteString",
-                     "value" : "XHodOB63gtF3yIyjVDqdbkOb1/g="
+            "notifications" : [
+               {
+                  "state" : {
+                     "value" : [
+                        {
+                           "value" : "XHodOB63gtF3yIyjVDqdbkOb1/g=",
+                           "type" : "ByteString"
+                        },
+                        {
+                           "value" : "50l6vFaauRKm8hPVkr3Aw2CeHQs=",
+                           "type" : "ByteString"
+                        },
+                        {
+                           "type" : "Integer",
+                           "value" : "500000000"
+                        }
+                     ],
+                     "type" : "Array"
                   },
-                  {
-                     "type" : "ByteString",
-                     "value" : "50l6vFaauRKm8hPVkr3Aw2CeHQs="
-                  },
-                  {
-                     "type" : "Integer",
-                     "value" : "500000000"
-                  }
-               ]
-            },
-            "eventname" : "transfer",
-            "contract" : "0x4f84a3b4a32125056b5b2bf5b6c7addc3616985f"
+                  "eventname" : "Transfer",
+                  "contract" : "0xe95ac155a85c449c881b3dc6b31f93ba9d514bb0"
+               }
+            ],
+            "gasconsumed" : "0.0981362",
+            "trigger" : "Application",
+            "vmstate" : "HALT",
+            "stack" : [
+               {
+                  "value" : "1",
+                  "type" : "Integer"
+               }
+            ]
          }
       ],
-      "stack" : [
-         {
-            "value" : "1",
-            "type" : "Integer"
-         }
-      ]
+      "txid" : "0x8fefd5861d865379b6632693a5c74f430eb4465b6abf2efef8bddfd0a17dfa70"
    },
-   "jsonrpc" : "2.0"
+   "id" : 1
 }
 ```
 Note, that `stack` field contains `1`, which means that token was successfully transferred.
 Let's now check the balance of `NgzuJWWGVEwFGsRrgzj8knswEYRJrTe7sm` account to ensure that the amount of token on that account = 5:
 ```
-$ ./bin/neo-go contract invokefunction -r http://localhost:20331 -w my_wallet.json 4f84a3b4a32125056b5b2bf5b6c7addc3616985f balanceOf NgzuJWWGVEwFGsRrgzj8knswEYRJrTe7sm
+$ ./bin/neo-go contract invokefunction -r http://localhost:20331 -w my_wallet.json e95ac155a85c449c881b3dc6b31f93ba9d514bb0 balanceOf NgzuJWWGVEwFGsRrgzj8knswEYRJrTe7sm
 ```
 The `getapplicationlog` RPC-call for this transaction tells us the following:
 ```
 {
    "result" : {
-      "trigger" : "Application",
-      "stack" : [
+      "txid" : "0x0cb6db18b98a188d15010f8d9002948168897eea119e1b28f3254a4c554feab4",
+      "executions" : [
          {
-            "type" : "Integer",
-            "value" : "500000000"
+            "gasconsumed" : "0.0514227",
+            "trigger" : "Application",
+            "vmstate" : "HALT",
+            "notifications" : [],
+            "stack" : [
+               {
+                  "value" : "500000000",
+                  "type" : "Integer"
+               }
+            ]
          }
-      ],
-      "notifications" : [],
-      "vmstate" : "HALT",
-      "txid" : "0x246aab29aefe81baed1c3a40243b8ee9113689a305e90aa5a89efdaba880bf0e",
-      "gasconsumed" : "5504020"
+      ]
    },
-   "id" : 1,
-   "jsonrpc" : "2.0"
+   "jsonrpc" : "2.0",
+   "id" : 1
 }
 ```
 Here we are! There are exactly 5 tokens at the `stack` field. You can also ensure that these 5 tokens were debited from `NULwe3UAHckN2fzNdcVg31tDiaYtMDwANt` account by using `balanceOf` method.
@@ -1189,7 +1225,8 @@ Enter account NULwe3UAHckN2fzNdcVg31tDiaYtMDwANt password >
 
 Result:
 ```
-Sent deployment transaction 2796d6d641d3e7528f7cb7c30cc8b0099e1291e2af3a14ef4a8d89f3dca14c44 for contract 459f3383e8b087a67454da141eeba34521eaccfc
+Contract: a8faf6491a34caaa9766f2f657546cceef9b6d7d
+bfe25b56f0e77738e816a282710e975188dfc2cf28f2c8e37d121bb7d7202334
 ```   
 You know, what it means :)
 
@@ -1197,7 +1234,7 @@ You know, what it means :)
 
 Invoke the contract to register domain with name `my_first_domain`:
 ```
-$ ./bin/neo-go contract invokefunction -r http://localhost:20331 -w my_wallet.json 459f3383e8b087a67454da141eeba34521eaccfc register my_first_domain NULwe3UAHckN2fzNdcVg31tDiaYtMDwANt -- f8d79b436e9d3a54a38cc877d182b71e381d7a5c:CalledByEntry
+$ ./bin/neo-go contract invokefunction -r http://localhost:20331 -w my_wallet.json a8faf6491a34caaa9766f2f657546cceef9b6d7d register my_first_domain NULwe3UAHckN2fzNdcVg31tDiaYtMDwANt -- f8d79b436e9d3a54a38cc877d182b71e381d7a5c:CalledByEntry
 ```
 ... the strongest password in the world, guess: `qwerty`
 ```
@@ -1205,59 +1242,63 @@ Enter account NULwe3UAHckN2fzNdcVg31tDiaYtMDwANt password >
 ```
 Result:
 ```
-Sent invocation transaction f6995b104a03fdb3dc45b236c371523276b8c17036631e3df9fdc5575d608988
+Sent invocation transaction 9742affb241286181d62832492ff81a982a48fe9d725c263bc0a90e2cbec1a87
 ```
 Also you can see the log message in the console, where you run neo-go node:
 ```
-2020-07-06T16:50:37.713+0300	INFO	runtime log	{"script": "fcccea2145a3eb1e14da5474a687b0e883339f45", "logs": "\"RegisterDomain: my_first_domain\""}
+2020-12-17T17:31:43.480+0300	INFO	runtime log	{"script": "7d6d9befce6c5457f6f26697aaca341a49f6faa8", "logs": "\"RegisterDomain: my_first_domain\""}
 ```
 Well, that's ok. Let's check now, whether our domain was registered with `getapplicationlog` RPC-call:
 ```
-curl -d '{ "jsonrpc": "2.0", "id": 1, "method": "getapplicationlog", "params": ["f6995b104a03fdb3dc45b236c371523276b8c17036631e3df9fdc5575d608988"] }' localhost:20331 | json_pp
+curl -d '{ "jsonrpc": "2.0", "id": 1, "method": "getapplicationlog", "params": ["9742affb241286181d62832492ff81a982a48fe9d725c263bc0a90e2cbec1a87"] }' localhost:20331 | json_pp
 ```
 The result is:
 ```
 {
-   "id" : 1,
-   "jsonrpc" : "2.0",
    "result" : {
-      "vmstate" : "HALT",
-      "txid" : "0xf6995b104a03fdb3dc45b236c371523276b8c17036631e3df9fdc5575d608988",
-      "gasconsumed" : "6223400",
-      "stack" : [
+      "txid" : "0x9742affb241286181d62832492ff81a982a48fe9d725c263bc0a90e2cbec1a87",
+      "executions" : [
          {
-            "type" : "Integer",
-            "value" : "1"
-         }
-      ],
-      "trigger" : "Application",
-      "notifications" : [
-         {
-            "contract" : "0x459f3383e8b087a67454da141eeba34521eaccfc",
-            "eventname" : "registered",
-            "state" : {
-               "type" : "Array",
-               "value" : [
-                  {
-                     "value" : "XHodOB63gtF3yIyjVDqdbkOb1/g=",
-                     "type" : "ByteString"
+            "stack" : [
+               {
+                  "type" : "Integer",
+                  "value" : "1"
+               }
+            ],
+            "gasconsumed" : "0.0763778",
+            "vmstate" : "HALT",
+            "trigger" : "Application",
+            "notifications" : [
+               {
+                  "state" : {
+                     "type" : "Array",
+                     "value" : [
+                        {
+                           "value" : "XHodOB63gtF3yIyjVDqdbkOb1/g=",
+                           "type" : "ByteString"
+                        },
+                        {
+                           "value" : "bXlfZmlyc3RfZG9tYWlu",
+                           "type" : "ByteString"
+                        }
+                     ]
                   },
-                  {
-                     "value" : "bXlfZmlyc3RfZG9tYWlu",
-                     "type" : "ByteString"
-                  }
-               ]
-            }
+                  "contract" : "0xa8faf6491a34caaa9766f2f657546cceef9b6d7d",
+                  "eventname" : "registered"
+               }
+            ]
          }
       ]
-   }
+   },
+   "id" : 1,
+   "jsonrpc" : "2.0"
 }
 ```
 Especially, we're interested in two fields of the json:
 
 First one is `notifications` field, which contains one notification with `registered` name:
 - `bXlfZmlyc3RfZG9tYWlu` byte string in base64 representation, which can be decoded to `my_first_domain` - our domain's name
-- `E9RIbx59YF1EGCw9f0E19Ms6o/A=` byte array, which can be decoded to the account address `NULwe3UAHckN2fzNdcVg31tDiaYtMDwANt`.
+- `XHodOB63gtF3yIyjVDqdbkOb1/g=` byte array, which can be decoded to the account address `NULwe3UAHckN2fzNdcVg31tDiaYtMDwANt`.
 
 The second field is `stack` with `1` value, which was returned by the smart contract.
 
@@ -1267,7 +1308,7 @@ All of these values let us be sure that our domain was successfully registered.
 
 Invoke the contract to query the address information our `my_first_domain` domain:
 ```
-$ ./bin/neo-go contract invokefunction -r http://localhost:20331 -w my_wallet.json 459f3383e8b087a67454da141eeba34521eaccfc query my_first_domain
+$ ./bin/neo-go contract invokefunction -r http://localhost:20331 -w my_wallet.json a8faf6491a34caaa9766f2f657546cceef9b6d7d query my_first_domain
 ```
 ... the pass `qwerty`:
 ```
@@ -1275,34 +1316,38 @@ Enter account NULwe3UAHckN2fzNdcVg31tDiaYtMDwANt password >
 ```
 Result:
 ```
-Sent invocation transaction 7890938840734c26a66ed642ab50ce9d5f1c075aa090a901c87fccb638d92012
+Sent invocation transaction c8cfe3bf1b08ba384263aa4c0e38d1db1094d5522bbf6a56a07f0000b417c840
 ```
 and log-message:
 ```
-2020-07-06T17:02:10.782+0300	INFO	runtime log	{"script": "fcccea2145a3eb1e14da5474a687b0e883339f45", "logs": "\"QueryDomain: my_first_domain\""}
+2020-12-17T17:39:32.677+0300	INFO	runtime log	{"script": "7d6d9befce6c5457f6f26697aaca341a49f6faa8", "logs": "\"QueryDomain: my_first_domain\""}
 ```
 Let's check this transaction with `getapplicationlog` RPC call:
 ```
-curl -d '{ "jsonrpc": "2.0", "id": 1, "method": "getapplicationlog", "params": ["7890938840734c26a66ed642ab50ce9d5f1c075aa090a901c87fccb638d92012"] }' localhost:20331 | json_pp
+curl -d '{ "jsonrpc": "2.0", "id": 1, "method": "getapplicationlog", "params": ["c8cfe3bf1b08ba384263aa4c0e38d1db1094d5522bbf6a56a07f0000b417c840"] }' localhost:20331 | json_pp
 ```
 ... which gives us the following result:
 ```
 {
-   "jsonrpc" : "2.0",
-   "id" : 1,
    "result" : {
-      "trigger" : "Application",
-      "vmstate" : "HALT",
-      "txid" : "0x7890938840734c26a66ed642ab50ce9d5f1c075aa090a901c87fccb638d92012",
-      "stack" : [
+      "executions" : [
          {
-            "type" : "ByteString",
-            "value" : "XHodOB63gtF3yIyjVDqdbkOb1/g="
+            "notifications" : [],
+            "vmstate" : "HALT",
+            "stack" : [
+               {
+                  "value" : "XHodOB63gtF3yIyjVDqdbkOb1/g=",
+                  "type" : "ByteString"
+               }
+            ],
+            "trigger" : "Application",
+            "gasconsumed" : "0.040908"
          }
       ],
-      "notifications" : [],
-      "gasconsumed" : "4185570"
-   }
+      "txid" : "0xc8cfe3bf1b08ba384263aa4c0e38d1db1094d5522bbf6a56a07f0000b417c840"
+   },
+   "id" : 1,
+   "jsonrpc" : "2.0"
 }
 ```
 
@@ -1312,7 +1357,7 @@ with base64 interpretation of our account address `NULwe3UAHckN2fzNdcVg31tDiaYtM
 
 Invoke the contract to transfer domain to the other account (e.g. account with `NgzuJWWGVEwFGsRrgzj8knswEYRJrTe7sm` address):
 ```
-$ ./bin/neo-go contract invokefunction -r http://localhost:20331 -w my_wallet.json 459f3383e8b087a67454da141eeba34521eaccfc transfer my_first_domain NgzuJWWGVEwFGsRrgzj8knswEYRJrTe7sm -- f8d79b436e9d3a54a38cc877d182b71e381d7a5c
+$ ./bin/neo-go contract invokefunction -r http://localhost:20331 -w my_wallet.json a8faf6491a34caaa9766f2f657546cceef9b6d7d transfer my_first_domain NgzuJWWGVEwFGsRrgzj8knswEYRJrTe7sm -- f8d79b436e9d3a54a38cc877d182b71e381d7a5c
 ```
 ... the password: `qwerty`
 ```
@@ -1320,81 +1365,85 @@ Enter account NULwe3UAHckN2fzNdcVg31tDiaYtMDwANt password >
 ```
 Result:
 ```
-Sent invocation transaction 7df4b7d4f318e1e2c3007ec919bbcbff620685df71add4834e0f1a35f57ef893
+Sent invocation transaction 1ff49e096a247e4ea25a8164de04fa695035ee02ce0a3096615c87fc4adb2c82
 ```
 and log-message:
 ```
-2020-07-06T17:10:08.521+0300	INFO	runtime log	{"script": "fcccea2145a3eb1e14da5474a687b0e883339f45", "logs": "\"TransferDomain: my_first_domain\""}
+2020-12-17T17:44:07.536+0300	INFO	runtime log	{"script": "7d6d9befce6c5457f6f26697aaca341a49f6faa8", "logs": "\"TransferDomain: my_first_domain\""}
 ```
 Perfect. And `getapplicationlog` RPC-call...
 ```
-curl -d '{ "jsonrpc": "2.0", "id": 1, "method": "getapplicationlog", "params": ["7df4b7d4f318e1e2c3007ec919bbcbff620685df71add4834e0f1a35f57ef893"] }' localhost:20331 | json_pp
+curl -d '{ "jsonrpc": "2.0", "id": 1, "method": "getapplicationlog", "params": ["1ff49e096a247e4ea25a8164de04fa695035ee02ce0a3096615c87fc4adb2c82"] }' localhost:20331 | json_pp
 ```
 ... tells us:
 ```
 {
-   "id" : 1,
-   "jsonrpc" : "2.0",
    "result" : {
-      "vmstate" : "HALT",
-      "trigger" : "Application",
-      "txid" : "0x7df4b7d4f318e1e2c3007ec919bbcbff620685df71add4834e0f1a35f57ef893",
-      "notifications" : [
+      "txid" : "0x1ff49e096a247e4ea25a8164de04fa695035ee02ce0a3096615c87fc4adb2c82",
+      "executions" : [
          {
-            "contract" : "0x459f3383e8b087a67454da141eeba34521eaccfc",
-            "state" : {
-               "value" : [
-                  {
-                     "type" : "ByteString",
-                     "value" : "XHodOB63gtF3yIyjVDqdbkOb1/g="
-                  },
-                  {
-                     "value" : "bXlfZmlyc3RfZG9tYWlu",
-                     "type" : "ByteString"
+            "stack" : [
+               {
+                  "value" : "1",
+                  "type" : "Integer"
+               }
+            ],
+            "vmstate" : "HALT",
+            "notifications" : [
+               {
+                  "eventname" : "deleted",
+                  "contract" : "0xa8faf6491a34caaa9766f2f657546cceef9b6d7d",
+                  "state" : {
+                     "value" : [
+                        {
+                           "type" : "ByteString",
+                           "value" : "XHodOB63gtF3yIyjVDqdbkOb1/g="
+                        },
+                        {
+                           "type" : "ByteString",
+                           "value" : "bXlfZmlyc3RfZG9tYWlu"
+                        }
+                     ],
+                     "type" : "Array"
                   }
-               ],
-               "type" : "Array"
-            },
-            "eventname" : "deleted"
-         },
-         {
-            "contract" : "0x459f3383e8b087a67454da141eeba34521eaccfc",
-            "eventname" : "registered",
-            "state" : {
-               "value" : [
-                  {
-                     "value" : "50l6vFaauRKm8hPVkr3Aw2CeHQs=",
-                     "type" : "ByteString"
-                  },
-                  {
-                     "value" : "bXlfZmlyc3RfZG9tYWlu",
-                     "type" : "ByteString"
+               },
+               {
+                  "eventname" : "registered",
+                  "contract" : "0xa8faf6491a34caaa9766f2f657546cceef9b6d7d",
+                  "state" : {
+                     "type" : "Array",
+                     "value" : [
+                        {
+                           "type" : "ByteString",
+                           "value" : "50l6vFaauRKm8hPVkr3Aw2CeHQs="
+                        },
+                        {
+                           "type" : "ByteString",
+                           "value" : "bXlfZmlyc3RfZG9tYWlu"
+                        }
+                     ]
                   }
-               ],
-               "type" : "Array"
-            }
+               }
+            ],
+            "trigger" : "Application",
+            "gasconsumed" : "0.0575972"
          }
-      ],
-      "stack" : [
-         {
-            "value" : "1",
-            "type" : "Integer"
-         }
-      ],
-      "gasconsumed" : "5410900"
-   }
+      ]
+   },
+   "jsonrpc" : "2.0",
+   "id" : 1
 }
 ```
 The `notifications` field contains two events:
 - First one with name `deleted` and additional information (domain `my_first_domain` was deleted from account `NULwe3UAHckN2fzNdcVg31tDiaYtMDwANt`),
-- Second one with name `cmVnaXN0ZXJlZA==`  and additional information  (domain `my_first_domain` was registered with account `NgzuJWWGVEwFGsRrgzj8knswEYRJrTe7sm`).
+- Second one with name `registered`  and additional information  (domain `my_first_domain` was registered with account `NgzuJWWGVEwFGsRrgzj8knswEYRJrTe7sm`).
 The `stack` field contains `1` value, which means that our domain was successfully transferred.
 
 #### Step #6
 
 The last call is `delete`, so you can try to create the other domain, e.g. `my_second_domain` and then remove it from storage with:
 ```
-$ ./bin/neo-go contract invokefunction -r http://localhost:20331 -w my_wallet.json 459f3383e8b087a67454da141eeba34521eaccfc delete my_second_domain -- f0a33acbf435417f3d2c18445d607d1e6f48d413
+$ ./bin/neo-go contract invokefunction -r http://localhost:20331 -w my_wallet.json a8faf6491a34caaa9766f2f657546cceef9b6d7d delete my_second_domain -- f0a33acbf435417f3d2c18445d607d1e6f48d413
 ```
 
 Thank you!
