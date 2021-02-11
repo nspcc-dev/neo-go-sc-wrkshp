@@ -1,5 +1,4 @@
-hasstorage: true
-ispayable: false
+name: "Storage contract"
 supportedstandards: []
 events:
   - name: info

@@ -1,4 +1,3 @@
-hasstorage: false
-ispayable: false
+name: "HelloWorld contract"
 supportedstandards: []
 events: []
