@@ -7,7 +7,7 @@ import (
 
 const itemKey = "test-storage-key"
 
-func _deploy(isUpdate bool) {
+func _deploy(_ interface{}, isUpdate bool) {
 	if !isUpdate {
 		ctx := storage.GetContext()
 		runtime.Notify("info", []byte("Storage key not yet set. Setting to 0"))
