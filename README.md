@@ -535,6 +535,45 @@ curl -d '{ "jsonrpc": "2.0", "id": 5, "method": "getcontractstate", "params": ["
 
 List of supported by neo-go node RPC commands you can find [here](https://github.com/nspcc-dev/neo-go/blob/master/docs/rpc.md#supported-methods).
 
+#### Utilities
+
+neo-go CLI provides `query tx` utility to check the transaction state. It uses
+`getrawtransaction` and `getapplicationlog` RPC calls under the hood and prints details
+of transaction invocation. Use `query tx` command to ensure transaction was accepted
+to the chain:
+```
+./bin/neo-go query tx bd23c836f7bdd62a0d9c5ecb3f5bdbf2d38ec9a5e2e3935ca543d8c18ed5479d -r http://localhost:20331 -v
+```
+where
+- `bd23c836f7bdd62a0d9c5ecb3f5bdbf2d38ec9a5e2e3935ca543d8c18ed5479d` - invocation transaction hash from step #7
+- `-r http://localhost:20331` - RPC node endpoint
+- `-v` - verbose flag (enables transaction's signers, fees and script dumps)
+
+The result is:
+```
+Hash:			bd23c836f7bdd62a0d9c5ecb3f5bdbf2d38ec9a5e2e3935ca543d8c18ed5479d
+OnChain:		true
+BlockHash:		c72e82e1dc4274a1c6d587370bfe56f359968ce18c27a7988883d34ebf415496
+Success:		true
+Signer:			NbrUYaZgyhSkNoRo9ugRyEMdUZxrhkNaWB (None)
+SystemFee:		0.0202833 GAS
+NetworkFee:		0.0117752 GAS
+Script:			EMAfDARtYWluDBTFG7BnftlcstPwXFcklVW/yWeEpEFifVtS
+INDEX    OPCODE       PARAMETER                                   
+0        PUSH0                                                    <<
+1        PACK                                                     
+2        PUSH15                                                   
+3        PUSHDATA1    6d61696e ("main")                           
+9        PUSHDATA1    c51bb0677ed95cb2d3f05c57249555bfc96784a4    
+31       SYSCALL      System.Contract.Call (627d5b52)             
+
+```
+
+From the `OnChain` field we can see that transaction was successfully accepted to the chain.
+`Success` field tells us whether transaction script was successfully executed, i.e. changes
+in tx has been persisted on chain and VM has `HALT` state after script execution. 
+
+
 ### Storage smart contract
 
 Let's take a look at the another smart contract example: [2-storage.go](https://github.com/nspcc-dev/neo-go-sc-wrkshp/blob/master/2-storage.go).

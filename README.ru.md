@@ -373,7 +373,7 @@ $ ./bin/neo-go contract deploy -i 1-print.nef -manifest 1-print.manifest.json -r
 ```
 Enter account NbrUYaZgyhSkNoRo9ugRyEMdUZxrhkNaWB password >
 ```
-CLI предложит подтвердить отправку транзакции с указанными комиссиямию Здесь и
+CLI предложит подтвердить отправку транзакции с указанными комиссиями. Здесь и
 далее введите `y` для подтверждения:
 ```
 Network fee: 1515520
@@ -527,6 +527,45 @@ curl -d '{ "jsonrpc": "2.0", "id": 5, "method": "getcontractstate", "params": ["
 ```
 
 Список всех поддерживаемых нодой neo-go вызовов RPC вы найдете [здесь](https://github.com/nspcc-dev/neo-go/blob/master/docs/rpc.md#supported-methods).
+
+#### Вспомогательные инструменты
+
+neo-go CLI предоставляет утилиту `query tx` для проверки состояния транзакции. Данная утилита
+ипользует вызовы RPC `getrawtransaction` и `getapplicationlog` для определения состояния транзакции
+и выводит детали выполнения транзакции на экран. Используйте команду `query tx` для того, чтобы 
+убедиться, что транзакция была успешно принята в блок:
+```
+./bin/neo-go query tx bd23c836f7bdd62a0d9c5ecb3f5bdbf2d38ec9a5e2e3935ca543d8c18ed5479d -r http://localhost:20331 -v
+```
+где
+- `bd23c836f7bdd62a0d9c5ecb3f5bdbf2d38ec9a5e2e3935ca543d8c18ed5479d` - хеш вызывающей транзакции из шага #7
+- `-r http://localhost:20331` - адрес и порт RPC узла
+- `-v` - флаг для вывода более детальной информации о транзакции (подписантов, комиссий и скрипта)
+
+Результат выполнения данной команды:
+```
+Hash:			bd23c836f7bdd62a0d9c5ecb3f5bdbf2d38ec9a5e2e3935ca543d8c18ed5479d
+OnChain:		true
+BlockHash:		c72e82e1dc4274a1c6d587370bfe56f359968ce18c27a7988883d34ebf415496
+Success:		true
+Signer:			NbrUYaZgyhSkNoRo9ugRyEMdUZxrhkNaWB (None)
+SystemFee:		0.0202833 GAS
+NetworkFee:		0.0117752 GAS
+Script:			EMAfDARtYWluDBTFG7BnftlcstPwXFcklVW/yWeEpEFifVtS
+INDEX    OPCODE       PARAMETER                                   
+0        PUSH0                                                    <<
+1        PACK                                                     
+2        PUSH15                                                   
+3        PUSHDATA1    6d61696e ("main")                           
+9        PUSHDATA1    c51bb0677ed95cb2d3f05c57249555bfc96784a4    
+31       SYSCALL      System.Contract.Call (627d5b52)             
+
+```
+
+Поле `OnChain` говорит о том, была ли транзакция принята в блок. Поле `Success` является индикатором
+того, был ли скрипт транзакции выполнен без ошибок, т.е. были ли сохранены изменения, вносимые транзакцией в чейн
+и осталась ли VM в состоянии `HALT` после выполнения скрипта транзакции.
+
 
 ### Смарт-контракт, использующий хранилище
 
