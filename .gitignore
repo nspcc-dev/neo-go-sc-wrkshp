@@ -1,4 +1,5 @@
 *.avm
+*.nef
 *~
 *.orig
 *.rej
