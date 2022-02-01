@@ -320,7 +320,10 @@ Now you have all things done to write your first smart contract, deploy and invo
 Let’s go!
 
 #### Step 1
-Create basic "Hello World" smart contract (or use the one presented in this repo):
+Use the "Hello World" smart contract contained in the repository in its own
+[1-print
+directory](https://github.com/nspcc-dev/neo-go-sc-wrkshp/tree/master/1-print). The
+code is rather simple:
 ```
 package main
 
@@ -332,22 +335,20 @@ func Main() {
 	runtime.Log("Hello, world!")
 }
 ```
-And save it as `1-print.go`.
 
-Create a configuration for it:
-https://github.com/nspcc-dev/neo-go-sc-wrkshp/blob/master/1-print.yml
+Contract configuration is available in the same directory, [1-print.yml](https://github.com/nspcc-dev/neo-go-sc-wrkshp/blob/master/1-print/1-print.yml).
 
 #### Step 2
 Compile "Hello World" smart contract:
 ```
-$ ./bin/neo-go contract compile -i 1-print.go -c 1-print.yml -m 1-print.manifest.json
+$ ./bin/neo-go contract compile -i 1-print/1-print.go -c 1-print/1-print.yml -m 1-print/1-print.manifest.json
 ```
 Where
 - `./bin/neo-go` runs neo-go
 - `contract compile` command with arguments in [neo-go](https://github.com/nspcc-dev/neo-go/blob/master/cli/smartcontract/smart_contract.go#L105)
-- `-i 1-print.go` path to smart contract
-- `-c 1-print.yml` path to configuration file
-- `-m 1-print.manifest.json` path to manifest file, which is required for smart contract deployment
+- `-i 1-print/1-print.go` path to smart contract
+- `-c 1-print/1-print.yml` path to configuration file
+- `-m 1-print/1-print.manifest.json` path to manifest file, which is required for smart contract deployment
 
 Result:
 
@@ -355,19 +356,19 @@ Compiled smart-contract: `1-pring.nef` and smart contract manifest `1-print.mani
 
 To dump all the opcodes, you can use:
 ```
-$ ./bin/neo-go contract inspect -i 1-print.nef
+$ ./bin/neo-go contract inspect -i 1-print/1-print.nef
 ```
 
 #### Step 3
 Deploy smart contract to the previously setup network:
 ```
-$ ./bin/neo-go contract deploy -i 1-print.nef -manifest 1-print.manifest.json -r http://localhost:20331 -w my_wallet.json
+$ ./bin/neo-go contract deploy -i 1-print/1-print.nef -manifest 1-print/1-print.manifest.json -r http://localhost:20331 -w my_wallet.json
 ```
 
 Where
 - `contract deploy` is a command for deployment
-- `-i 1-print.nef` path to smart contract
-- `-manifest 1-print.manifest.json` smart contract manifest file
+- `-i 1-print/1-print.nef` path to smart contract
+- `-manifest 1-print/1-print.manifest.json` smart contract manifest file
 - `-r http://localhost:20331` node endpoint
 - `-w my_wallet.json` wallet to use to get the key for transaction signing (you can use one from the workshop repo)
 
@@ -576,7 +577,7 @@ in tx has been persisted on chain and VM has `HALT` state after script execution
 
 ### Storage smart contract
 
-Let's take a look at the another smart contract example: [2-storage.go](https://github.com/nspcc-dev/neo-go-sc-wrkshp/blob/master/2-storage.go).
+Let's take a look at the another smart contract example: [2-storage.go](https://github.com/nspcc-dev/neo-go-sc-wrkshp/blob/master/2-storage/2-storage.go).
 This contract is quite simple and, as the previous one, doesn't take any arguments.
 On the other hand, it is able to count the number of its own invocations by storing an integer value and increment it after each invocation.
 We are interested in this contract as far as it's able to *store* values, i.e. it has a *storage* which can be shared within all contract invocations.
@@ -590,10 +591,10 @@ Our `_deploy` method is aimed to initialise the storage value with `0` when the 
 Now, when we learned about the storage, let's try to deploy and invoke our contract!
 
 #### Step #1
-Compile smart contract [2-storage.go](https://github.com/nspcc-dev/neo-go-sc-wrkshp/blob/master/2-storage.go):
+Compile smart contract [2-storage.go](https://github.com/nspcc-dev/neo-go-sc-wrkshp/blob/master/2-storage/2-storage.go):
 
 ```
-$ ./bin/neo-go contract compile -i 2-storage.go -c 2-storage.yml -m 2-storage.manifest.json
+$ ./bin/neo-go contract compile -i 2-storage/2-storage.go -c 2-storage/2-storage.yml -m 2-storage/2-storage.manifest.json
 ```
 
 Result:
@@ -603,7 +604,7 @@ Compiled smart-contract: `2-storage.nef` and smart contract manifest `2-storage.
 #### Step #2
 Deploy compiled smart contract:
 ```
-$ ./bin/neo-go contract deploy -i 2-storage.nef -manifest 2-storage.manifest.json -r http://localhost:20331 -w my_wallet.json
+$ ./bin/neo-go contract deploy -i 2-storage/2-storage.nef -manifest 2-storage/2-storage.manifest.json -r http://localhost:20331 -w my_wallet.json
 ```
 ... enter the password `qwerty`:
 ```
@@ -1217,13 +1218,13 @@ The `getapplicationlog` RPC-call for this transaction tells us the following:
 Here we are! There are exactly 5 tokens at the `stack` field. You can also ensure that these 5 tokens were debited from `NbrUYaZgyhSkNoRo9ugRyEMdUZxrhkNaWB` account by using `balanceOf` method.
 
 ## Workshop. Part 4
-In this part we'll summarise our knowledge about smart contracts by investigating [4-domain](https://github.com/nspcc-dev/neo-go-sc-wrkshp/blob/master/4-domain.go) smart contract. This contract 
+In this part we'll summarise our knowledge about smart contracts by investigating [4-domain](https://github.com/nspcc-dev/neo-go-sc-wrkshp/blob/master/4-domain/4-domain.go) smart contract. This contract
 contains code for domain registration, transferring, deletion and getting information about registered domains.
 
 Let’s go!
 
 #### Step #1
-Let's take a glance at our [contract](https://github.com/nspcc-dev/neo-go-sc-wrkshp/blob/master/4-domain.go) and inspect it. The contract takes an action string as the first parameter, which is one of the following:
+Let's take a glance at our [contract](https://github.com/nspcc-dev/neo-go-sc-wrkshp/blob/master/4-domain/4-domain.go) and inspect it. The contract takes an action string as the first parameter, which is one of the following:
 - `register` checks, whether domain with the specified name already exists. If not, it also adds the pair `[domainName, owner]` to the storage. It requires additional arguments:
    - `domainName` which is the new domain name.
    - `owner` - the 34-digit account address from our [wallet](https://github.com/nspcc-dev/neo-go-sc-wrkshp/blob/master/my_wallet.json), which will be used for contract invocation.
@@ -1240,18 +1241,15 @@ Let's take a glance at our [contract](https://github.com/nspcc-dev/neo-go-sc-wrk
 
 #### Step #2
 
-Compile smart contract [4-domain.go](https://github.com/nspcc-dev/neo-go-sc-wrkshp/blob/master/4-domain.go) with [configuration](https://github.com/nspcc-dev/neo-go-sc-wrkshp/blob/master/4-domain.yml)
+Compile smart contract [4-domain.go](https://github.com/nspcc-dev/neo-go-sc-wrkshp/blob/master/4-domain/4-domain.go) with [configuration](https://github.com/nspcc-dev/neo-go-sc-wrkshp/blob/master/4-domain/4-domain.yml)
 ```
-$ ./bin/neo-go contract compile -i 4-domain.go -c 4-domain.yml -m 4-domain.manifest.json
+$ ./bin/neo-go contract compile -i 4-domain/4-domain.go -c 4-domain/4-domain.yml -m 4-domain/4-domain.manifest.json
 ```
 
 ... and deploy it:
 ```
-$ ./bin/neo-go contract deploy -i 4-domain.nef --manifest 4-domain.manifest.json -r http://localhost:20331 -w my_wallet.json
+$ ./bin/neo-go contract deploy -i 4-domain/4-domain.nef --manifest 4-domain/4-domain.manifest.json -r http://localhost:20331 -w my_wallet.json
 ```
-Just a note: our contract uses storage and, as the previous one, needs the flag `hasstorage` to be set to `true` value.
-That can be done in [configuration](https://github.com/nspcc-dev/neo-go-sc-wrkshp/blob/master/4-domain.yml) file.
-
 ... enter the password `qwerty`:
 ```
 Enter account NbrUYaZgyhSkNoRo9ugRyEMdUZxrhkNaWB password >

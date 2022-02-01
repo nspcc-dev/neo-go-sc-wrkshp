@@ -318,7 +318,9 @@ $ ./bin/neo-go node --privnet
 
 
 #### Шаг 1
-Создайте простой смарт-контракт "Hello World" (или используйте представленный в репозтитории воркшопа):
+Используйте представленный в репозитории воркшопа контракт
+[1-print.go](https://github.com/nspcc-dev/neo-go-sc-wrkshp/blob/master/1-print/1-print.go).
+Его код прост, это "Hello World" из смарт-контракта:
 ```
 package main
 
@@ -330,42 +332,40 @@ func Main() {
 	runtime.Log("Hello, world!")
 }
 ```
-И сохраните его как `1-print.go`.
 
-Создайте конфигурацию для смарт-контракта:
-https://github.com/nspcc-dev/neo-go-sc-wrkshp/blob/master/1-print.yml
+Конфигурация контракта доступна в том же каталоге, [1-print.yml](https://github.com/nspcc-dev/neo-go-sc-wrkshp/blob/master/1-print/1-print.yml).
 
 #### Шаг 2
 Скомпилируйте смарт-контракт "Hello World":
 ```
-$ ./bin/neo-go contract compile -i 1-print.go -c 1-print.yml -m 1-print.manifest.json
+$ ./bin/neo-go contract compile -i 1-print/1-print.go -c 1-print/1-print.yml -m 1-print/1-print.manifest.json
 ```
 
 Где
 - `./bin/neo-go` запускает neo-go
 - `contract compile` команда с аргументами из [neo-go](https://github.com/nspcc-dev/neo-go/blob/master/cli/smartcontract/smart_contract.go#L105)
-- `-i 1-print.go` путь к смарт-контракту
-- `-c 1-print.yml` путь к конфигурационному файлу
-- `-m 1-print.manifest.json` путь к файлу манифеста, который потребуется в дальнейшем при деплое смарт-контракта
+- `-i 1-print/1-print.go` путь к смарт-контракту
+- `-c 1-print/1-print.yml` путь к конфигурационному файлу
+- `-m 1-print/1-print.manifest.json` путь к файлу манифеста, который потребуется в дальнейшем при деплое смарт-контракта
 
 Результат: 
-Скомпилированный смарт-контракт `1-pring.nef` и созданный манифест смарт-контракта `1-pring.manifest.json`
+Скомпилированный смарт-контракт `1-print.nef` и созданный манифест смарт-контракта `1-print.manifest.json`.
 
 Для просмотра опкодов вы можете воспользоваться командой:
 ```
-$ ./bin/neo-go contract inspect -i 1-print.nef
+$ ./bin/neo-go contract inspect -i 1-print/1-print.nef
 ```
 
 #### Шаг 3
 Разверните смарт-контракт в запущенной ранее частной сети:
 ```
-$ ./bin/neo-go contract deploy -i 1-print.nef -manifest 1-print.manifest.json -r http://localhost:20331 -w my_wallet.json
+$ ./bin/neo-go contract deploy -i 1-print/1-print.nef -manifest 1-print/1-print.manifest.json -r http://localhost:20331 -w my_wallet.json
 ```
 
 Где
 - `contract deploy` - команда для развертывания
-- `-i 1-print.nef` - путь к смарт-контракту
-- `-manifest 1-print.manifest.json` - файл манифеста смарт-контракта
+- `-i 1-print/1-print.nef` - путь к смарт-контракту
+- `-manifest 1-print/1-print.manifest.json` - файл манифеста смарт-контракта
 - `-r http://localhost:20331` - эндпоинт ноды
 - `-w my_wallet.json` - кошелек, в котором хранится ключ для подписи транзакции (вы можете взять его из репозитория воркшопа)
 
@@ -569,7 +569,7 @@ INDEX    OPCODE       PARAMETER
 
 ### Смарт-контракт, использующий хранилище
 
-Давайте изучим еще один пример смарт-контракта: [2-storage.go](https://github.com/nspcc-dev/neo-go-sc-wrkshp/blob/master/2-storage.go).
+Давайте изучим еще один пример смарт-контракта: [2-storage.go](https://github.com/nspcc-dev/neo-go-sc-wrkshp/blob/master/2-storage/2-storage.go).
 Он достаточно простой и, так же как предыдущий, не принимает никаких аргументов.
 С другой стороны, этот контракт умеет считать количество его вызовов, сохраняя целое число и увеличивая его на 1 после каждого вызова.
 Подобный контракт будет интересен нам, поскольку он способен *хранить* значения, т.е. обладает *хранилищем*, которое является общим для всех вызовов данного контракта.
@@ -583,19 +583,19 @@ INDEX    OPCODE       PARAMETER
 Теперь, когда мы узнали о хранилище, давайте скомпилируем, развернем и вызовем смарт-контракт.
 
 #### Шаг #1
-Скомпилируйте смарт-контракт [2-storage.go](https://github.com/nspcc-dev/neo-go-sc-wrkshp/blob/master/2-storage.go):
+Скомпилируйте смарт-контракт [2-storage.go](https://github.com/nspcc-dev/neo-go-sc-wrkshp/blob/master/2-storage/2-storage.go):
 ```
-$ ./bin/neo-go contract compile -i 2-storage.go -c 2-storage.yml -m 2-storage.manifest.json
+$ ./bin/neo-go contract compile -i 2-storage/2-storage.go -c 2-storage/2-storage.yml -m 2-storage/2-storage.manifest.json
 ```
 
 Результат:
 
-Скомпилированный смарт-контракт `2-storage.nef` и манифест `2-storage.manifest.json`
+Скомпилированный смарт-контракт `2-storage.nef` и манифест `2-storage.manifest.json` в каталоге `2-storage`.
 
 #### Шаг #2
 Разверните скомпилированный смарт-контракт:
 ```
-$ ./bin/neo-go contract deploy -i 2-storage.nef -manifest 2-storage.manifest.json -r http://localhost:20331 -w my_wallet.json
+$ ./bin/neo-go contract deploy -i 2-storage/2-storage.nef -manifest 2-storage/2-storage.manifest.json -r http://localhost:20331 -w my_wallet.json
 ```
 ... введите пароль `qwerty`:
 ```
@@ -1211,13 +1211,13 @@ $ ./bin/neo-go contract invokefunction -r http://localhost:20331 -w my_wallet.js
 Вы можете самостоятельно убедиться, что с нашего аккаунта были списаны 5 токенов, выполнив метод `balanceOf` с аргументом `NbrUYaZgyhSkNoRo9ugRyEMdUZxrhkNaWB`.
 
 ## Воркшоп. Часть 4
-В этой части подытожим наши знания о смарт-контрактах и исследуем смарт-контракт [4-domain.go](https://github.com/nspcc-dev/neo-go-sc-wrkshp/blob/master/4-domain.go).
+В этой части подытожим наши знания о смарт-контрактах и исследуем смарт-контракт [4-domain.go](https://github.com/nspcc-dev/neo-go-sc-wrkshp/blob/master/4-domain/4-domain.go).
 Данный контракт описывает операции регистрации, переноса и удаления доменов, а также операцию получения информации о зарегистрированном домене.
 
 Начнем!
 
 #### Шаг #1
-Давайте рассмотрим и исследуем [смарт-контракт](https://github.com/nspcc-dev/neo-go-sc-wrkshp/blob/master/4-domain.go). В качестве первого параметра контракт принимает на вход строку - действие, одно из следующих значений:
+Давайте рассмотрим и исследуем [смарт-контракт](https://github.com/nspcc-dev/neo-go-sc-wrkshp/blob/master/4-domain/4-domain.go). В качестве первого параметра контракт принимает на вход строку - действие, одно из следующих значений:
 - `register` проверяет, существует ли домен с указанным именем. В случае, если такого домена не существует, добавляет пару `[domainName, owner]` в хранилище. Данная операция требудет дополнительных аргументов:
    - `domainName` - новое имя домена.
    - `owner` - 34-значный адрес аккаунта из нашего [wallet](https://github.com/nspcc-dev/neo-go-sc-wrkshp/blob/master/my_wallet.json), который будет использоваться для вызова контракта.
@@ -1235,17 +1235,15 @@ $ ./bin/neo-go contract invokefunction -r http://localhost:20331 -w my_wallet.js
 
 #### Шаг #2
 
-Скомпилируйте смарт-контракт [4-domain.go](https://github.com/nspcc-dev/neo-go-sc-wrkshp/blob/master/4-domain.go) с [конфигурацией](https://github.com/nspcc-dev/neo-go-sc-wrkshp/blob/master/4-domain.yml)
+Скомпилируйте смарт-контракт [4-domain.go](https://github.com/nspcc-dev/neo-go-sc-wrkshp/blob/master/4-domain/4-domain.go) с [конфигурацией](https://github.com/nspcc-dev/neo-go-sc-wrkshp/blob/master/4-domain/4-domain.yml)
 ```
-$ ./bin/neo-go contract compile -i 4-domain.go -c 4-domain.yml -m 4-domain.manifest.json
+$ ./bin/neo-go contract compile -i 4-domain/4-domain.go -c 4-domain/4-domain.yml -m 4-domain/4-domain.manifest.json
 ```
 
 ... и разверните его:
 ```
-$ ./bin/neo-go contract deploy -i 4-domain.avm -c 4-domain.yml -e http://localhost:20331 -w my_wallet.json -g 0.001
+$ ./bin/neo-go contract deploy -i 4-domain/4-domain.nef -m 4-domain/4-domain.manifest.json -e http://localhost:20331 -w my_wallet.json
 ```
-Обратите внимание, что наш контракт использует хранилище и, как и с предыдущим контрактом, необходимо, чтобы флаг `hasstorage` имел значение `true`.
-Этот флаг указывается в файле [конфигурации](https://github.com/nspcc-dev/neo-go-sc-wrkshp/blob/master/4-domain.yml).
 
 ... введите пароль `qwerty`:
 ```
