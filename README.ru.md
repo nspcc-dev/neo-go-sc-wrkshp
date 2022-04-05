@@ -56,27 +56,42 @@ NEO-GO-VM >
 Для получения списка поддерживаемых операций используйте `help`:
 ```
 NEO-GO-VM > help
+NAME:
+   VM CLI - Official VM CLI for Neo-Go
 
-Commands:
-  astack        Show alt stack contents
-  break         Place a breakpoint
-  clear         clear the screen
-  cont          Continue execution of the current loaded script
-  estack        Show evaluation stack contents
-  exit          Exit the VM prompt
-  help          display help
-  ip            Show current instruction
-  istack        Show invocation stack contents
-  loadavm       Load an avm script into the VM
-  loadgo        Compile and load a Go file into the VM
-  loadhex       Load a hex-encoded script string into the VM
-  ops           Dump opcodes of the current loaded program
-  run           Execute the current loaded script
-  step          Step (n) instruction in the program
-  stepinto      Stepinto instruction to take in the debugger
-  stepout       Stepout instruction to take in the debugger
-  stepover      Stepover instruction to take in the debugger
+USAGE:
+    [global options] command [command options] [arguments...]
 
+VERSION:
+   0.98.2
+
+COMMANDS:
+   exit        Exit the VM prompt
+   ip          Show current instruction
+   break       Place a breakpoint
+   estack      Show evaluation stack contents
+   istack      Show invocation stack contents
+   sslot       Show static slot contents
+   lslot       Show local slot contents
+   aslot       Show arguments slot contents
+   loadnef     Load a NEF-consistent script into the VM
+   loadbase64  Load a base64-encoded script string into the VM
+   loadhex     Load a hex-encoded script string into the VM
+   loadgo      Compile and load a Go file with the manifest into the VM
+   reset       Unload compiled script from the VM
+   parse       Parse provided argument and convert it into other possible formats
+   run         Execute the current loaded script
+   cont        Continue execution of the current loaded script
+   step        Step (n) instruction in the program
+   stepinto    Stepinto instruction to take in the debugger
+   stepout     Stepout instruction to take in the debugger
+   stepover    Stepover instruction to take in the debugger
+   ops         Dump opcodes of the current loaded program
+   help, h     Shows a list of commands or help for one command
+
+GLOBAL OPTIONS:
+   --help, -h     show help
+   --version, -v  print the version
 ```
 Как вы видите, тут есть с чем поэкспериментировать. Давайте создадим простой смарт-контракт `1-print.go` и скомпилируем его:
  
