@@ -174,11 +174,9 @@ $ make build
 ```
 
 #### Step 2
-There are 2 ways of running local private network. 
-One way is using neo-local private network and other way is with neo-go private network.
+To run NeoGo-based 4-node private network use this commands:
 
-#### Running with neo-go private network
-```
+
 $ make env_image
 $ make env_up
 ```
@@ -196,14 +194,6 @@ Creating neo_go_node_three ... done
 In case you need to shutdown environment you can use:
 ```
 $ make env_down
-```
-
-#### Running with neo local private network
-```
-git clone https://github.com/CityOfZion/neo-local.git
-$ cd neo-local
-$ git checkout -b 4nodes 0.12
-$ make start
 ```
 
 #### Step 3

@@ -170,16 +170,14 @@ $ make build
 ```
 
 #### Шаг 2
-Существует два способа запуска локальной private network. 
-Первый - запуск neo-local private network, второй - запуск neo-go private network.
+Запустим локальную сеть из четырёх узлов в реализации NeoGo.
 
-#### Запуск neo-go private network
 ```
 $ make env_image
 $ make env_up
 ```
 
-В результате должна запуститься локальная privatenet:
+В результате должна запуститься приватная сеть:
 ```
 => Bootup environment
 Creating network "neo_go_network" with the default driver
@@ -193,14 +191,6 @@ Creating neo_go_node_three ... done
 Для остановки используйте:
 ```
 $ make env_down
-```
-
-#### Запуск neo local private network
-```
-$ git clone https://github.com/CityOfZion/neo-local.git
-$ cd neo-local
-$ git checkout -b 4nodes 0.12
-$ make start
 ```
 
 #### Шаг 3
