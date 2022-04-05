@@ -2,17 +2,17 @@
 <img src="./pic/neo_color_dark_gopher.png" width="300px" alt="logo">
 </p>
 
-[NEO](https://neo.org/) builds smart economy and we at [NEO SPCC](https://nspcc.ru/en/) help them with that big challenge. 
-In our blog you might find the latest articles [how we run NEOFS public test net](https://medium.com/@neospcc/public-neofs-testnet-launch-18f6315c5ced) 
+[Neo](https://neo.org/) builds smart economy and we at [NeoSPCC](https://nspcc.ru/en/) help them with that big challenge. 
+In our blog you might find the latest articles [how we run NeoFS public test net](https://medium.com/@neospcc/public-neofs-testnet-launch-18f6315c5ced) 
 but it’s not the only thing we’re working on.
 
-## NEO GO
+## NeoGo
 As you know network is composed of nodes. These nodes as of now have several implementations:
 - https://github.com/neo-project/neo
 - https://github.com/CityOfZion/neo-python
 - https://github.com/nspcc-dev/neo-go
 
-This article is about the last one since we’re developing it at NEO SPCC. 
+This article is about the last one since we’re developing it at NeoSPCC. 
 Hope that this article will help you to get an idea of how everything is tied up and being able to start neo-go node,
  write smart contract and deploy it.
  
@@ -132,7 +132,7 @@ signing transactions, working with accounts, assets, storing blocks in database 
 #### Network
 There are 3 types of network. 
 Private net -- it’s the private one which you can run locally. Testnet and Mainnet where much of the nodes across the world now running. 
-NEO has a nice monitor where you can find particular node running in the blockchain network.
+Neo has a nice monitor where you can find particular node running in the blockchain network.
 [Neo Monitor](http://monitor.cityofzion.io/)
 
 ## Workshop. Preparation
@@ -1484,7 +1484,7 @@ Thank you!
 ### Useful links
 
 * [Our basic tutorial on Medium](https://medium.com/@neospcc/%D1%81%D0%BC%D0%B0%D1%80%D1%82-%D0%BA%D0%BE%D0%BD%D1%82%D1%80%D0%B0%D0%BA%D1%82-%D0%B4%D0%BB%D1%8F-neo-769139352b65)
-* [Using NEO Blockchain Toolkit](https://medium.com/@neospcc/neogo-adds-support-for-neo-blockchain-toolkit-673ea914f661)
-* [NEO documentation](https://docs.neo.org/)
-* [NEO github](https://github.com/neo-project/neo/)
-* [NEO-GO github](https://github.com/nspcc-dev/neo-go)
+* [Using Neo Blockchain Toolkit](https://medium.com/@neospcc/neogo-adds-support-for-neo-blockchain-toolkit-673ea914f661)
+* [Neo documentation](https://docs.neo.org/)
+* [Neo github](https://github.com/neo-project/neo/)
+* [NeoGo github](https://github.com/nspcc-dev/neo-go)
