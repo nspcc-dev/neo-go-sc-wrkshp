@@ -9,7 +9,6 @@ but it’s not the only thing we’re working on.
 ## NeoGo
 As you know network is composed of nodes. These nodes as of now have several implementations:
 - https://github.com/neo-project/neo
-- https://github.com/CityOfZion/neo-python
 - https://github.com/nspcc-dev/neo-go
 
 This article is about the last one since we’re developing it at NeoSPCC. 

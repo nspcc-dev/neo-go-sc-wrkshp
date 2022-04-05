@@ -9,7 +9,6 @@
 ## NeoGo
 Как вы знаете, сеть состоит из нод. В текущий момент ноды имеют несколько реализаций:
 - https://github.com/neo-project/neo.git
-- https://github.com/CityOfZion/neo-python
 - https://github.com/nspcc-dev/neo-go
 
 Данная статья посвящена последней реализации, поскольку мы в NeoSPCC занимаемся ее разработкой.
