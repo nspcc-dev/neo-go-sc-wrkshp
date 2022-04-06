@@ -170,7 +170,7 @@ $ make build
 #### Step 2
 To run NeoGo-based 4-node private network use this commands:
 
-
+```
 $ make env_image
 $ make env_up
 ```
