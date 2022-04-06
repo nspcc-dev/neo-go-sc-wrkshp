@@ -158,12 +158,6 @@ For this workshop you will need Debian 10, Docker, docker-compose, go to be inst
 - [docker](https://docs.docker.com/install/linux/docker-ce/debian/)
 - [go](https://golang.org/dl/)
 
-#### Versioning
-As with many other Neo projects NeoGo is currently on its way to Neo 3, so there are two main branches there — [master](https://github.com/nspcc-dev/neo-go),
-where all Neo 3 development is happening right now and [master-2.x](https://github.com/nspcc-dev/neo-go/tree/master-2.x) for stable Neo 2 implementation. 
-This workshop contains basic tutorial notes for Neo 3 version. 
-If you want to continue with Neo 2, please, refer to [master-2.x branch](https://github.com/nspcc-dev/neo-go-sc-wrkshp/tree/master-2.x).
-
 #### Step 1
 If you already have neo-go or go smart-contracts, please, update go modules in order to be up-to-date with the current interop API changes.
 If not, download neo-go and build it (master branch):

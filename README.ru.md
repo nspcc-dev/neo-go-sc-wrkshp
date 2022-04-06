@@ -154,12 +154,6 @@ Network-слой - один из самых важных частей ноды. 
 - [docker](https://docs.docker.com/install/linux/docker-ce/debian/)
 - [go](https://golang.org/dl/)
 
-#### Версионирование
-Как и многие другие проекты Neo, NeoGo находится на своем пути к Neo 3, поэтому в нем существуют две основные ветки - [master](https://github.com/nspcc-dev/neo-go),
-в которой сейчас происходит разработка Neo 3, и [master-2.x](https://github.com/nspcc-dev/neo-go/tree/master-2.x) - стабильная реализация Neo 2. 
-Данный воркшоп содержит базовый туториал для Neo 3. 
-Если вы хотите продолжить с Neo 2, воспользуйтесь веткой [master-2.x branch](https://github.com/nspcc-dev/neo-go-sc-wrkshp/tree/master-2.x).
-
 #### Шаг 1
 Если у вас уже установлен neo-go или есть смарт-контракты на go, пожалуйста, обновите go modules чтобы использовать свежую версию API интеропов.
 Если нет, скачайте neo-go и соберите проект (ветку master):
