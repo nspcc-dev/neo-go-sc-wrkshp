@@ -2,17 +2,16 @@
 <img src="./pic/neo_color_dark_gopher.png" width="300px" alt="logo">
 </p>
 
-[NEO](https://neo.org/) builds smart economy and we at [NEO SPCC](https://nspcc.ru/en/) help them with that big challenge. 
-In our blog you might find the latest articles [how we run NEOFS public test net](https://medium.com/@neospcc/public-neofs-testnet-launch-18f6315c5ced) 
+[Neo](https://neo.org/) builds smart economy and we at [NeoSPCC](https://nspcc.ru/en/) help them with that big challenge. 
+In our blog you might find the latest articles [how we run NeoFS public test net](https://medium.com/@neospcc/public-neofs-testnet-launch-18f6315c5ced) 
 but it’s not the only thing we’re working on.
 
-## NEO GO
+## NeoGo
 As you know network is composed of nodes. These nodes as of now have several implementations:
 - https://github.com/neo-project/neo
-- https://github.com/CityOfZion/neo-python
 - https://github.com/nspcc-dev/neo-go
 
-This article is about the last one since we’re developing it at NEO SPCC. 
+This article is about the last one since we’re developing it at NeoSPCC. 
 Hope that this article will help you to get an idea of how everything is tied up and being able to start neo-go node,
  write smart contract and deploy it.
  
@@ -60,27 +59,42 @@ Once we run this command we will get an interface to interact with virtual machi
 To get a list of all supported operation you just use `help`:
 ```
 NEO-GO-VM > help
+NAME:
+   VM CLI - Official VM CLI for Neo-Go
 
-Commands:
-  astack        Show alt stack contents
-  break         Place a breakpoint
-  clear         clear the screen
-  cont          Continue execution of the current loaded script
-  estack        Show evaluation stack contents
-  exit          Exit the VM prompt
-  help          display help
-  ip            Show current instruction
-  istack        Show invocation stack contents
-  loadavm       Load an avm script into the VM
-  loadgo        Compile and load a Go file into the VM
-  loadhex       Load a hex-encoded script string into the VM
-  ops           Dump opcodes of the current loaded program
-  run           Execute the current loaded script
-  step          Step (n) instruction in the program
-  stepinto      Stepinto instruction to take in the debugger
-  stepout       Stepout instruction to take in the debugger
-  stepover      Stepover instruction to take in the debugger
+USAGE:
+    [global options] command [command options] [arguments...]
 
+VERSION:
+   0.98.2
+
+COMMANDS:
+   exit        Exit the VM prompt
+   ip          Show current instruction
+   break       Place a breakpoint
+   estack      Show evaluation stack contents
+   istack      Show invocation stack contents
+   sslot       Show static slot contents
+   lslot       Show local slot contents
+   aslot       Show arguments slot contents
+   loadnef     Load a NEF-consistent script into the VM
+   loadbase64  Load a base64-encoded script string into the VM
+   loadhex     Load a hex-encoded script string into the VM
+   loadgo      Compile and load a Go file with the manifest into the VM
+   reset       Unload compiled script from the VM
+   parse       Parse provided argument and convert it into other possible formats
+   run         Execute the current loaded script
+   cont        Continue execution of the current loaded script
+   step        Step (n) instruction in the program
+   stepinto    Stepinto instruction to take in the debugger
+   stepout     Stepout instruction to take in the debugger
+   stepover    Stepover instruction to take in the debugger
+   ops         Dump opcodes of the current loaded program
+   help, h     Shows a list of commands or help for one command
+
+GLOBAL OPTIONS:
+   --help, -h     show help
+   --version, -v  print the version
 ```
 As you can see there are a lot of options to play with it. Let’s take simple smart contract `1-print.go` and compile it:
  
@@ -132,7 +146,7 @@ signing transactions, working with accounts, assets, storing blocks in database 
 #### Network
 There are 3 types of network. 
 Private net -- it’s the private one which you can run locally. Testnet and Mainnet where much of the nodes across the world now running. 
-NEO has a nice monitor where you can find particular node running in the blockchain network.
+Neo has a nice monitor where you can find particular node running in the blockchain network.
 [Neo Monitor](http://monitor.cityofzion.io/)
 
 ## Workshop. Preparation
@@ -144,12 +158,6 @@ For this workshop you will need Debian 10, Docker, docker-compose, go to be inst
 - [docker](https://docs.docker.com/install/linux/docker-ce/debian/)
 - [go](https://golang.org/dl/)
 
-#### Versioning
-As with many other Neo projects NeoGo is currently on its way to Neo 3, so there are two main branches there — [master](https://github.com/nspcc-dev/neo-go),
-where all Neo 3 development is happening right now and [master-2.x](https://github.com/nspcc-dev/neo-go/tree/master-2.x) for stable Neo 2 implementation. 
-This workshop contains basic tutorial notes for Neo 3 version. 
-If you want to continue with Neo 2, please, refer to [master-2.x branch](https://github.com/nspcc-dev/neo-go-sc-wrkshp/tree/master-2.x).
-
 #### Step 1
 If you already have neo-go or go smart-contracts, please, update go modules in order to be up-to-date with the current interop API changes.
 If not, download neo-go and build it (master branch):
@@ -160,11 +168,9 @@ $ make build
 ```
 
 #### Step 2
-There are 2 ways of running local private network. 
-One way is using neo-local private network and other way is with neo-go private network.
+To run NeoGo-based 4-node private network use this commands:
 
-#### Running with neo-go private network
-```
+
 $ make env_image
 $ make env_up
 ```
@@ -182,14 +188,6 @@ Creating neo_go_node_three ... done
 In case you need to shutdown environment you can use:
 ```
 $ make env_down
-```
-
-#### Running with neo local private network
-```
-git clone https://github.com/CityOfZion/neo-local.git
-$ cd neo-local
-$ git checkout -b 4nodes 0.12
-$ make start
 ```
 
 #### Step 3
@@ -1484,7 +1482,7 @@ Thank you!
 ### Useful links
 
 * [Our basic tutorial on Medium](https://medium.com/@neospcc/%D1%81%D0%BC%D0%B0%D1%80%D1%82-%D0%BA%D0%BE%D0%BD%D1%82%D1%80%D0%B0%D0%BA%D1%82-%D0%B4%D0%BB%D1%8F-neo-769139352b65)
-* [Using NEO Blockchain Toolkit](https://medium.com/@neospcc/neogo-adds-support-for-neo-blockchain-toolkit-673ea914f661)
-* [NEO documentation](https://docs.neo.org/)
-* [NEO github](https://github.com/neo-project/neo/)
-* [NEO-GO github](https://github.com/nspcc-dev/neo-go)
+* [Using Neo Blockchain Toolkit](https://medium.com/@neospcc/neogo-adds-support-for-neo-blockchain-toolkit-673ea914f661)
+* [Neo documentation](https://docs.neo.org/)
+* [Neo github](https://github.com/neo-project/neo/)
+* [NeoGo github](https://github.com/nspcc-dev/neo-go)

@@ -2,17 +2,16 @@
 <img src="./pic/neo_color_dark_gopher.png" width="300px" alt="logo">
 </p>
 
-[NEO](https://neo.org/) разрабатывает системы умной экономики, и мы в [NEO SPCC](https://nspcc.ru/) помогаем им с этой нелегкой задачей. 
-В нашем блоге вы можете найти статью [how we run NEOFS public test net](https://medium.com/@neospcc/public-neofs-testnet-launch-18f6315c5ced), 
+[Neo](https://neo.org/) разрабатывает системы умной экономики, и мы в [NeoSPCC](https://nspcc.ru/) помогаем им с этой нелегкой задачей. 
+В нашем блоге вы можете найти статью [how we run NeoFS public test net](https://medium.com/@neospcc/public-neofs-testnet-launch-18f6315c5ced), 
 но это не единственная вещь, над которой мы работаем.
 
-## NEO GO
+## NeoGo
 Как вы знаете, сеть состоит из нод. В текущий момент ноды имеют несколько реализаций:
 - https://github.com/neo-project/neo.git
-- https://github.com/CityOfZion/neo-python
 - https://github.com/nspcc-dev/neo-go
 
-Данная статья посвящена последней реализации, поскольку мы в NEO SPCC занимаемся ее разработкой.
+Данная статья посвящена последней реализации, поскольку мы в NeoSPCC занимаемся ее разработкой.
 Мы надеемся, что данная статья позволит вам понять, как устроена нода neo-go, и поможет научиться писать и разворачивать смрт-контракты.
 
 ## Что такое нода?
@@ -57,27 +56,42 @@ NEO-GO-VM >
 Для получения списка поддерживаемых операций используйте `help`:
 ```
 NEO-GO-VM > help
+NAME:
+   VM CLI - Official VM CLI for Neo-Go
 
-Commands:
-  astack        Show alt stack contents
-  break         Place a breakpoint
-  clear         clear the screen
-  cont          Continue execution of the current loaded script
-  estack        Show evaluation stack contents
-  exit          Exit the VM prompt
-  help          display help
-  ip            Show current instruction
-  istack        Show invocation stack contents
-  loadavm       Load an avm script into the VM
-  loadgo        Compile and load a Go file into the VM
-  loadhex       Load a hex-encoded script string into the VM
-  ops           Dump opcodes of the current loaded program
-  run           Execute the current loaded script
-  step          Step (n) instruction in the program
-  stepinto      Stepinto instruction to take in the debugger
-  stepout       Stepout instruction to take in the debugger
-  stepover      Stepover instruction to take in the debugger
+USAGE:
+    [global options] command [command options] [arguments...]
 
+VERSION:
+   0.98.2
+
+COMMANDS:
+   exit        Exit the VM prompt
+   ip          Show current instruction
+   break       Place a breakpoint
+   estack      Show evaluation stack contents
+   istack      Show invocation stack contents
+   sslot       Show static slot contents
+   lslot       Show local slot contents
+   aslot       Show arguments slot contents
+   loadnef     Load a NEF-consistent script into the VM
+   loadbase64  Load a base64-encoded script string into the VM
+   loadhex     Load a hex-encoded script string into the VM
+   loadgo      Compile and load a Go file with the manifest into the VM
+   reset       Unload compiled script from the VM
+   parse       Parse provided argument and convert it into other possible formats
+   run         Execute the current loaded script
+   cont        Continue execution of the current loaded script
+   step        Step (n) instruction in the program
+   stepinto    Stepinto instruction to take in the debugger
+   stepout     Stepout instruction to take in the debugger
+   stepover    Stepover instruction to take in the debugger
+   ops         Dump opcodes of the current loaded program
+   help, h     Shows a list of commands or help for one command
+
+GLOBAL OPTIONS:
+   --help, -h     show help
+   --version, -v  print the version
 ```
 Как вы видите, тут есть с чем поэкспериментировать. Давайте создадим простой смарт-контракт `1-print.go` и скомпилируем его:
  
@@ -123,12 +137,12 @@ Network-слой - один из самых важных частей ноды. 
 Виртуальная машина запускает скомпилированный байт-код. Виртуальная машина Neo является [стековой](https://docs.neo.org/docs/en-us/basic/technology/neovm.html). Для вычислений в ней содержится два стека.
 
 #### Блокчейн
-Блокчейн - достаточно большая часть NEO GO, содержащая в себе операции по принятию и валидации транзакций, их подписи,
+Блокчейн - достаточно большая часть NeoGo, содержащая в себе операции по принятию и валидации транзакций, их подписи,
 работе с аккаунтами, ассетами, хранению блоков в базе данных (или в кэше).
 
 #### Сеть
 Существует 3 типа сетей.
-Частная сеть (Private net) - это сеть, которую вы можете запустить локально. Тестовая сеть (Testnet) и Основная сеть (Mainnet) - сети, в которых запущены большинство нод NEO по всему миру.
+Частная сеть (Private net) - это сеть, которую вы можете запустить локально. Тестовая сеть (Testnet) и Основная сеть (Mainnet) - сети, в которых запущены большинство нод Neo по всему миру.
 Каждую ноду, запущенную в сети блокчейн, вы можете найти в [Neo Monitor](http://monitor.cityofzion.io/)
 
 ## Воркшоп. Подготовка
@@ -140,12 +154,6 @@ Network-слой - один из самых важных частей ноды. 
 - [docker](https://docs.docker.com/install/linux/docker-ce/debian/)
 - [go](https://golang.org/dl/)
 
-#### Версионирование
-Как и многие другие проекты Neo, NeoGo находится на своем пути к Neo 3, поэтому в нем существуют две основные ветки - [master](https://github.com/nspcc-dev/neo-go),
-в которой сейчас происходит разработка Neo 3, и [master-2.x](https://github.com/nspcc-dev/neo-go/tree/master-2.x) - стабильная реализация Neo 2. 
-Данный воркшоп содержит базовый туториал для Neo 3. 
-Если вы хотите продолжить с Neo 2, воспользуйтесь веткой [master-2.x branch](https://github.com/nspcc-dev/neo-go-sc-wrkshp/tree/master-2.x).
-
 #### Шаг 1
 Если у вас уже установлен neo-go или есть смарт-контракты на go, пожалуйста, обновите go modules чтобы использовать свежую версию API интеропов.
 Если нет, скачайте neo-go и соберите проект (ветку master):
@@ -156,16 +164,14 @@ $ make build
 ```
 
 #### Шаг 2
-Существует два способа запуска локальной private network. 
-Первый - запуск neo-local private network, второй - запуск neo-go private network.
+Запустим локальную сеть из четырёх узлов в реализации NeoGo.
 
-#### Запуск neo-go private network
 ```
 $ make env_image
 $ make env_up
 ```
 
-В результате должна запуститься локальная privatenet:
+В результате должна запуститься приватная сеть:
 ```
 => Bootup environment
 Creating network "neo_go_network" with the default driver
@@ -179,14 +185,6 @@ Creating neo_go_node_three ... done
 Для остановки используйте:
 ```
 $ make env_down
-```
-
-#### Запуск neo local private network
-```
-$ git clone https://github.com/CityOfZion/neo-local.git
-$ cd neo-local
-$ git checkout -b 4nodes 0.12
-$ make start
 ```
 
 #### Шаг 3
@@ -428,7 +426,7 @@ Sent invocation transaction bd23c836f7bdd62a0d9c5ecb3f5bdbf2d38ec9a5e2e3935ca543
 Каждая нода neo-go предоставляет API интерфейс для получения данных о блокчейне.
 Данное взаимодействие осуществляется по протоколу `JSON-RPC`, использующему HTTP для общения.
 
-Полный `NEO JSON-RPC 3.0 API` описан [здесь](https://docs.neo.org/v3/docs/en-us/reference/rpc/latest-version/api.html).
+Полный `Neo JSON-RPC 3.0 API` описан [здесь](https://docs.neo.org/v3/docs/en-us/reference/rpc/latest-version/api.html).
 
 RPC-сервер ноды neo-go, запущенной на шаге 5, доступен по `localhost:20331`. Давайте выполним несколько вызовов RPC.
 
@@ -1479,7 +1477,7 @@ $ ./bin/neo-go contract invokefunction -r http://localhost:20331 -w my_wallet.js
 ### Полезные ссылки
 
 * [Наш воркшоп на Medium](https://medium.com/@neospcc/%D1%81%D0%BC%D0%B0%D1%80%D1%82-%D0%BA%D0%BE%D0%BD%D1%82%D1%80%D0%B0%D0%BA%D1%82-%D0%B4%D0%BB%D1%8F-neo-769139352b65)
-* [Использование NEO Blockchain Toolkit](https://medium.com/@neospcc/neogo-adds-support-for-neo-blockchain-toolkit-673ea914f661)
-* [Документация NEO](https://docs.neo.org/)
-* [NEO github](https://github.com/neo-project/neo/)
-* [NEO-GO github](https://github.com/nspcc-dev/neo-go)
+* [Использование Neo Blockchain Toolkit](https://medium.com/@neospcc/neogo-adds-support-for-neo-blockchain-toolkit-673ea914f661)
+* [Документация Neo](https://docs.neo.org/)
+* [Neo github](https://github.com/neo-project/neo/)
+* [NeoGo github](https://github.com/nspcc-dev/neo-go)
