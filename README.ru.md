@@ -145,6 +145,28 @@ Network-слой - один из самых важных частей ноды. 
 Частная сеть (Private net) - это сеть, которую вы можете запустить локально. Тестовая сеть (Testnet) и Основная сеть (Mainnet) - сети, в которых запущены большинство нод Neo по всему миру.
 Каждую ноду, запущенную в сети блокчейн, вы можете найти в [Neo Monitor](http://monitor.cityofzion.io/)
 
+## Воркшоп. Содержание
+Воркшоп содержит обучающее руководство, примеры и подсказки, помогающие начать
+разработку смарт контрактов и децентрализованных приложений для экосистемы Neo
+с помощью инструментов, предлагаемых проектом NeoGo. Воркшоп содержит несколько
+частей:
+
+1. [**Подготовка.**](#workshop-preparation) В этой части рассказывается, как запустить локальную сеть Neo, перевести
+  средства на аккаунт с помощью NeoGo CLI и проверить баланс с помощью вызова
+  JSON RPC.
+2. [**Часть 1.**](#workshop-part-1) Содержит инструкции для компиляции, исследования, развертывания и вызовов простого
+  пример контракта `Hello, world!`, написанного на Go.
+3. [**Часть 2.**](#workshop-part-2) Помогает познакомиться с протоколом Neo JSON-RPC и утилитами NeoGo
+  CLI для получения информации от RPC-нод Neo. В эту часть включено описание концепции хранилища смарт
+  контрактов. Кроме того, в часть включена инструкция по компиляции, развертыванию и вызовам смарт контракта, который
+  демонстрирует вариант использования своего хранилища.
+4. [**Часть 3.**](#workshop-part-3) Содержит описание стандарта токенов NEP-17 и пример
+  контракта, поддерживающего стандарт NEP-17.
+5. [**Часть 4.**](#workshop-part-4) Резюмирует знания, полученные о смарт контрактах. Содержит инструкции по
+  компиляции, развертыванию и вызовам более сложного смарт контракта.
+6. [**Часть 5.**](#workshop-part-5) Описывает, как разработать простое децентрализованное
+  приложение для экосистемы Neo, используя инструменты NeoGo.
+
 ## Воркшоп. Подготовка
 В этой части мы настроим окружение: запустим частную сеть, подсоединим к ней ноду neo-go и переведем немного GAS на аккаунт, с который будем использовать далее
 для создания транзакций. Давайте начнем.
@@ -1523,6 +1545,72 @@ curl -d '{ "jsonrpc": "2.0", "id": 1, "method": "getapplicationlog", "params": [
 $ ./bin/neo-go contract invokefunction -r http://localhost:20331 -w my_wallet.json 9042814f07d65d2b835fa1f07d21c22c6e1cbdf7 register my_second_domain NbrUYaZgyhSkNoRo9ugRyEMdUZxrhkNaWB -- NbrUYaZgyhSkNoRo9ugRyEMdUZxrhkNaWB:CalledByEntry
 $ ./bin/neo-go contract invokefunction -r http://localhost:20331 -w my_wallet.json 9042814f07d65d2b835fa1f07d21c22c6e1cbdf7 delete my_second_domain -- NbrUYaZgyhSkNoRo9ugRyEMdUZxrhkNaWB
 ```
+
+## Воркшоп. Часть 5
+
+В этой части будет представлен пример децентрализованного приложения на языке Go,
+работающего в экосистеме Neo. Пример показывает варианты использования NeoGo RPC
+клиента и набора утилит для работы с кошельками, деплоя и вызва смарт контрактов,
+получения данных из блокчейна, обработки происходящих в блокчейне событий и
+автоматической генерации RPC биндингов для смарт контрактов.
+
+#### Шаг #1
+
+Убедитесь, что локальная сеть из четырех узлов, описанная в [подготовительной части](#workshop-preparation)
+настроена и запущена. Нам также понадобится аккаунт `NbrUYaZgyhSkNoRo9ugRyEMdUZxrhkNaWB`
+из [кошелька](https://github.com/nspcc-dev/neo-go-sc-wrkshp/blob/e11949bf5f1dc1ce4e3b6551b6ae22032945c75d/my_wallet.json) с некоторым количеством токена GAS на нём. Откройте и внимательно
+просмотрите пример децентрализованного приложения: [dApp.go](./dApp/dApp.go). Пример включает
+в себя различные варианты использования базового API, которые необходимы для
+начала разработки своего собственного децентрализванного приложения в экосистеме
+Neo:
+* Создание [клиента JSON-RPC](https://pkg.go.dev/github.com/nspcc-dev/neo-go/pkg/rpcclient), его инициализация и примеры вызовов базовых
+  RPC методов.
+* Управление кошельками и аккаунтами Neo с помощью [пакета NeoGo `wallet`](https://pkg.go.dev/github.com/nspcc-dev/neo-go/pkg/wallet).
+* [Расширения](https://github.com/nspcc-dev/neo-go/blob/5fc61be5f6c5349d8de8b61967380feee6b51c55/docs/rpc.md#extensions), предлагаемые NeoGo JSON RPC сервером и поддерживаемые NeoGo RPC клиентом.
+* [Веб-сокетное расширение](https://github.com/nspcc-dev/neo-go/blob/5fc61be5f6c5349d8de8b61967380feee6b51c55/docs/rpc.md#websocket-server)NeoGo JSON RPC сервера. Создание, инициализация и использование [веб-сокетного JSON RPC клиента](https://pkg.go.dev/github.com/nspcc-dev/neo-go/pkg/rpcclient#WSClient). 
+* [Пакетная утилита `unwrap`](https://pkg.go.dev/github.com/nspcc-dev/neo-go/pkg/rpcclient/unwrap), предназначенная для извлечения результатов тестовых RPC-вызовов.
+* Примеры использования [подсистемы уведомлений](https://github.com/nspcc-dev/neo-go/blob/5fc61be5f6c5349d8de8b61967380feee6b51c55/docs/notifications.md) NeoGo JSON RPC. Подписки на происходящие в блокчейне события и получение уведомлений по веб-сокетному каналу.
+* Примеры использования пакета NeoGo `invoker`. Выполнение тестовых вызовов смарт контрактов, скриптов или верификационных методов с удобным интерфейсом [Invoker](https://pkg.go.dev/github.com/nspcc-dev/neo-go/pkg/rpcclient/invoker).
+* Статья-введение в Neo witnesses и [области их действия](https://neospcc.medium.com/thou-shalt-check-their-witnesses-485d2bf8375d).
+* [Исторические вызовы](https://github.com/nspcc-dev/neo-go/blob/5fc61be5f6c5349d8de8b61967380feee6b51c55/docs/rpc.md#invokecontractverifyhistoric-invokefunctionhistoric-and-invokescripthistoric-calls), являющиеся еще одним расширением NeoGo RPC сервера и клиентский API для их использования.
+* Примеры использования пакета NeoGo `actor`. Генерация, настройка, подпись, отправка и осуществление ожидания испонения транзаций с гибким интерфейсом [Actor](https://pkg.go.dev/github.com/nspcc-dev/neo-go/pkg/rpcclient/actor).
+* Работа с набором NEP-специфичных и контракт-специфичных пакетов:
+  * Использование пакетов [`nep17`](https://pkg.go.dev/github.com/nspcc-dev/neo-go/pkg/rpcclient/nep17) и [`nep11`](https://pkg.go.dev/github.com/nspcc-dev/neo-go/pkg/rpcclient/nep11) для вызовов NEP-17 и NEP-11 совместимых контрактов.
+  * Использование акторов, специфичных для нативных контрактов: [`gas`](https://pkg.go.dev/github.com/nspcc-dev/neo-go/pkg/rpcclient/gas), [`neo`](https://pkg.go.dev/github.com/nspcc-dev/neo-go/pkg/rpcclient/neo), [`management`](https://pkg.go.dev/github.com/nspcc-dev/neo-go/pkg/rpcclient/management), [`policy`](https://pkg.go.dev/github.com/nspcc-dev/neo-go/pkg/rpcclient/policy), [`oracle`](https://pkg.go.dev/github.com/nspcc-dev/neo-go/pkg/rpcclient/oracle), [`rolemgmt`](https://pkg.go.dev/github.com/nspcc-dev/neo-go/pkg/rpcclient/rolemgmt), [`notary`](https://pkg.go.dev/github.com/nspcc-dev/neo-go/pkg/rpcclient/notary) пакеты.
+* Деплой и вызовы [примера контракта Storage](https://github.com/nspcc-dev/neo-go/tree/5fc61be5f6c5349d8de8b61967380feee6b51c55/examples/storage) с помощью пакета-актора, специфичного для [нативного `ContractManagement` контракта](https://pkg.go.dev/github.com/nspcc-dev/neo-go/pkg/rpcclient/management).
+* Демонстрация API итераторов контрактного хранилища:
+  * Обход итератора в NeoVM-скрипте с использованием [`CallAndExpandIterator` Invoker API](https://pkg.go.dev/github.com/nspcc-dev/neo-go/pkg/rpcclient/invoker#Invoker.CallAndExpandIterator).
+  * Обход сессионного итератора с использованием [`TraverseIterator` Invoker API](https://pkg.go.dev/github.com/nspcc-dev/neo-go/pkg/rpcclient/invoker#Invoker.TraverseIterator).
+* Использование автогенерированных [контрактных RPC биндингов](https://github.com/nspcc-dev/neo-go/blob/5fc61be5f6c5349d8de8b61967380feee6b51c55/docs/compiler.md#generating-rpc-contract-bindings).
+
+Внимательно разберите пример децентрализованного приложения и прочитайте
+комментарии к блокам кода в нём. Перейдите по ссылкам, представленным в
+комментариях и прочитайте документацию к использованным API. Перед тем как
+запустить приложение склонируйте репозиторий NeoGo в ту же папку, где расположен
+репозиторий воркшопа и скомпилируйте демонстрационный пример контракта Storage
+из репозитория NeoGo:
+```
+$ git clone https://github.com/nspcc-dev/neo-go
+$ cd neo-go
+$ make build
+$ ./bin/neo-go contract compile -i ./examples/storage/storage.go -c ./examples/storage/storage.yml -o examples/storage/storage.nef -m ./examples/storage/storage.manifest.json
+```  
+
+В качестве последнего подготовительного шага проверьте, что хэш транзакции,
+переводящей GAS с мультисигового аккаунта на аккаунт из `my_wallet.json`, верно
+указан в переменной `transferTxH` примера `./dApp/dApp.go`
+
+#### Шаг #2
+
+В консоли перейдите в директорию приложения `dApp` и запустите приложение:
+```
+$ cd ./dApp
+$ go run dApp.go 
+``` 
+
+Изучите вывод приложения в консоль, просмотрите примеры кода, представленного в
+приложении и используйте их для разработки своего собственного децентрализованного
+приложения для экосистемы Neo!
 
 Спасибо!
 
