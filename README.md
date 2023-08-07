@@ -232,7 +232,7 @@ Result:
 #### Step 4
 Transfer some GAS from multisig account to our account.
 
-1. Create NEP17 transfer transaction:
+1. Create NEP-17 transfer transaction:
     ```
         $ ./bin/neo-go wallet nep17 transfer -w .docker/wallets/wallet1.json --out my_tx.json -r http://localhost:20331 --from NVTiAjNgagDkTr5HTzDmQP9kPwPHN5BgVq --to NbrUYaZgyhSkNoRo9ugRyEMdUZxrhkNaWB --token GAS --amount 29999999
     ``` 
@@ -892,14 +892,14 @@ The JSON result is:
 The `stack` field contains now `2` integer value, so the counter was incremented as we expected.
 
 ## Workshop. Part 3
-In this part we'll know about NEP5 token standard and try to write, deploy and invoke more complicated smart contract. 
+In this part we'll know about NEP-17 token standard and try to write, deploy and invoke more complicated smart contract. 
 Let’s go!
 
-### NEP17
-[NEP17](https://github.com/neo-project/proposals/blob/master/nep-17.mediawiki) is a token standard for the Neo blockchain that provides systems with a generalized interaction mechanism for tokenized smart contracts.
+### NEP-17
+[NEP-17](https://github.com/neo-project/proposals/blob/master/nep-17.mediawiki) is a token standard for the Neo blockchain that provides systems with a generalized interaction mechanism for tokenized smart contracts.
 The example with implementation of all required by the standard methods you can find in [nep17.go](https://github.com/nspcc-dev/neo-go/blob/master/examples/token/nep17/nep17.go)
  
-Let's take a view on the example of smart contract with NEP17: [token.go](https://github.com/nspcc-dev/neo-go/blob/master/examples/token/token.go)
+Let's take a view on the example of smart contract with NEP-17: [token.go](https://github.com/nspcc-dev/neo-go/blob/master/examples/token/token.go)
  
 This smart contract initialises nep17 token interface and takes operation string as a parameter, which is one of:
 - `symbol` returns ticker symbol of the token
@@ -947,7 +947,7 @@ Which means that our contract was deployed and now we can invoke it.
 #### Step #2
 Let's invoke the contract to perform different operations.
 
-To start with, query `Symbol` of the created nep17 token:
+To start with, query `Symbol` of the created NEP-17 token:
 
 ```
 $ ./bin/neo-go contract invokefunction -r http://localhost:20331 -w my_wallet.json c36534b6b81621178980438c18796f23a463441a symbol
@@ -1007,7 +1007,7 @@ $ ./bin/neo-go contract invokefunction -r http://localhost:20331 -w my_wallet.js
 
 #### Step #3
 
-Now it's time for more interesting things. First of all, let's check the balance of nep17 token on our account by using `balanceOf`:
+Now it's time for more interesting things. First of all, let's check the balance of NEP-17 token on our account by using `balanceOf`:
 ```
 $ ./bin/neo-go contract invokefunction -r http://localhost:20331 -w my_wallet.json c36534b6b81621178980438c18796f23a463441a balanceOf NbrUYaZgyhSkNoRo9ugRyEMdUZxrhkNaWB
 ```                             
@@ -1155,7 +1155,7 @@ Sent invocation transaction 870607e5bbffdaef9adb38cf4ca08125481554bf674d6a63e79c
    "jsonrpc" : "2.0"
 }
 ```
-Now we can see integer value at the `stack` field, so `1100000000000000` is the nep17 token balance of our account.
+Now we can see integer value at the `stack` field, so `1100000000000000` is the NEP-17 token balance of our account.
 
 Note, that token can be minted only once.
 
