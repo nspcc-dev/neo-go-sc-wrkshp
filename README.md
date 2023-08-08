@@ -1613,6 +1613,9 @@ Thank you!
 ### Useful links
 
 * [Our basic tutorial on Medium](https://medium.com/@neospcc/%D1%81%D0%BC%D0%B0%D1%80%D1%82-%D0%BA%D0%BE%D0%BD%D1%82%D1%80%D0%B0%D0%BA%D1%82-%D0%B4%D0%BB%D1%8F-neo-769139352b65)
+* [Go smart contracts development workshop on YouTube (as a part of the Neo Polaris Launchpad)](https://www.youtube.com/watch?v=o38fXiLG7EM)
+* [Go smart contracts development workshop on YouTube (as a part of the Neo Asia-Pacific Tour)](https://www.youtube.com/watch?v=q_TMlpx1-0M)
+* [Go dApp development workshop on YouTube](https://www.youtube.com/live/8zVBIrVQa58)
 * [Using Neo Blockchain Toolkit](https://medium.com/@neospcc/neogo-adds-support-for-neo-blockchain-toolkit-673ea914f661)
 * [Neo documentation](https://docs.neo.org/)
 * [Neo github](https://github.com/neo-project/neo/)

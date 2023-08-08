@@ -1617,6 +1617,9 @@ $ go run dApp.go
 ### Полезные ссылки
 
 * [Наш воркшоп на Medium](https://medium.com/@neospcc/%D1%81%D0%BC%D0%B0%D1%80%D1%82-%D0%BA%D0%BE%D0%BD%D1%82%D1%80%D0%B0%D0%BA%D1%82-%D0%B4%D0%BB%D1%8F-neo-769139352b65)
+* [Разработка смарт контрактов на Go (YouTube, в рамках события Neo Polaris Launchpad)](https://www.youtube.com/watch?v=o38fXiLG7EM)
+* [Разработка смарт контрактов на Go (YouTube, в рамках события Neo Asia-Pacific Tour)](https://www.youtube.com/watch?v=q_TMlpx1-0M)
+* [Разработка децентрализованных приложений на Go (YouTube)](https://www.youtube.com/live/8zVBIrVQa58)
 * [Использование Neo Blockchain Toolkit](https://medium.com/@neospcc/neogo-adds-support-for-neo-blockchain-toolkit-673ea914f661)
 * [Документация Neo](https://docs.neo.org/)
 * [Neo github](https://github.com/neo-project/neo/)
