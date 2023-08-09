@@ -149,6 +149,26 @@ Private net -- it’s the private one which you can run locally. Testnet and Mai
 Neo has a nice monitor where you can find particular node running in the blockchain network.
 [Neo Monitor](http://monitor.cityofzion.io/)
 
+## Workshop. Content
+The workshop contains a guide, examples and tips on Neo smart contracts development
+and dApps development for Neo ecosystem using development kit offered by NeoGo.
+The workshop is divided into multiple parts:
+1. [**Preparation.**](#workshop-preparation) Learn how to run a Neo private network,
+  transfer some funds from multi-signature account to a simple signature account
+  using NeoGo CLI and check the balance via JSON RPC call.
+2. [**Part 1.**](#workshop-part-1) Compile, inspect, deploy and invoke simple
+  `Hello, world!` smart contract written in Go.
+3. [**Part 2.**](#workshop-part-2) Investigate Neo JSON RPC protocol and NeoGo CLI
+   utilities to retrieve information from Neo RPC nodes. Get acquainted with the
+   concept of a smart contract storage. Compile, deploy and invoke contract that
+   demonstrates how to use its storage.
+4. [**Part 3.**](#workshop-part-3) Learn more about NEP-17 token standard and take
+   a look at the NEP-17 compatible contract.
+5. [**Part 4.**](#workshop-part-4) Summarize knowledge about smart contracts. Create,
+   compile and invoke more complicated contract.
+6. [**Part 5.**](#workshop-part-5) Learn how to develop simple decentralized application
+   for the Neo ecosystem using tools provided by NeoGo.
+ 
 ## Workshop. Preparation
 In this part we will setup the environment: run private network, connect neo-go node to it and transfer some initial GAS to our basic account
 in order to be able to pay for transaction deployment and invocation. Let's start.
@@ -232,7 +252,7 @@ Result:
 #### Step 4
 Transfer some GAS from multisig account to our account.
 
-1. Create NEP17 transfer transaction:
+1. Create NEP-17 transfer transaction:
     ```
         $ ./bin/neo-go wallet nep17 transfer -w .docker/wallets/wallet1.json --out my_tx.json -r http://localhost:20331 --from NVTiAjNgagDkTr5HTzDmQP9kPwPHN5BgVq --to NbrUYaZgyhSkNoRo9ugRyEMdUZxrhkNaWB --token GAS --amount 29999999
     ``` 
@@ -892,14 +912,14 @@ The JSON result is:
 The `stack` field contains now `2` integer value, so the counter was incremented as we expected.
 
 ## Workshop. Part 3
-In this part we'll know about NEP5 token standard and try to write, deploy and invoke more complicated smart contract. 
+In this part we'll know about NEP-17 token standard and try to write, deploy and invoke more complicated smart contract. 
 Let’s go!
 
-### NEP17
-[NEP17](https://github.com/neo-project/proposals/blob/master/nep-17.mediawiki) is a token standard for the Neo blockchain that provides systems with a generalized interaction mechanism for tokenized smart contracts.
+### NEP-17
+[NEP-17](https://github.com/neo-project/proposals/blob/master/nep-17.mediawiki) is a token standard for the Neo blockchain that provides systems with a generalized interaction mechanism for tokenized smart contracts.
 The example with implementation of all required by the standard methods you can find in [nep17.go](https://github.com/nspcc-dev/neo-go/blob/master/examples/token/nep17/nep17.go)
  
-Let's take a view on the example of smart contract with NEP17: [token.go](https://github.com/nspcc-dev/neo-go/blob/master/examples/token/token.go)
+Let's take a view on the example of smart contract with NEP-17: [token.go](https://github.com/nspcc-dev/neo-go/blob/master/examples/token/token.go)
  
 This smart contract initialises nep17 token interface and takes operation string as a parameter, which is one of:
 - `symbol` returns ticker symbol of the token
@@ -947,7 +967,7 @@ Which means that our contract was deployed and now we can invoke it.
 #### Step #2
 Let's invoke the contract to perform different operations.
 
-To start with, query `Symbol` of the created nep17 token:
+To start with, query `Symbol` of the created NEP-17 token:
 
 ```
 $ ./bin/neo-go contract invokefunction -r http://localhost:20331 -w my_wallet.json c36534b6b81621178980438c18796f23a463441a symbol
@@ -1007,7 +1027,7 @@ $ ./bin/neo-go contract invokefunction -r http://localhost:20331 -w my_wallet.js
 
 #### Step #3
 
-Now it's time for more interesting things. First of all, let's check the balance of nep17 token on our account by using `balanceOf`:
+Now it's time for more interesting things. First of all, let's check the balance of NEP-17 token on our account by using `balanceOf`:
 ```
 $ ./bin/neo-go contract invokefunction -r http://localhost:20331 -w my_wallet.json c36534b6b81621178980438c18796f23a463441a balanceOf NbrUYaZgyhSkNoRo9ugRyEMdUZxrhkNaWB
 ```                             
@@ -1155,7 +1175,7 @@ Sent invocation transaction 870607e5bbffdaef9adb38cf4ca08125481554bf674d6a63e79c
    "jsonrpc" : "2.0"
 }
 ```
-Now we can see integer value at the `stack` field, so `1100000000000000` is the nep17 token balance of our account.
+Now we can see integer value at the `stack` field, so `1100000000000000` is the NEP-17 token balance of our account.
 
 Note, that token can be minted only once.
 
@@ -1529,11 +1549,73 @@ $ ./bin/neo-go contract invokefunction -r http://localhost:20331 -w my_wallet.js
 $ ./bin/neo-go contract invokefunction -r http://localhost:20331 -w my_wallet.json 9042814f07d65d2b835fa1f07d21c22c6e1cbdf7 delete my_second_domain -- NbrUYaZgyhSkNoRo9ugRyEMdUZxrhkNaWB
 ```
 
+## Workshop. Part 5
+
+In this part we'll take a look at the example of a decentralized application for the
+Neo ecosystem written in Go. The example demonstrates how to use NeoGo RPC Client
+and a set of helpers to work with wallets, deployments, invocations, data retrieval,
+blockchain events, auto-generated smart contract RPC bindings and such.
+
+#### Step #1
+
+Ensure that private network created at the [Preparation part](#workshop-preparation)
+step is up and running. We'll also need a `NbrUYaZgyhSkNoRo9ugRyEMdUZxrhkNaWB`
+account from the [wallet](https://github.com/nspcc-dev/neo-go-sc-wrkshp/blob/e11949bf5f1dc1ce4e3b6551b6ae22032945c75d/my_wallet.json)
+with some GAS on it. Take a look at the dApp example: [dApp.go](./dApp/dApp.go).
+The example includes all basic API usages you need to be aware of to start your
+dApp development for Neo:
+* [JSON-RPC client](https://pkg.go.dev/github.com/nspcc-dev/neo-go/pkg/rpcclient) creation, initialization and example of simple Neo JSON RPC APIs usage.
+* Neo wallet and account managing with [NeoGo `wallet` package](https://pkg.go.dev/github.com/nspcc-dev/neo-go/pkg/wallet).
+* [Extensions](https://github.com/nspcc-dev/neo-go/blob/5fc61be5f6c5349d8de8b61967380feee6b51c55/docs/rpc.md#extensions) offered by NeoGo JSON RPC server and supported by the NeoGo RPC client.
+* NeoGo JSON RPC server [web-socket extension](https://github.com/nspcc-dev/neo-go/blob/5fc61be5f6c5349d8de8b61967380feee6b51c55/docs/rpc.md#websocket-server). [Web-socket JSON RPC Client](https://pkg.go.dev/github.com/nspcc-dev/neo-go/pkg/rpcclient#WSClient) creation, initialization and usage example. 
+* [`unwrap` helper package](https://pkg.go.dev/github.com/nspcc-dev/neo-go/pkg/rpcclient/unwrap) for test invocation results unwrapping.
+* NeoGo JSON RPC [Notification subsystem](https://github.com/nspcc-dev/neo-go/blob/5fc61be5f6c5349d8de8b61967380feee6b51c55/docs/notifications.md) usage example. Subscribe for a various set of blockchain node events and receive notifications over web-socket channel.
+* NeoGo `invoker` package usage example. Perform test invocation of smart contract, script or verification method with the powerful [Invoker API](https://pkg.go.dev/github.com/nspcc-dev/neo-go/pkg/rpcclient/invoker).
+* How to work with witnesses and [witness scopes](https://neospcc.medium.com/thou-shalt-check-their-witnesses-485d2bf8375d).
+* [Historic invocations functionality](https://github.com/nspcc-dev/neo-go/blob/5fc61be5f6c5349d8de8b61967380feee6b51c55/docs/rpc.md#invokecontractverifyhistoric-invokefunctionhistoric-and-invokescripthistoric-calls) provided by NeoGo RPC server and client extensions.
+* NeoGo `actor` package usage example. Build, tune, sign, send and await transactions with our flexible [Actor API](https://pkg.go.dev/github.com/nspcc-dev/neo-go/pkg/rpcclient/actor).
+* Work with a set of NEP-specific and native-specific packages:
+  * [`nep17`](https://pkg.go.dev/github.com/nspcc-dev/neo-go/pkg/rpcclient/nep17) and [`nep11`](https://pkg.go.dev/github.com/nspcc-dev/neo-go/pkg/rpcclient/nep11) packages for NEP-17 or NEP-11 compatible Neo token management.
+  * Native contracts specific actors: [`gas`](https://pkg.go.dev/github.com/nspcc-dev/neo-go/pkg/rpcclient/gas), [`neo`](https://pkg.go.dev/github.com/nspcc-dev/neo-go/pkg/rpcclient/neo), [`management`](https://pkg.go.dev/github.com/nspcc-dev/neo-go/pkg/rpcclient/management), [`policy`](https://pkg.go.dev/github.com/nspcc-dev/neo-go/pkg/rpcclient/policy), [`oracle`](https://pkg.go.dev/github.com/nspcc-dev/neo-go/pkg/rpcclient/oracle), [`rolemgmt`](https://pkg.go.dev/github.com/nspcc-dev/neo-go/pkg/rpcclient/rolemgmt), [`notary`](https://pkg.go.dev/github.com/nspcc-dev/neo-go/pkg/rpcclient/notary) Actor packages.
+* Deploy and invoke an [example contract](https://github.com/nspcc-dev/neo-go/tree/5fc61be5f6c5349d8de8b61967380feee6b51c55/examples/storage) with the help of native [`ContractManagement` specific Actor package](https://pkg.go.dev/github.com/nspcc-dev/neo-go/pkg/rpcclient/management).
+* Contract storage iterator API demonstration:
+  * Script-based iterator unwrapping via [`CallAndExpandIterator` Invoker API](https://pkg.go.dev/github.com/nspcc-dev/neo-go/pkg/rpcclient/invoker#Invoker.CallAndExpandIterator).
+  * Session-based iterator traversal via [`TraverseIterator` Invoker API](https://pkg.go.dev/github.com/nspcc-dev/neo-go/pkg/rpcclient/invoker#Invoker.TraverseIterator).
+* Usage of autogenerated [RPC smart contract binding](https://github.com/nspcc-dev/neo-go/blob/5fc61be5f6c5349d8de8b61967380feee6b51c55/docs/compiler.md#generating-rpc-contract-bindings).
+
+Carefully read the dApp example and comments to the blocks of code. Follow the
+provided links and read the corresponding documentation. Before running the
+example, clone the NeoGo repo to the same folder where the workshop repo is
+placed and compile the example Storage contract:
+```
+$ git clone https://github.com/nspcc-dev/neo-go
+$ cd neo-go
+$ make build
+$ ./bin/neo-go contract compile -i ./examples/storage/storage.go -c ./examples/storage/storage.yml -o examples/storage/storage.nef -m ./examples/storage/storage.manifest.json
+```  
+
+The last preparation step is to check that variable `transferTxH` contains the
+actual hash of GAS transfer transaction from the Preparation part.
+
+#### Step #2
+
+Change working directory to the `dApp` package and run the `dApp.go` example:
+```
+$ cd ./dApp
+$ go run dApp.go 
+``` 
+
+Inspect the resulting output in the console, investigate the dApp example code
+snippets and build your own dApp for Neo!
+
 Thank you!
 
 ### Useful links
 
 * [Our basic tutorial on Medium](https://medium.com/@neospcc/%D1%81%D0%BC%D0%B0%D1%80%D1%82-%D0%BA%D0%BE%D0%BD%D1%82%D1%80%D0%B0%D0%BA%D1%82-%D0%B4%D0%BB%D1%8F-neo-769139352b65)
+* [Go smart contracts development workshop on YouTube (as a part of the Neo Polaris Launchpad)](https://www.youtube.com/watch?v=o38fXiLG7EM)
+* [Go smart contracts development workshop on YouTube (as a part of the Neo Asia-Pacific Tour)](https://www.youtube.com/watch?v=q_TMlpx1-0M)
+* [Go dApp development workshop on YouTube](https://www.youtube.com/live/8zVBIrVQa58)
 * [Using Neo Blockchain Toolkit](https://medium.com/@neospcc/neogo-adds-support-for-neo-blockchain-toolkit-673ea914f661)
 * [Neo documentation](https://docs.neo.org/)
 * [Neo github](https://github.com/neo-project/neo/)
