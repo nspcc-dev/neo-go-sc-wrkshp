@@ -1,5 +1,5 @@
 <p align="center">
-<img src="./pic/neo_color_dark_gopher.png" width="300px" alt="logo">
+<img src="./.github/neo_color_dark_gopher.png" width="300px" alt="logo">
 </p>
 
 [Neo](https://neo.org/) builds smart economy and we at [NeoSPCC](https://nspcc.ru/en/) help them with that big challenge. 
@@ -18,7 +18,7 @@ Hope that this article will help you to get an idea of how everything is tied up
 ## What is a node?
 
 <p align="center">
-<img src="./pic/node.png" width="300px" alt="node">
+<img src="./.github/node.png" width="300px" alt="node">
 </p>
 
 The main goal of the node is to interact with each other (through P2P) and synchronize blocks in the network. 
