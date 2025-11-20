@@ -1,5 +1,5 @@
 <p align="center">
-<img src="./pic/neo_color_dark_gopher.png" width="300px" alt="logo">
+<img src="./.github/neo_color_dark_gopher.png" width="300px" alt="logo">
 </p>
 
 [Neo](https://neo.org/) разрабатывает системы умной экономики, и мы в [NeoSPCC](https://nspcc.ru/) помогаем им с этой нелегкой задачей. 
@@ -17,7 +17,7 @@
 ## Что такое нода?
 
 <p align="center">
-<img src="./pic/node.png" width="300px" alt="node">
+<img src="./.github/node.png" width="300px" alt="node">
 </p>
 
 Главная цель нод - взаимодействовие друг с другом по протоколу P2P и синхронизация блоков в сети.
