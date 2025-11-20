@@ -1,6 +1,6 @@
 module dApp
 
-go 1.18
+go 1.24.0
 
 require (
 	github.com/nspcc-dev/neo-go v0.101.5-0.20230802075307-afa4530c7d73
