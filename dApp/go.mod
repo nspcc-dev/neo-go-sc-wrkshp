@@ -1,6 +1,6 @@
 module dApp
 
-go 1.18
+go 1.24.0
 
 require (
 	github.com/nspcc-dev/neo-go v0.101.5-0.20230802075307-afa4530c7d73
@@ -16,8 +16,8 @@ require (
 	github.com/nspcc-dev/go-ordered-json v0.0.0-20220111165707-25110be27d22 // indirect
 	github.com/nspcc-dev/rfc6979 v0.2.0 // indirect
 	go.uber.org/atomic v1.10.0 // indirect
-	golang.org/x/crypto v0.31.0 // indirect
-	golang.org/x/sync v0.10.0 // indirect
-	golang.org/x/text v0.21.0 // indirect
+	golang.org/x/crypto v0.45.0 // indirect
+	golang.org/x/sync v0.18.0 // indirect
+	golang.org/x/text v0.31.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
