@@ -202,7 +202,7 @@ func main() {
 		close(dispatcherToMainCh)
 	}(ctx, bCh, ntfCh, aerCh, dispatcherToMainCh)
 
-	primary := 0
+	primary := byte(0)
 	till := bCount + 5
 	fltB := &neorpc.BlockFilter{
 		Primary: &primary,
@@ -324,13 +324,14 @@ mainLoop:
 	act, err := actor.New(wsC, actSigners)
 	check(err, "create actor")
 
-	aer, err := act.Wait(act.SendCall(gasState.Hash, "transfer", from, to, amount, data))
+	h, vub, err := act.SendCall(gasState.Hash, "transfer", from, to, amount, data)
+	aer, err := act.Wait(context.Background(), h, vub, err)
 	check(err, "send `transfer` call via actor")
 	if aer.VMState != vmstate.Halt {
 		panic("unexpected `transfer` result")
 	}
 
-	aer, err = act.Wait(act.SendTunedCall(gasState.Hash, "transfer", []transaction.Attribute{}, func(r *result.Invoke, t *transaction.Transaction) error {
+	h, vub, err = act.SendTunedCall(gasState.Hash, "transfer", []transaction.Attribute{}, func(r *result.Invoke, t *transaction.Transaction) error {
 		err := actor.DefaultCheckerModifier(r, t)
 		if err != nil {
 			return err
@@ -352,7 +353,8 @@ mainLoop:
 		t.NetworkFee = r.GasConsumed + 1
 
 		return nil
-	}, from, to, amount, data))
+	}, from, to, amount, data)
+	aer, err = act.Wait(context.Background(), h, vub, err)
 	check(err, "send `transfer` tuned call via actor")
 	if aer.VMState != vmstate.Halt {
 		panic("unexpected `transfer` tuned result")
@@ -371,7 +373,7 @@ mainLoop:
 	check(err, "retrieve GAS decimals via NEP17 actor")
 	fmt.Printf("GAS decimals: %d\n", d)
 
-	aer, err = act.Wait(nep17Act.MultiTransfer([]nep17.TransferParameters{
+	h, vub, err = nep17Act.MultiTransfer([]nep17.TransferParameters{
 		{
 			From:   from,
 			To:     from,
@@ -384,7 +386,8 @@ mainLoop:
 			Amount: big.NewInt(5),
 			Data:   nil,
 		},
-	}))
+	})
+	aer, err = act.Wait(context.Background(), h, vub, err)
 	check(err, "GAS multitransfer")
 	applogTr, err := wsC.GetApplicationLog(aer.Container, nil)
 	check(err, "retrieve applog for multitransfer")
@@ -445,7 +448,8 @@ mainLoop:
 
 	// If not, then deploy it:
 	if sState == nil {
-		aer, err = act.Wait(mgmtAct.Deploy(&nefFile, m, nil))
+		h, vub, err = mgmtAct.Deploy(&nefFile, m, nil)
+		aer, err = act.Wait(context.Background(), h, vub, err)
 		check(err, "deploy storage contract")
 		if aer.VMState != vmstate.Halt {
 			panic(fmt.Sprintf("deploy storage contract: %s", aer.FaultException))
@@ -458,11 +462,14 @@ mainLoop:
 		check(err, "decode storage contract hash")
 
 		// Put several values into storage of the deployed contract:
-		_, err = act.Wait(act.SendCall(sH, "put", "key1", "value1"))
+		h, vub, err = act.SendCall(sH, "put", "key1", "value1")
+		_, err = act.Wait(context.Background(), h, vub, err)
 		check(err, "put `key1` into storage contract")
-		_, err = act.Wait(act.SendCall(sH, "put", "key2", "value2"))
+		h, vub, err = act.SendCall(sH, "put", "key2", "value2")
+		_, err = act.Wait(context.Background(), h, vub, err)
 		check(err, "put `key2` into storage contract")
-		_, err = act.Wait(act.SendCall(sH, "put", "key3", "value3"))
+		h, vub, err = act.SendCall(sH, "put", "key3", "value3")
+		_, err = act.Wait(context.Background(), h, vub, err)
 		check(err, "put `key3` into storage contract")
 	}
 
@@ -507,7 +514,8 @@ mainLoop:
 	// binding to your dApp project as a separate package and call the deployed
 	// contract directly from your dAPP code which is very convenient:
 	storageAct := storagecontract.New(act, sH)
-	_, err = act.Wait(storageAct.Put([]byte("key4"), []byte("value4")))
+	h, vub, err = storageAct.Put([]byte("key4"), []byte("value4"))
+	_, err = act.Wait(context.Background(), h, vub, err)
 	check(err, "put key4 to the storage contract")
 }
 
