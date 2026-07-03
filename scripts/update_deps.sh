@@ -13,5 +13,6 @@ for dir in "$root"/*/; do
 	cd "$dir" || exit 1
 	go get github.com/nspcc-dev/neo-go/pkg/interop@"$REV"
 	go get github.com/nspcc-dev/neo-go@"$REV"
+	go get -u
 	go mod tidy
 done

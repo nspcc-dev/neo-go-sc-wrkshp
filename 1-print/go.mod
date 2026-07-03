@@ -1,5 +1,5 @@
 module 1-print
 
-go 1.24.0
+go 1.25
 
-require github.com/nspcc-dev/neo-go/pkg/interop v0.0.0-20251117171409-30e56bf9ea0c
+require github.com/nspcc-dev/neo-go/pkg/interop v0.0.0-20260703142814-2897d8f482e4
